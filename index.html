@@ -4,129 +4,155 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Command. — Aswin's Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://accounts.google.com/gsi/client"></script>
 <style>
 :root{
   --bg:#fbf6ee;--surface:#f5ede0;--surface2:#ede3d3;
-  --border:#e0d5c5;--border-dark:#c8baa8;
-  --text:#111;--text-muted:#888;--text-dim:#bbb;
-  --accent:#ff610b;--accent-bg:rgba(255,97,11,0.08);--accent-bg2:rgba(255,97,11,0.14);
-  --green:#2d7a4f;--green-bg:rgba(45,122,79,0.08);
-  --blue:#1a5c8a;--blue-bg:rgba(26,92,138,0.08);
-  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
-  --purple:#6b3fa0;--purple-bg:rgba(107,63,160,0.08);
+  --border:#e2d6c4;--border-dark:#c9baA8;
+  --text:#1a1208;--text-muted:#8a7a68;--text-dim:#c4b8a8;
+  --accent:#ff610b;--accent-bg:rgba(255,97,11,0.07);
+  --green:#2d7a4f;--green-bg:rgba(45,122,79,0.07);
+  --blue:#1a5c8a;--blue-bg:rgba(26,92,138,0.07);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.07);
+  --purple:#6b3fa0;--purple-bg:rgba(107,63,160,0.07);
+  --gold:#b8860b;--gold-bg:rgba(184,134,11,0.07);
+  --radius:10px;--shadow:0 2px 12px rgba(0,0,0,0.06);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-weight:300;min-height:100vh;font-size:13.5px;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-weight:300;min-height:100vh;font-size:14px;line-height:1.5;}
+h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
 
 /* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:var(--text);position:sticky;top:0;z-index:300;gap:12px;flex-wrap:wrap;}
-.t-left{display:flex;align-items:baseline;gap:12px;}
-.logo{font-family:'Playfair Display',serif;font-size:17px;color:var(--bg);}
-.logo span{color:var(--accent);}
-.tagline{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#666;letter-spacing:0.14em;text-transform:uppercase;}
-.t-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-#clock{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#999;letter-spacing:0.05em;}
-.wpill{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#aaa;background:#1e1e1e;padding:3px 9px;border-radius:20px;}
-.acc-badges{display:flex;gap:5px;}
-.abadge{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:9px;padding:3px 9px;border-radius:20px;border:1px solid #333;cursor:pointer;color:#666;transition:all 0.15s;}
-.abadge.on{border-color:var(--accent);color:var(--accent);}
-.abadge .dot{width:5px;height:5px;border-radius:50%;background:#333;}
-.abadge.on .dot{background:var(--accent);}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:var(--text);position:sticky;top:0;z-index:400;gap:10px;flex-wrap:wrap;}
+.t-logo{font-family:'EB Garamond',serif;font-size:20px;color:var(--bg);letter-spacing:0.01em;}
+.t-logo span{color:var(--accent);}
+.t-tag{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#666;letter-spacing:0.16em;text-transform:uppercase;}
+.t-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+#clock{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#888;}
+.wpill{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#999;background:#222;padding:3px 9px;border-radius:20px;}
+.badges{display:flex;gap:5px;}
+.badge{display:flex;align-items:center;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;padding:3px 9px;border-radius:20px;border:1px solid #333;cursor:pointer;color:#666;transition:all 0.15s;}
+.badge.on{border-color:var(--accent);color:var(--accent);}
+.badge .dot{width:5px;height:5px;border-radius:50%;background:#333;}
+.badge.on .dot{background:var(--accent);}
+.btn-refresh{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;padding:4px 10px;border-radius:4px;border:1px solid #444;cursor:pointer;background:transparent;color:#888;transition:all 0.15s;}
+.btn-refresh:hover{border-color:var(--accent);color:var(--accent);}
 
 /* ── SUMMARY BAR ── */
-.summary-bar{display:grid;grid-template-columns:repeat(6,1fr);gap:0;background:#fff;border-bottom:2px solid var(--accent);}
-.sb-card{padding:14px 18px;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;position:relative;}
-.sb-card:last-child{border-right:none;}
-.sb-card:hover{background:var(--surface);}
-.sb-card.active{background:var(--accent-bg);}
-.sb-card.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--accent);}
-.sb-num{font-family:'Playfair Display',serif;font-size:28px;color:var(--accent);line-height:1;}
-.sb-num.zero{color:var(--text-dim);}
-.sb-label{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-top:4px;}
-.sb-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.sumbar{display:grid;grid-template-columns:repeat(6,1fr);background:#fff;border-bottom:2px solid var(--accent);box-shadow:var(--shadow);}
+.sc{padding:14px 16px;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;position:relative;overflow:hidden;}
+.sc:last-child{border-right:none;}
+.sc:hover{background:var(--surface);}
+.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform 0.2s;}
+.sc:hover::after{transform:scaleX(1);}
+.sc-num{font-family:'EB Garamond',serif;font-size:32px;color:var(--accent);line-height:1;font-weight:500;}
+.sc-num.zero{color:var(--text-dim);}
+.sc-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-top:3px;}
+.sc-sub{font-size:11px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-/* ── MAIN GRID ── */
-.main{padding:20px 24px;display:flex;flex-direction:column;gap:18px;}
-.row-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+/* ── MAIN ── */
+.main{padding:20px 22px;display:flex;flex-direction:column;gap:16px;max-width:1600px;margin:0 auto;}
 
 /* ── PANEL ── */
-.panel{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .ph{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:8px;}
-.pt{display:flex;align-items:center;gap:7px;font-family:'Playfair Display',serif;font-size:15px;font-weight:400;}
-.pmeta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
-.pacts{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
-.btn{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.08em;padding:4px 10px;border-radius:4px;border:1px solid var(--border-dark);cursor:pointer;background:transparent;color:var(--text-muted);transition:all 0.15s;}
+.pt{font-family:'EB Garamond',serif;font-size:16px;font-weight:500;display:flex;align-items:center;gap:7px;}
+.pmeta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
+.pacts{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.btn{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.08em;padding:4px 10px;border-radius:4px;border:1px solid var(--border-dark);cursor:pointer;background:transparent;color:var(--text-muted);transition:all 0.15s;}
 .btn:hover{border-color:var(--text);color:var(--text);}
 .btn.p{background:var(--accent);border-color:var(--accent);color:#fff;}
 .btn.p:hover{background:#e05500;}
 .btn.act{border-color:var(--accent);color:var(--accent);}
+.btn.g{background:var(--green);border-color:var(--green);color:#fff;}
 
 /* ── AI STRIP ── */
-.ai-strip{background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden;}
-.ai-hdr{padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:9px;}
-.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;}
+.ai-strip{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.ai-hdr{padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.ai-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.ai-title{font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);flex:1;}
-.ai-resp{padding:13px 16px;min-height:52px;font-size:13px;line-height:1.65;color:var(--text);white-space:pre-wrap;}
-.ai-resp.empty{color:var(--text-muted);font-style:italic;}
+.ai-ttl{font-family:'EB Garamond',serif;font-size:15px;flex:1;}
+.ai-resp{padding:14px 16px;min-height:52px;font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
+.ai-resp.empty{color:var(--text-muted);font-style:italic;font-family:'EB Garamond',serif;}
 .ai-row{display:flex;gap:7px;padding:9px 16px;border-top:1px solid var(--border);background:var(--surface);}
-.ai-inp{flex:1;background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:7px 11px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color 0.15s;}
+.ai-inp{flex:1;background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:7px 11px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);outline:none;transition:border-color 0.15s;}
 .ai-inp:focus{border-color:var(--accent);}
-.ai-inp::placeholder{color:var(--text-dim);}
+.ai-inp::placeholder{color:var(--text-dim);font-style:italic;}
 
-/* ── EVENTS ── */
-.sec-hdr{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);padding:5px 16px;border-bottom:1px solid var(--border);background:var(--surface);}
-.ev-item{display:flex;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
+/* ── ROWS ── */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);}
+.tab{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;padding:9px 14px;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* ── FILTER ROW ── */
+.frow{display:flex;gap:5px;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;}
+.chip{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:0.06em;padding:3px 8px;border-radius:20px;border:1px solid var(--border-dark);cursor:pointer;white-space:nowrap;background:transparent;color:var(--text-muted);transition:all 0.15s;}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+.chip:hover:not(.active){border-color:var(--text);color:var(--text);}
+
+/* ── SECTION HEADER ── */
+.sec-hdr{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);padding:5px 16px;border-bottom:1px solid var(--border);background:var(--surface);}
+
+/* ── EVENT ITEMS ── */
+.ev-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .ev-item:last-child{border-bottom:none;}
 .ev-item:hover{background:var(--surface);}
-.ev-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);width:54px;flex-shrink:0;padding-top:2px;}
-.ev-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px;}
+.ev-time{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);width:52px;flex-shrink:0;padding-top:3px;}
+.ev-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
 .ev-dot.blue{background:var(--blue);}
 .ev-dot.green{background:var(--green);}
 .ev-dot.purple{background:var(--purple);}
+.ev-dot.gold{background:var(--gold);}
 .ev-body{flex:1;}
-.ev-title{font-size:13px;font-weight:400;line-height:1.3;}
-.ev-loc{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.ev-title{font-size:13.5px;line-height:1.3;font-weight:400;}
+.ev-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
 .etag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;margin-top:3px;background:var(--accent-bg);color:var(--accent);}
 .etag.blue{background:var(--blue-bg);color:var(--blue);}
 .etag.green{background:var(--green-bg);color:var(--green);}
 .etag.purple{background:var(--purple-bg);color:var(--purple);}
-.zoom-link{display:inline-flex;align-items:center;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--blue);text-decoration:none;margin-top:3px;}
+.etag.gold{background:var(--gold-bg);color:var(--gold);}
+.zoom-link{display:inline-flex;align-items:center;gap:3px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--blue);text-decoration:none;margin-top:3px;}
 .zoom-link:hover{text-decoration:underline;}
 
 /* ── EMAIL ── */
-.em-item{display:flex;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);align-items:flex-start;cursor:pointer;transition:background 0.1s;}
+.em-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .em-item:last-child{border-bottom:none;}
 .em-item:hover{background:var(--surface);}
 .em-item.unread{background:rgba(255,97,11,0.02);}
 .em-udot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
 .em-udot.read{background:transparent;}
 .em-body{flex:1;min-width:0;}
-.em-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
-.em-sender{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.em-top{display:flex;justify-content:space-between;gap:8px;}
+.em-sender{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400;}
 .em-item.unread .em-sender{font-weight:500;}
-.em-time{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);flex-shrink:0;}
+.em-time{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);flex-shrink:0;}
 .em-subj{font-size:12.5px;color:var(--text);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .em-prev{font-size:11px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.em-acc{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--blue-bg);color:var(--blue);display:inline-block;margin-top:2px;}
+.em-acc{font-family:'IBM Plex Mono',monospace;font-size:7.5px;padding:1px 5px;border-radius:3px;background:var(--blue-bg);color:var(--blue);display:inline-block;margin-top:2px;}
 .em-acc.personal{background:var(--green-bg);color:var(--green);}
 
 /* ── TASKS ── */
-.tk-item{display:flex;gap:9px;padding:8px 16px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
+.tk-item{display:flex;gap:9px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .tk-item:last-child{border-bottom:none;}
 .tk-item:hover{background:var(--surface);}
 .tk-chk{width:15px;height:15px;border:1.5px solid var(--border-dark);border-radius:3px;flex-shrink:0;margin-top:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;transition:all 0.15s;}
 .tk-chk:hover{border-color:var(--accent);}
 .tk-chk.done{background:var(--green);border-color:var(--green);color:#fff;}
 .tk-body{flex:1;}
-.tk-text{font-size:13px;line-height:1.3;}
+.tk-text{font-size:13.5px;line-height:1.3;}
 .tk-text.done{text-decoration:line-through;color:var(--text-muted);}
 .tk-meta{display:flex;gap:6px;align-items:center;margin-top:2px;flex-wrap:wrap;}
-.tk-due{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
+.tk-due{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
 .tk-due.ov{color:var(--red);}
 .tk-due.td{color:var(--accent);}
 .tpri{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;}
@@ -136,88 +162,139 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
 .tcat{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-dim);}
 
 /* ── DEADLINES ── */
-.dl-item{display:flex;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center;}
+.dl-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;}
 .dl-item:last-child{border-bottom:none;}
-.dl-days{font-family:'IBM Plex Mono',monospace;font-size:17px;font-weight:500;width:38px;flex-shrink:0;text-align:right;}
+.dl-days{font-family:'EB Garamond',serif;font-size:22px;font-weight:500;width:42px;flex-shrink:0;text-align:right;line-height:1;}
 .dl-days.urgent{color:var(--red);}
 .dl-days.soon{color:var(--accent);}
 .dl-days.ok{color:var(--green);}
 .dl-sep{width:1px;background:var(--border);height:28px;flex-shrink:0;}
 .dl-body{flex:1;}
-.dl-title{font-size:13px;}
-.dl-date{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;}
+.dl-title{font-size:13.5px;}
+.dl-info{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
 .dl-cat{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--blue-bg);color:var(--blue);}
 
+/* ── TIDYCAL ── */
+.tc-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.tc-item:last-child{border-bottom:none;}
+.tc-date{font-family:'EB Garamond',serif;font-size:18px;font-weight:500;color:var(--accent);width:38px;text-align:center;flex-shrink:0;line-height:1.1;}
+.tc-month{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;color:var(--text-muted);text-align:center;}
+.tc-body{flex:1;}
+.tc-name{font-size:13.5px;}
+.tc-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;}
+.tc-svc{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--purple-bg);color:var(--purple);margin-top:3px;display:inline-block;}
+
+/* ── YOUTUBE ── */
+.yt-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);}
+.yt-stat{padding:12px 14px;border-right:1px solid var(--border);text-align:center;}
+.yt-stat:last-child{border-right:none;}
+.yt-num{font-family:'EB Garamond',serif;font-size:24px;font-weight:500;color:var(--accent);}
+.yt-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
+.yt-video{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.yt-video:last-child{border-bottom:none;}
+.yt-thumb{width:60px;height:34px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--surface2);}
+.yt-vbody{flex:1;min-width:0;}
+.yt-vtitle{font-size:12.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.yt-vmeta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
+
+/* ── SENDFOX ── */
+.sf-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);}
+.sf-stat{padding:12px 14px;border-right:1px solid var(--border);text-align:center;}
+.sf-stat:last-child{border-right:none;}
+.sf-num{font-family:'EB Garamond',serif;font-size:24px;font-weight:500;color:var(--green);}
+.sf-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
+.sf-camp{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border);}
+.sf-camp:last-child{border-bottom:none;}
+.sf-cname{font-size:13px;}
+.sf-cstats{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);text-align:right;}
+
 /* ── DRIVE ── */
-.dr-item{display:flex;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.1s;text-decoration:none;color:inherit;}
+.dr-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.1s;text-decoration:none;color:inherit;}
 .dr-item:last-child{border-bottom:none;}
 .dr-item:hover{background:var(--surface);}
 .dr-icon{font-size:18px;flex-shrink:0;}
 .dr-body{flex:1;min-width:0;}
 .dr-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.dr-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;}
-
-/* ── BATCH ── */
-.batch-section{border-bottom:1px solid var(--border);}
-.batch-section:last-child{border-bottom:none;}
-.batch-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--surface);cursor:pointer;}
-.batch-name{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text);}
-.batch-count{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
-.batch-events{display:none;}
-.batch-events.open{display:block;}
+.dr-meta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:1px;}
 
 /* ── MOON ── */
-.moon-card{padding:16px;display:flex;gap:16px;align-items:center;}
-.moon-glyph{font-size:42px;line-height:1;}
-.moon-info{}
-.moon-phase{font-family:'Playfair Display',serif;font-size:16px;color:var(--text);margin-bottom:4px;}
-.moon-rasi{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:3px;}
-.moon-tithi{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);}
-.moon-nakshatra{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-top:3px;}
+.moon-wrap{padding:16px;display:flex;gap:16px;align-items:center;}
+.moon-glyph{font-size:48px;line-height:1;flex-shrink:0;}
+.moon-info{flex:1;}
+.moon-phase{font-family:'EB Garamond',serif;font-size:18px;color:var(--text);margin-bottom:5px;}
+.moon-row{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:3px;}
+.moon-row span{color:var(--accent);}
+.moon-date-full{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:6px;}
+
+/* ── BATCH ── */
+.batch-sec{border-bottom:1px solid var(--border);}
+.batch-sec:last-child{border-bottom:none;}
+.batch-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);cursor:pointer;user-select:none;}
+.batch-name{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;}
+.batch-count{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
+.batch-body{display:none;}
+.batch-body.open{display:block;}
 
 /* ── NOTES ── */
-.note-ta{width:100%;min-height:120px;background:var(--surface);border:none;border-top:1px solid var(--border);padding:14px 16px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text);resize:vertical;outline:none;line-height:1.7;}
-.note-ta:focus{background:#fff;}
-.note-saved{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);padding:4px 16px;border-top:1px solid var(--border);text-align:right;background:var(--surface);}
+.note-ta{width:100%;min-height:130px;background:var(--surface);border:none;border-top:1px solid var(--border);padding:14px 16px;font-family:'EB Garamond',serif;font-size:15px;color:var(--text);resize:vertical;outline:none;line-height:1.7;}
+.note-ta:focus{background:#fffdf9;}
+.note-saved{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-dim);padding:5px 16px;border-top:1px solid var(--border);text-align:right;background:var(--surface);}
 
 /* ── ADD ROWS ── */
-.add-row{display:flex;gap:6px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
-.inp{flex:1;min-width:80px;background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 9px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color 0.15s;}
+.add-row{display:flex;gap:6px;padding:9px 14px;border-top:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
+.inp{flex:1;min-width:80px;background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 9px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);outline:none;transition:border-color 0.15s;}
 .inp:focus{border-color:var(--accent);}
 .inp::placeholder{color:var(--text-dim);}
-.sel{background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);outline:none;cursor:pointer;}
+.sel{background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 7px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);outline:none;cursor:pointer;}
 
-/* ── FILTER ROW ── */
-.frow{display:flex;gap:5px;padding:8px 16px;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;}
-.chip{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.06em;padding:3px 8px;border-radius:20px;border:1px solid var(--border-dark);cursor:pointer;white-space:nowrap;background:transparent;color:var(--text-muted);transition:all 0.15s;}
-.chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-.chip:hover:not(.active){border-color:var(--text);color:var(--text);}
-
-/* ── UTILS ── */
+/* ── EMPTY / UTILS ── */
+.empty{padding:22px 14px;text-align:center;color:var(--text-muted);font-family:'EB Garamond',serif;font-style:italic;font-size:14px;}
 .del{background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:12px;padding:0 3px;flex-shrink:0;}
 .del:hover{color:var(--red);}
-.empty{padding:24px 16px;text-align:center;color:var(--text-muted);font-size:13px;}
-.empty-ico{font-size:20px;margin-bottom:6px;}
-::-webkit-scrollbar{width:4px;height:4px;}
+.scrollable{overflow-y:auto;}
+::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border-dark);border-radius:2px;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .panel,.ai-strip{animation:fadeUp 0.2s ease both;}
 
 /* ── LOGIN ── */
-#login{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:24px;}
-.login-logo{font-family:'Playfair Display',serif;font-size:38px;}
+#login{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:22px;padding:20px;}
+.login-logo{font-family:'EB Garamond',serif;font-size:42px;color:var(--text);}
 .login-logo span{color:var(--accent);}
-.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);}
-.login-cards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
-.lcard{background:#fff;border:1px solid var(--border);border-radius:10px;padding:20px 26px;text-align:center;cursor:pointer;transition:all 0.2s;min-width:190px;}
+.login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);}
+.lcards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.lcard{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px 26px;text-align:center;cursor:pointer;transition:all 0.2s;min-width:180px;}
 .lcard:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(255,97,11,0.1);}
-.lcard-ico{font-size:24px;margin-bottom:8px;}
-.lcard-title{font-family:'Playfair Display',serif;font-size:15px;margin-bottom:3px;}
-.lcard-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
-#login-msg{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);text-align:center;max-width:380px;line-height:1.6;}
-.skip-btn{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);background:none;border:1px solid var(--border);padding:6px 14px;border-radius:4px;cursor:pointer;}
+.lcard-ico{font-size:26px;margin-bottom:8px;}
+.lcard-title{font-family:'EB Garamond',serif;font-size:17px;margin-bottom:3px;}
+.lcard-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
+#login-msg{font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--text-muted);text-align:center;max-width:380px;line-height:1.6;}
+.skip-btn{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);background:none;border:1px solid var(--border);padding:6px 14px;border-radius:4px;cursor:pointer;}
 .skip-btn:hover{color:var(--text);border-color:var(--text);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sumbar{grid-template-columns:repeat(3,1fr);}
+  .sc:nth-child(3){border-right:none;}
+  .sc:nth-child(4){border-top:1px solid var(--border);}
+  .row2,.row3{grid-template-columns:1fr;}
+  .topbar{padding:10px 14px;}
+  .t-tag,.wpill{display:none;}
+  .main{padding:12px 14px;gap:12px;}
+  .yt-stats,.sf-stats{grid-template-columns:repeat(3,1fr);}
+  .moon-glyph{font-size:36px;}
+}
+@media(max-width:480px){
+  .sumbar{grid-template-columns:repeat(2,1fr);}
+  .sc:nth-child(2){border-right:none;}
+  .sc:nth-child(3){border-top:1px solid var(--border);border-right:1px solid var(--border);}
+  .sc:nth-child(4){border-right:none;}
+  .sc:nth-child(5){border-top:1px solid var(--border);border-right:1px solid var(--border);}
+  .sc:nth-child(6){border-top:1px solid var(--border);}
+  .badges{display:none;}
+  #clock{font-size:9.5px;}
+}
 </style>
 </head>
 <body>
@@ -225,8 +302,8 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
 <!-- LOGIN -->
 <div id="login">
   <div class="login-logo">Command<span>.</span></div>
-  <div class="login-sub">Aswin's Personal Dashboard</div>
-  <div class="login-cards">
+  <div class="login-sub">Aswin Subramanyan · Dashboard</div>
+  <div class="lcards">
     <div class="lcard" onclick="signIn('work')">
       <div class="lcard-ico">💼</div>
       <div class="lcard-title">Work Account</div>
@@ -238,58 +315,58 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
       <div class="lcard-sub">theabverdict@gmail.com</div>
     </div>
   </div>
-  <div id="login-msg">Connect one or both accounts. Your data is never stored on any server.</div>
-  <button class="skip-btn" onclick="launchDashboard()">Skip — use tasks & notes only</button>
+  <div id="login-msg">Connect one or both accounts. Data stays in your browser — nothing is stored on any server.</div>
+  <button class="skip-btn" onclick="launchDashboard()">Skip — use offline features only</button>
 </div>
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="t-left">
-    <div class="logo">Command<span>.</span></div>
-    <div class="tagline">Aswin · Chennai</div>
+  <div style="display:flex;align-items:baseline;gap:12px">
+    <div class="t-logo">Command<span>.</span></div>
+    <div class="t-tag">Aswin · Chennai</div>
   </div>
   <div class="t-right">
     <div id="wpill" class="wpill">Chennai</div>
     <div id="clock"></div>
-    <div class="acc-badges">
-      <div class="abadge" id="b-work" onclick="signIn('work')"><div class="dot"></div>Work</div>
-      <div class="abadge" id="b-personal" onclick="signIn('personal')"><div class="dot"></div>Personal</div>
-      <button class="btn p" onclick="refreshAll()" style="font-size:10px">↻ Refresh</button>
+    <div class="badges">
+      <div class="badge" id="b-work" onclick="signIn('work')"><div class="dot"></div>Work</div>
+      <div class="badge" id="b-personal" onclick="signIn('personal')"><div class="dot"></div>Personal</div>
     </div>
+    <button class="btn-refresh" onclick="refreshAll()">↻ Refresh</button>
   </div>
 </div>
 
 <!-- SUMMARY BAR -->
-<div class="summary-bar">
-  <div class="sb-card" onclick="scrollTo2('sec-email')">
-    <div class="sb-num" id="sn-unread">—</div>
-    <div class="sb-label">Unread Email</div>
-    <div class="sb-sub" id="ss-unread">both accounts</div>
+<div class="sumbar">
+  <div class="sc" onclick="scrollTo2('sec-email')">
+    <div class="sc-num" id="sn-em">—</div>
+    <div class="sc-label">Unread Email</div>
+    <div class="sc-sub" id="ss-em">both accounts</div>
   </div>
-  <div class="sb-card" onclick="scrollTo2('sec-cal')">
-    <div class="sb-num" id="sn-events">—</div>
-    <div class="sb-label">Events Today</div>
-    <div class="sb-sub" id="ss-events">from all calendars</div>
+  <div class="sc" onclick="scrollTo2('sec-cal')">
+    <div class="sc-num" id="sn-ev">—</div>
+    <div class="sc-label">Events Today</div>
+    <div class="sc-sub" id="ss-ev">all calendars</div>
   </div>
-  <div class="sb-card" onclick="scrollTo2('sec-tasks')">
-    <div class="sb-num" id="sn-tasks">—</div>
-    <div class="sb-label">Tasks Pending</div>
-    <div class="sb-sub" id="ss-tasks">across all categories</div>
+  <div class="sc" onclick="scrollTo2('sec-tasks')">
+    <div class="sc-num" id="sn-tk">—</div>
+    <div class="sc-label">Tasks Pending</div>
+    <div class="sc-sub" id="ss-tk">Google Tasks</div>
   </div>
-  <div class="sb-card" onclick="scrollTo2('sec-dl')">
-    <div class="sb-num" id="sn-dl">—</div>
-    <div class="sb-label">Deadlines</div>
-    <div class="sb-sub" id="ss-dl">next 30 days</div>
+  <div class="sc" onclick="scrollTo2('sec-tc')">
+    <div class="sc-num" id="sn-tc">—</div>
+    <div class="sc-label">Bookings</div>
+    <div class="sc-sub" id="ss-tc">upcoming · TidyCal</div>
   </div>
-  <div class="sb-card" onclick="scrollTo2('sec-drive')">
-    <div class="sb-num" id="sn-drive">—</div>
-    <div class="sb-label">Drive Files</div>
-    <div class="sb-sub">recently modified</div>
+  <div class="sc" onclick="scrollTo2('sec-yt')">
+    <div class="sc-num" id="sn-yt">—</div>
+    <div class="sc-label">YT Subscribers</div>
+    <div class="sc-sub" id="ss-yt">YouTube</div>
   </div>
-  <div class="sb-card" onclick="scrollTo2('sec-moon')">
-    <div class="sb-num" id="sn-moon" style="font-size:22px">🌙</div>
-    <div class="sb-label">Moon / Tithi</div>
-    <div class="sb-sub" id="ss-moon">loading…</div>
+  <div class="sc" onclick="scrollTo2('sec-moon')">
+    <div class="sc-num" id="sn-moon" style="font-size:22px">🌙</div>
+    <div class="sc-label">Pañcāṅga</div>
+    <div class="sc-sub" id="ss-moon">today's tithi</div>
   </div>
 </div>
 
@@ -300,19 +377,20 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
   <div class="ai-strip" id="panel-ai">
     <div class="ai-hdr">
       <div class="ai-dot"></div>
-      <div class="ai-title">✦ AI Assistant</div>
+      <div class="ai-ttl">✦ AI Assistant</div>
       <button class="btn p" onclick="aiBriefing()">Daily Briefing</button>
       <button class="btn" onclick="aiSummariseEmails()">Summarise Emails</button>
+      <button class="btn" onclick="aiExpandNote()">Expand Notes</button>
     </div>
-    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a full summary, or ask anything…</div>
+    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a full summary of your day, or ask anything below…</div>
     <div class="ai-row">
-      <input class="ai-inp" id="ai-in" placeholder="What's urgent today? · Summarise emails · Draft a reply…" />
+      <input class="ai-inp" id="ai-in" placeholder="What's urgent today? · Draft a response to… · Summarise my week…" />
       <button class="btn p" onclick="askAI()">Ask ↵</button>
     </div>
   </div>
 
   <!-- ROW 1: EMAIL + CALENDAR -->
-  <div class="row-2">
+  <div class="row2">
 
     <!-- EMAIL -->
     <div class="panel" id="sec-email">
@@ -322,6 +400,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
           <span class="pmeta" id="em-meta"></span>
           <button class="btn act" id="ef-ur" onclick="setEF('unread',this)">Unread</button>
           <button class="btn" id="ef-all" onclick="setEF('all',this)">All</button>
+          <button class="btn" onclick="syncEmail()">↻</button>
         </div>
       </div>
       <div class="frow">
@@ -329,8 +408,8 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
         <button class="chip" onclick="setEA('work',this)">Work</button>
         <button class="chip" onclick="setEA('personal',this)">Personal</button>
       </div>
-      <div id="em-list" style="max-height:380px;overflow-y:auto">
-        <div class="empty"><div class="empty-ico">◎</div>Connect Gmail to load emails</div>
+      <div id="em-list" class="scrollable" style="max-height:360px">
+        <div class="empty">Connect Gmail to load emails</div>
       </div>
     </div>
 
@@ -343,28 +422,29 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
           <button class="btn act" id="cf-t" onclick="setCF('today',this)">Today</button>
           <button class="btn" id="cf-w" onclick="setCF('week',this)">Week</button>
           <button class="btn" id="cf-a" onclick="setCF('all',this)">All</button>
-          <button class="btn p" onclick="toggleAddEvent()">+ Event</button>
+          <button class="btn p" onclick="tog('add-ev-form')">+ Event</button>
+          <button class="btn" onclick="syncCalendar()">↻</button>
         </div>
       </div>
-      <div id="ev-list" style="max-height:340px;overflow-y:auto">
-        <div class="empty"><div class="empty-ico">◈</div>Connect Google Calendar to load events</div>
+      <div id="ev-list" class="scrollable" style="max-height:300px">
+        <div class="empty">Connect Google Calendar to load events</div>
       </div>
       <div id="add-ev-form" style="display:none">
         <div class="add-row">
-          <input class="inp" id="ne-title" placeholder="Event title" style="flex:2" />
-          <input class="inp" id="ne-date" type="date" style="flex:1;min-width:110px" />
-          <input class="inp" id="ne-time" type="time" style="flex:1;min-width:85px" />
-          <input class="inp" id="ne-end" type="time" style="flex:1;min-width:85px" />
+          <input class="inp" id="ne-title" placeholder="Event title" style="flex:2"/>
+          <input class="inp" id="ne-date" type="date" style="flex:1;min-width:110px"/>
+          <input class="inp" id="ne-time" type="time" style="flex:1;min-width:82px"/>
+          <input class="inp" id="ne-end" type="time" style="flex:1;min-width:82px"/>
           <select class="sel" id="ne-cal"><option value="work">Work</option><option value="personal">Personal</option></select>
           <button class="btn p" onclick="addEventToGoogle()">Save</button>
-          <button class="btn" onclick="toggleAddEvent()">✕</button>
+          <button class="btn" onclick="tog('add-ev-form')">✕</button>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- TASKS FULL WIDTH -->
+  <!-- GOOGLE TASKS FULL WIDTH -->
   <div class="panel" id="sec-tasks">
     <div class="ph">
       <div class="pt">◻ Tasks</div>
@@ -374,6 +454,7 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
         <button class="btn" id="tf-td" onclick="setTF('today',this)">Today</button>
         <button class="btn" id="tf-pend" onclick="setTF('pending',this)">Pending</button>
         <button class="btn" id="tf-done" onclick="setTF('done',this)">Done</button>
+        <button class="btn" onclick="syncTasks()">↻ Sync</button>
       </div>
     </div>
     <div class="frow" id="cat-row">
@@ -385,10 +466,10 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
       <button class="chip" onclick="setTC('Research',this)">Research</button>
       <button class="chip" onclick="setTC('Personal',this)">Personal</button>
     </div>
-    <div id="tk-list"></div>
+    <div id="tk-list" class="scrollable" style="max-height:340px"></div>
     <div class="add-row">
-      <input class="inp" id="nt-txt" placeholder="Add a task… (press Enter)" style="flex:3" onkeydown="if(event.key==='Enter')addTask()" />
-      <input class="inp" id="nt-due" type="date" style="flex:1;min-width:110px" />
+      <input class="inp" id="nt-txt" placeholder="Add task… (Enter to save)" style="flex:3" onkeydown="if(event.key==='Enter')addTask()"/>
+      <input class="inp" id="nt-due" type="date" style="flex:1;min-width:110px"/>
       <select class="sel" id="nt-pri"><option value="high">High</option><option value="medium" selected>Med</option><option value="low">Low</option></select>
       <select class="sel" id="nt-cat">
         <option>Consultations</option><option>Book</option><option>Teaching</option>
@@ -398,26 +479,90 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
     </div>
   </div>
 
-  <!-- ROW 3: DEADLINES + DRIVE + BATCH -->
-  <div class="row-3" id="sec-dl">
+  <!-- ROW 2: TIDYCAL + DEADLINES -->
+  <div class="row2">
+
+    <!-- TIDYCAL -->
+    <div class="panel" id="sec-tc">
+      <div class="ph">
+        <div class="pt">📅 Bookings</div>
+        <div class="pacts">
+          <span class="pmeta" id="tc-meta"></span>
+          <button class="btn" onclick="syncTidyCal()">↻ Sync</button>
+        </div>
+      </div>
+      <div id="tc-list" class="scrollable" style="max-height:320px">
+        <div class="empty">Loading TidyCal bookings…</div>
+      </div>
+    </div>
 
     <!-- DEADLINES -->
     <div class="panel">
       <div class="ph">
         <div class="pt">⏳ Deadlines</div>
-        <div class="pacts"><button class="btn p" onclick="toggleAddDL()">+ Add</button></div>
+        <div class="pacts"><button class="btn p" onclick="tog('add-dl-form')">+ Add</button></div>
       </div>
-      <div id="dl-list"><div class="empty"><div class="empty-ico">⏳</div>No deadlines yet</div></div>
+      <div id="dl-list" class="scrollable" style="max-height:270px">
+        <div class="empty">No deadlines yet</div>
+      </div>
       <div id="add-dl-form" style="display:none">
         <div class="add-row">
-          <input class="inp" id="nd-title" placeholder="Title" style="flex:2" />
-          <input class="inp" id="nd-date" type="date" style="flex:1;min-width:110px" />
+          <input class="inp" id="nd-title" placeholder="Deadline title" style="flex:2"/>
+          <input class="inp" id="nd-date" type="date" style="flex:1;min-width:110px"/>
           <select class="sel" id="nd-cat"><option>PhD</option><option>Journal</option><option>Book</option><option>Teaching</option><option>Consulting</option><option>Personal</option></select>
           <button class="btn p" onclick="addDeadline()">Save</button>
-          <button class="btn" onclick="toggleAddDL()">✕</button>
+          <button class="btn" onclick="tog('add-dl-form')">✕</button>
         </div>
       </div>
     </div>
+
+  </div>
+
+  <!-- ROW 3: YOUTUBE + SENDFOX -->
+  <div class="row2">
+
+    <!-- YOUTUBE -->
+    <div class="panel" id="sec-yt">
+      <div class="ph">
+        <div class="pt">▶ YouTube</div>
+        <div class="pacts">
+          <span class="pmeta" id="yt-meta"></span>
+          <button class="btn" onclick="syncYouTube()">↻ Sync</button>
+        </div>
+      </div>
+      <div id="yt-stats" class="yt-stats">
+        <div class="yt-stat"><div class="yt-num" id="yt-subs">—</div><div class="yt-label">Subscribers</div></div>
+        <div class="yt-stat"><div class="yt-num" id="yt-views">—</div><div class="yt-label">Total Views</div></div>
+        <div class="yt-stat"><div class="yt-num" id="yt-vids">—</div><div class="yt-label">Videos</div></div>
+      </div>
+      <div id="yt-list" class="scrollable" style="max-height:200px">
+        <div class="empty">Connect work account to load YouTube data</div>
+      </div>
+    </div>
+
+    <!-- SENDFOX -->
+    <div class="panel" id="sec-sf">
+      <div class="ph">
+        <div class="pt">✉ SendFox</div>
+        <div class="pacts">
+          <span class="pmeta" id="sf-meta"></span>
+          <button class="btn" onclick="syncSendFox()">↻ Sync</button>
+        </div>
+      </div>
+      <div class="sf-stats">
+        <div class="sf-stat"><div class="sf-num" id="sf-subs">—</div><div class="sf-label">Subscribers</div></div>
+        <div class="sf-stat"><div class="sf-num" id="sf-lists">—</div><div class="sf-label">Lists</div></div>
+        <div class="sf-stat"><div class="sf-num" id="sf-camps">—</div><div class="sf-label">Campaigns</div></div>
+      </div>
+      <div id="sf-list" class="scrollable" style="max-height:200px">
+        <div class="empty">Loading SendFox data…</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ROW 4: DRIVE + FORMS -->
+  <div class="row2">
 
     <!-- DRIVE -->
     <div class="panel" id="sec-drive">
@@ -428,36 +573,45 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
           <button class="btn" onclick="syncDrive()">↻ Sync</button>
         </div>
       </div>
-      <div id="dr-list"><div class="empty"><div class="empty-ico">◫</div>Connect Google to load files</div></div>
+      <div id="dr-list" class="scrollable" style="max-height:280px">
+        <div class="empty">Connect Google to load recent files</div>
+      </div>
     </div>
 
-    <!-- BATCH STATUS -->
-    <div class="panel">
+    <!-- GOOGLE FORMS RESPONSES -->
+    <div class="panel" id="sec-forms">
       <div class="ph">
-        <div class="pt">◉ Diploma Batches</div>
-        <div class="pacts"><span class="pmeta">from calendar</span></div>
+        <div class="pt">📋 Form Responses</div>
+        <div class="pacts">
+          <span class="pmeta" id="forms-meta"></span>
+          <button class="btn" onclick="syncForms()">↻ Sync</button>
+        </div>
       </div>
-      <div id="batch-list"><div class="empty"><div class="empty-ico">◉</div>Connect calendar to load batch sessions</div></div>
+      <div id="forms-list" class="scrollable" style="max-height:280px">
+        <div class="empty">Connect Google to load form responses</div>
+      </div>
     </div>
 
   </div>
 
-  <!-- ROW 4: MOON + NOTES -->
-  <div class="row-2">
+  <!-- ROW 5: MOON + NOTES -->
+  <div class="row2">
 
-    <!-- MOON / PANCHANGA -->
+    <!-- PANCHANGA -->
     <div class="panel" id="sec-moon">
       <div class="ph">
         <div class="pt">🌙 Pañcāṅga</div>
-        <div class="pacts"><span class="pmeta" id="moon-date"></span></div>
+        <div class="pacts"><span class="pmeta" id="moon-meta">Rāman Ayanāṁśa · Sidereal</span></div>
       </div>
-      <div class="moon-card" id="moon-card">
+      <div class="moon-wrap">
         <div class="moon-glyph" id="moon-glyph">🌙</div>
         <div class="moon-info">
           <div class="moon-phase" id="moon-phase">Calculating…</div>
-          <div class="moon-rasi" id="moon-rasi"></div>
-          <div class="moon-tithi" id="moon-tithi"></div>
-          <div class="moon-nakshatra" id="moon-nakshatra"></div>
+          <div class="moon-row">Tithi: <span id="moon-tithi">—</span></div>
+          <div class="moon-row">Moon (Sidereal): <span id="moon-rasi">—</span></div>
+          <div class="moon-row">Nakṣatra: <span id="moon-nak">—</span></div>
+          <div class="moon-row">Moon Age: <span id="moon-age">—</span></div>
+          <div class="moon-date-full" id="moon-date"></div>
         </div>
       </div>
     </div>
@@ -468,275 +622,239 @@ body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-ser
         <div class="pt">◇ Notes</div>
         <div class="pacts">
           <button class="btn p" onclick="aiExpandNote()">AI Expand</button>
-          <button class="btn" onclick="if(confirm('Clear?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
+          <button class="btn" onclick="if(confirm('Clear notes?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
         </div>
       </div>
-      <textarea class="note-ta" id="note-ta" placeholder="Quick notes, ideas, reminders…" oninput="saveNote()"></textarea>
+      <textarea class="note-ta" id="note-ta" placeholder="Quick notes, ideas, reminders, draft thoughts…" oninput="saveNote()"></textarea>
       <div class="note-saved" id="note-saved"></div>
     </div>
 
   </div>
 
+  <!-- DIPLOMA BATCHES -->
+  <div class="panel" id="sec-batches">
+    <div class="ph">
+      <div class="pt">◉ Diploma Programme</div>
+      <div class="pacts"><span class="pmeta">DIAB1 · DIAB2 · DIAB3 — next 14 days</span></div>
+    </div>
+    <div id="batch-list"><div class="empty">Connect calendar to load batch sessions</div></div>
+  </div>
+
 </div><!-- /main -->
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────────
-const CLIENT_ID = '628443819075-2chd41al5oegn74fdfk6186pq7ke5iu9.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly';
+// ── KEYS ─────────────────────────────────────────────────────────────────────
+const CLIENT_ID='628443819075-2chd41al5oegn74fdfk6186pq7ke5iu9.apps.googleusercontent.com';
+const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly';
+const GEMINI_KEY='AIzaSyAwmxvj2TeG4Jl1Rt-5ejyYAUQKAORcVZc';
+const SENDFOX_TOKEN='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5MzciLCJqdGkiOiJjZDc3YTgxN2E5ZDY0NzZhNjQwM2I0NmQ2ODIzYzEwMzAwZDY4ZjMwODA5MjEzOTFkZGQyMmI0ZTAyYTRhYmQyNmU2NThiN2E0NTU4ZTM5NSIsImlhdCI6MTc3NTg4NDI5My4xNDQ2MDYsIm5iZiI6MTc3NTg4NDI5My4xNDQ2MDcsImV4cCI6NDkzMTU1Nzg5My4xMzY4NDEsInN1YiI6IjE4NDg4OSIsInNjb3BlcyI6W119.DprO_b1p0kVFKmwEvycc_mccwQntAb6bLVA2ve32wr9Obpmc5lzhaDK-xIM1NXL7c6-0Io1eIs0pMvkqwff3VfU3MVOsHKIJ2soz0E0CMqZajWPezK-CcylFHipTZw3T6anlOjj5ViKv2-yZW0bXZG3hrIRoITkY3fU_0SXbz-ttBRwNo0cvi38DGmgUxOtv4rjJlQEyhoYcP0C-wt5GFaW_AvRfxhG1t7dNp4Ws8TceXFP79MURc43JjUaNpaUAFuIFjP82_ovnTN6xtfgFY15FqgLlPCfyAicqllNCUblSiWmI99zSHKqlsZxMC_8etjdx_ggSGmm07uAHPDZ13u49HJ4ZLKDksA-tIB4OTcgD-CslzVWfnIHZ1SPmHP3HJo-NQF7E6otgL0Fn4mnSugipj20ih0kXiuC6N8KsEm2F7OglO6ua-LRnDS5hzM41w_MvxA2nLJ5dIFXks7JUg0-Fvi-Bz8vFhimcoqHcJsq0JFzTVDLfMoHv0Vy5rfKDjxpGdOEvbfoJAr7nFiVXF7xVITwXoQWvNJAZ00A5Fv3XEMvplISil5K6eopWbbtOiS5JUjaNnJ3GiqEWn8VpGrRpMp_UAP93sFk1qx97dBEut0HzRjQ01PtATeCM-F7zV_WHJttgDCgg9m0yD5DDq1VQnGjy-s0F5FHFJxkU';
+const TIDYCAL_TOKEN='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNmE1Yzk2MDA0ZjY5MGRmMzg2YzNmN2JmOGNhYjk4OTY1MzljMDdiN2I2NmVjMWFhODllYjA5Zjg1MzkzY2M2M2E3OGJkNGU4NmEzYTg2NmUiLCJpYXQiOjE3NzU4ODQ0MDQuODEyNzc3LCJuYmYiOjE3NzU4ODQ0MDQuODEyNzc5LCJleHAiOjQ5MzE1NTgwMDQuNzk5NTgsInN1YiI6IjI0ODcwMSIsInNjb3BlcyI6W119.JCxvLVsuPhy4dVi6tJgOiJG-u7dd3_NZV9bDKg3pf9ec-CK0ObbjAA15GojivRRoFH9AIVQ7wZ461Y1LWt5ctI8XhjD_6-qbO0kQ5AjF2hXd9tophKEUL6drE-5S8BAjuOpCsrWj-1YkzuJ2W_Bfj0bf0YiEhd9FVkBL8QwNj0g73cD-G89VQoG1ioWUvdVqNJWWw0q9T7GY6JmEPlhgO24Oar8sagxTguqmSAetqUEJ4U6wZHcoa2TPwOVA0WPErrXfs7_2j17XbE1fJTzdkrCgUpkN1m-P65eg4ZZFSakeL6WbjfffkeBwqqnMkMFO2rYzjYcv42TytoiaSe4JW9MomeHTUDM5w41NlS5w4HYW186Q1Foes39msmZZzI20Fczjk-u6bR0Y85LoM5YScUVpGFnLJCZ6pCqbe8v-HnVHAz5-SOMU5Di7v5Gyp7vNg5SxLTowaZz7kDbTlozqUgyTOzCkTMJZp9qwtK2nhzRipjSGyNZkut8I1EJ5ltg54C64Z8K8smDHfI9pFUU6K7tVPqWCZWEd-bo3mnKl3Yis6CTkeu-lm2DWSCSTcnm4TGFxMbCjRSkcykcihzVjPxvG7GHRWiMRHNFLWIkXzrGRg2ZUONUI1tiP2rkCp_m04K4xjQEjMTCcUEZsb4iwvh7fXWfuevEzgOWzmkWTMDU';
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
-const S = {
-  tokens: JSON.parse(localStorage.getItem('cmd_tokens')||'{}'),
-  emails: [], events: [],
-  tasks: JSON.parse(localStorage.getItem('cmd_tasks')||'[]'),
-  deadlines: JSON.parse(localStorage.getItem('cmd_dl')||'[]'),
-  emailFilter: 'unread', emailAcc: 'both',
-  taskFilter: 'all', taskCat: 'all',
-  calFilter: 'today',
-  noteTimer: null
+const S={
+  tokens:JSON.parse(localStorage.getItem('cmd_tokens')||'{}'),
+  emails:[],events:[],tasks:[],
+  deadlines:JSON.parse(localStorage.getItem('cmd_dl')||'[]'),
+  localTasks:JSON.parse(localStorage.getItem('cmd_tasks')||'[]'),
+  googleTaskListId:null,
+  emailFilter:'unread',emailAcc:'both',
+  taskFilter:'all',taskCat:'all',calFilter:'today',
+  noteTimer:null
 };
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
+const tog=id=>{const f=$(id);f.style.display=f.style.display==='none'?'block':'none';};
 
 // ── CLOCK ─────────────────────────────────────────────────────────────────────
 function tick(){
-  const n=new Date(), p=x=>String(x).padStart(2,'0');
+  const n=new Date(),p=x=>String(x).padStart(2,'0');
   const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const mons=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   $('clock').textContent=`${days[n.getDay()]} · ${mons[n.getMonth()]} ${n.getDate()} · ${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
-  const h=n.getHours();
 }
-setInterval(tick,1000); tick();
+setInterval(tick,1000);tick();
 
 // ── WEATHER ───────────────────────────────────────────────────────────────────
 async function loadWeather(){
   try{
     const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=13.0827&longitude=80.2707&current=temperature_2m,weathercode&timezone=Asia/Kolkata');
     const d=await r.json();
-    const codes={0:'Clear',1:'Clear',2:'Partly cloudy',3:'Overcast',51:'Drizzle',61:'Rain',63:'Rain',65:'Heavy rain',80:'Showers',95:'Thunderstorm'};
-    $('wpill').textContent=`Chennai · ${Math.round(d.current.temperature_2m)}°C · ${codes[d.current.weathercode]||'Clear'}`;
+    const c={0:'Clear',1:'Clear',2:'Partly cloudy',3:'Overcast',51:'Drizzle',61:'Rain',63:'Rain',65:'Heavy rain',80:'Showers',95:'Thunderstorm'};
+    $('wpill').textContent=`Chennai · ${Math.round(d.current.temperature_2m)}°C · ${c[d.current.weathercode]||'Clear'}`;
   }catch(e){$('wpill').textContent='Chennai';}
 }
 loadWeather();
 
-// ── MOON / PANCHANGA ──────────────────────────────────────────────────────────
-function calcMoon(){
+// ── PANCHANGA (Raman Ayanamsa, Sidereal) ─────────────────────────────────────
+function calcPanchanga(){
   const now=new Date();
-  // Julian date calculation
   const y=now.getFullYear(),m=now.getMonth()+1,d=now.getDate();
-  const h=now.getHours()+now.getMinutes()/60;
-  let jd=367*y-Math.floor(7*(y+Math.floor((m+9)/12))/4)+Math.floor(275*m/9)+d+1721013.5+h/24;
-  // Moon age (days since new moon)
-  const synodicPeriod=29.53058867;
-  const knownNew=2451550.1; // Jan 6 2000 new moon JD
-  const daysSince=jd-knownNew;
-  const cycles=daysSince/synodicPeriod;
-  const moonAge=(cycles-Math.floor(cycles))*synodicPeriod;
-  // Tithi (each tithi = synodic period/30)
-  const tithiNum=Math.floor(moonAge/(synodicPeriod/30))+1;
-  const tithiNames=['Pratipadā','Dvitīyā','Tṛtīyā','Caturthī','Pañcamī','Ṣaṣṭhī','Saptamī','Aṣṭamī','Navamī','Daśamī','Ekādaśī','Dvādaśī','Trayodaśī','Caturdaśī','Pūrṇimā/Amāvāsyā'];
-  const paksha=moonAge<14.77?'Śukla':'Kṛṣṇa';
-  const tithiInPaksha=moonAge<14.77?tithiNum:tithiNum-15;
-  const tithiLabel=tithiNames[Math.min(tithiNum-1,14)];
-  // Nakshatra (approximate — moon moves ~13.2°/day through 27 nakshatras of 13.33° each)
-  const moonLon=(moonAge/synodicPeriod)*360;
-  const nakshatras=['Aśvinī','Bharaṇī','Kṛttikā','Rohiṇī','Mṛgaśīrṣa','Ārdrā','Punarvasu','Puṣya','Āśleṣā','Maghā','Pūrvā Phālgunī','Uttarā Phālgunī','Hasta','Citrā','Svātī','Viśākhā','Anurādhā','Jyeṣṭhā','Mūla','Pūrvāṣāḍhā','Uttarāṣāḍhā','Śravaṇa','Dhaniṣṭhā','Śatabhiṣā','Pūrva Bhādrapadā','Uttara Bhādrapadā','Revatī'];
-  const nIdx=Math.floor((moonLon%360)/(360/27));
-  const nakshatra=nakshatras[nIdx%27];
-  // Rāśi
+  const h=now.getHours()+now.getMinutes()/60+now.getSeconds()/3600;
+  // Julian Day Number
+  const A=Math.floor((14-m)/12),YY=y+4800-A,MM=m+12*A-3;
+  let jd=d+Math.floor((153*MM+2)/5)+365*YY+Math.floor(YY/4)-Math.floor(YY/100)+Math.floor(YY/400)-32045+(h-12)/24;
+  // Raman Ayanamsa (approx 22°27' in 2000, precessing at ~50.3"/yr)
+  const ramanAyanamsa2000=22.4611; // degrees
+  const yearsFrom2000=(jd-2451545.0)/365.25;
+  const ayanamsa=ramanAyanamsa2000+(yearsFrom2000*50.3/3600);
+  // Tropical moon longitude (simplified)
+  const T=(jd-2451545.0)/36525;
+  let moonLonTropical=218.316+13.176396*( jd-2451545.0);
+  moonLonTropical=((moonLonTropical%360)+360)%360;
+  // Sun longitude (simplified)
+  let sunLon=280.460+0.9856474*(jd-2451545.0);
+  sunLon=((sunLon%360)+360)%360;
+  // Sidereal positions (subtract ayanamsa)
+  const moonSidereal=((moonLonTropical-ayanamsa)%360+360)%360;
+  const sunSidereal=((sunLon-ayanamsa)%360+360)%360;
+  // Elongation for tithi
+  let elong=((moonLonTropical-sunLon)%360+360)%360;
+  const tithiNum=Math.floor(elong/12)+1;
+  const paksha=tithiNum<=15?'Śukla':'Kṛṣṇa';
+  const tithiInPaksha=tithiNum<=15?tithiNum:tithiNum-15;
+  const tNames=['Pratipadā','Dvitīyā','Tṛtīyā','Caturthī','Pañcamī','Ṣaṣṭhī','Saptamī','Aṣṭamī','Navamī','Daśamī','Ekādaśī','Dvādaśī','Trayodaśī','Caturdaśī','Pūrṇimā'];
+  const tithiLabel=tNames[Math.min(tithiInPaksha-1,14)];
+  // Nakshatra (sidereal)
+  const naks=['Aśvinī','Bharaṇī','Kṛttikā','Rohiṇī','Mṛgaśīrṣa','Ārdrā','Punarvasu','Puṣya','Āśleṣā','Maghā','Pūrvā Phālgunī','Uttarā Phālgunī','Hasta','Citrā','Svātī','Viśākhā','Anurādhā','Jyeṣṭhā','Mūla','Pūrvāṣāḍhā','Uttarāṣāḍhā','Śravaṇa','Dhaniṣṭhā','Śatabhiṣā','Pūrva Bhādrapadā','Uttara Bhādrapadā','Revatī'];
+  const nakIdx=Math.floor(moonSidereal/(360/27));
+  const nakshatra=naks[nakIdx%27];
+  // Rashi (sidereal)
   const rasis=['Meṣa','Vṛṣabha','Mithuna','Karkaṭa','Siṃha','Kanyā','Tulā','Vṛścika','Dhanus','Makara','Kumbha','Mīna'];
-  const rIdx=Math.floor((moonLon%360)/30);
-  const rasi=rasis[rIdx%12];
-  // Phase glyph
+  const rasiIdx=Math.floor(moonSidereal/30);
+  const rasi=rasis[rasiIdx%12];
+  // Moon phase glyph
+  const synodicPeriod=29.53058867;
+  const knownNew=2451550.1;
+  const moonAge=((jd-knownNew)%synodicPeriod+synodicPeriod)%synodicPeriod;
   const glyphs=['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
-  const gIdx=Math.floor(moonAge/(synodicPeriod/8))%8;
-  const phaseNames=['New Moon','Waxing Crescent','First Quarter','Waxing Gibbous','Full Moon','Waning Gibbous','Last Quarter','Waning Crescent'];
+  const phases=['New Moon','Waxing Crescent','First Quarter','Waxing Gibbous','Full Moon','Waning Gibbous','Last Quarter','Waning Crescent'];
+  const gIdx=Math.round(moonAge/(synodicPeriod/8))%8;
 
   $('moon-glyph').textContent=glyphs[gIdx];
-  $('moon-phase').textContent=phaseNames[gIdx];
-  $('moon-rasi').textContent=`Moon in ${rasi} · ${nakshatra}`;
-  $('moon-tithi').textContent=`${paksha} ${tithiLabel}`;
-  $('moon-nakshatra').textContent=`Moon age: ${moonAge.toFixed(1)} days`;
+  $('moon-phase').textContent=phases[gIdx];
+  $('moon-tithi').textContent=`${paksha} ${tithiLabel} (${tithiNum})`;
+  $('moon-rasi').textContent=`${rasi} (${moonSidereal.toFixed(2)}°)`;
+  $('moon-nak').textContent=nakshatra;
+  $('moon-age').textContent=`${moonAge.toFixed(1)} days`;
   $('moon-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   $('sn-moon').textContent=glyphs[gIdx];
-  $('ss-moon').textContent=tithiLabel;
+  $('ss-moon').textContent=`${paksha} ${tithiLabel}`;
 }
-calcMoon();
+calcPanchanga();
 
 // ── GOOGLE AUTH ───────────────────────────────────────────────────────────────
-let tokenClient=null, signingIn=null;
+let tokenClient=null,signingIn=null;
 function initGoogleAuth(){
   tokenClient=google.accounts.oauth2.initTokenClient({
-    client_id:CLIENT_ID, scope:SCOPES,
+    client_id:CLIENT_ID,scope:SCOPES,
     callback:(resp)=>{
       if(resp.error){console.error(resp);return;}
       S.tokens[signingIn]=resp.access_token;
       localStorage.setItem('cmd_tokens',JSON.stringify(S.tokens));
       updateBadges();
-      $('login-msg').textContent=`✓ ${signingIn==='work'?'Work':'Personal'} account connected! ${Object.keys(S.tokens).length===1?'Connect the second account or skip.':'Both accounts connected.'}`;
-      if(Object.keys(S.tokens).length>=1) setTimeout(launchDashboard,1000);
+      $('login-msg').textContent=`✓ ${signingIn==='work'?'Work':'Personal'} connected. ${Object.keys(S.tokens).length===1?'Connect the second account or skip.':'Both accounts connected!'}`;
+      if(Object.keys(S.tokens).length>=1) setTimeout(launchDashboard,800);
     }
   });
   if(Object.keys(S.tokens).length>0) launchDashboard();
 }
-function signIn(acc){
-  signingIn=acc;
-  if(!tokenClient){setTimeout(()=>signIn(acc),500);return;}
-  tokenClient.requestAccessToken({prompt:''});
-}
+function signIn(acc){signingIn=acc;if(!tokenClient){setTimeout(()=>signIn(acc),500);return;}tokenClient.requestAccessToken({prompt:''});}
 function launchDashboard(){
   $('login').style.display='none';
   updateBadges();
-  loadAllData();
-}
-function updateBadges(){
-  ['work','personal'].forEach(a=>{
-    const b=$('b-'+a);
-    b.classList.toggle('on',!!S.tokens[a]);
-  });
-}
-async function refreshAll(){
-  await Promise.all([syncCalendar(),syncEmail(),syncDrive()]);
-  updateStats();
-}
-
-// ── LOAD ALL ──────────────────────────────────────────────────────────────────
-async function loadAllData(){
   const td=todayStr();
-  $('nt-due').value=td; $('ne-date').value=td; $('nd-date').value=td;
+  $('nt-due').value=td;$('ne-date').value=td;$('nd-date').value=td;
   $('note-ta').value=localStorage.getItem('cmd_note')||'';
-  renderTasks(); renderDeadlines(); updateStats();
+  renderDeadlines();renderLocalTasks();updateStats();
   if(Object.keys(S.tokens).length>0){
-    await Promise.all([syncCalendar(),syncEmail(),syncDrive()]);
+    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncYouTube();syncSendFox();syncTidyCal();
   }
+}
+function updateBadges(){['work','personal'].forEach(a=>{const b=$('b-'+a);b.classList.toggle('on',!!S.tokens[a]);});}
+async function refreshAll(){
+  if(Object.keys(S.tokens).length===0){alert('Connect a Google account first.');return;}
+  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncYouTube(),syncSendFox(),syncTidyCal()]);
+  updateStats();
 }
 
 // ── CALENDAR ──────────────────────────────────────────────────────────────────
 async function syncCalendar(){
   S.events=[];
   const now=new Date();
-  const tMin=new Date(now); tMin.setDate(now.getDate()-1);
-  const tMax=new Date(now); tMax.setDate(now.getDate()+30);
-  for(const acc of ['work','personal']){
-    if(!S.tokens[acc]) continue;
+  const tMin=new Date(now);tMin.setDate(now.getDate()-1);
+  const tMax=new Date(now);tMax.setDate(now.getDate()+30);
+  for(const acc of['work','personal']){
+    if(!S.tokens[acc])continue;
     try{
-      const calList=await gFetch('https://www.googleapis.com/calendar/v3/users/me/calendarList',acc);
-      for(const cal of (calList.items||[])){
+      const cl=await gFetch('https://www.googleapis.com/calendar/v3/users/me/calendarList',acc);
+      for(const cal of(cl.items||[])){
         try{
-          const cid=encodeURIComponent(cal.id);
-          const r=await gFetch(`https://www.googleapis.com/calendar/v3/calendars/${cid}/events?timeMin=${tMin.toISOString()}&timeMax=${tMax.toISOString()}&singleEvents=true&orderBy=startTime&maxResults=50`,acc);
+          const r=await gFetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(cal.id)}/events?timeMin=${tMin.toISOString()}&timeMax=${tMax.toISOString()}&singleEvents=true&orderBy=startTime&maxResults=50`,acc);
           (r.items||[]).forEach(ev=>{
-            if(!ev.start) return;
-            // Extract Zoom link
-            let zoomLink='';
+            if(!ev.start)return;
             const desc=ev.description||'';
             const zm=desc.match(/https:\/\/[a-z0-9.]+zoom\.us\/[^\s"<]+/);
-            if(zm) zoomLink=zm[0];
-            else if(ev.hangoutLink) zoomLink=ev.hangoutLink;
-            S.events.push({
-              id:ev.id+cal.id, title:ev.summary||'(No title)',
-              start:ev.start.dateTime||ev.start.date||'',
-              end:ev.end?.dateTime||ev.end?.date||'',
-              location:ev.location||'', account:acc, calName:cal.summary,
-              allDay:!ev.start.dateTime, zoomLink
-            });
+            S.events.push({id:ev.id+cal.id,title:ev.summary||'(No title)',start:ev.start.dateTime||ev.start.date||'',end:ev.end?.dateTime||ev.end?.date||'',location:ev.location||'',account:acc,calName:cal.summary,allDay:!ev.start.dateTime,zoomLink:zm?zm[0]:(ev.hangoutLink||'')});
           });
-        }catch(e){console.warn('Skip cal',cal.summary,e);}
+        }catch(e){console.warn('Cal skip',cal.summary);}
       }
-    }catch(e){console.error('Cal sync',acc,e); if(e.status===401) delete S.tokens[acc];}
+    }catch(e){if(e.status===401)delete S.tokens[acc];}
   }
-  // Dedupe
   const seen=new Set();
   S.events=S.events.filter(e=>{const k=e.title+e.start;if(seen.has(k))return false;seen.add(k);return true;});
   S.events.sort((a,b)=>a.start.localeCompare(b.start));
-  renderCal(); renderBatches(); updateStats();
+  renderCal();renderBatches();updateStats();
 }
-
-function setCF(f,btn){
-  S.calFilter=f;
-  ['cf-t','cf-w','cf-a'].forEach(id=>{const el=$(id);if(el)el.classList.remove('act');});
-  btn.classList.add('act'); renderCal();
-}
-function toggleAddEvent(){const f=$('add-ev-form');f.style.display=f.style.display==='none'?'block':'none';}
-
+function setCF(f,btn){S.calFilter=f;['cf-t','cf-w','cf-a'].forEach(id=>{const el=$(id);if(el)el.classList.remove('act');});btn.classList.add('act');renderCal();}
 async function addEventToGoogle(){
-  const title=$('ne-title').value.trim(), date=$('ne-date').value, st=$('ne-time').value, et=$('ne-end').value, acc=$('ne-cal').value;
+  const title=$('ne-title').value.trim(),date=$('ne-date').value,st=$('ne-time').value,et=$('ne-end').value,acc=$('ne-cal').value;
   if(!title||!date){alert('Title and date required.');return;}
   if(!S.tokens[acc]){alert('Connect '+acc+' account first.');return;}
-  const body=st
-    ?{summary:title,start:{dateTime:`${date}T${st}:00`,timeZone:'Asia/Kolkata'},end:{dateTime:`${date}T${et||st}:00`,timeZone:'Asia/Kolkata'}}
-    :{summary:title,start:{date},end:{date}};
-  try{
-    await gFetch('https://www.googleapis.com/calendar/v3/calendars/primary/events',acc,'POST',body);
-    $('ne-title').value=''; $('add-ev-form').style.display='none';
-    await syncCalendar();
-  }catch(e){alert('Could not add event.');}
+  const body=st?{summary:title,start:{dateTime:`${date}T${st}:00`,timeZone:'Asia/Kolkata'},end:{dateTime:`${date}T${et||st}:00`,timeZone:'Asia/Kolkata'}}:{summary:title,start:{date},end:{date}};
+  try{await gFetch('https://www.googleapis.com/calendar/v3/calendars/primary/events',acc,'POST',body);$('ne-title').value='';tog('add-ev-form');await syncCalendar();}
+  catch(e){alert('Could not add event.');}
 }
-
 function renderCal(){
-  const today=todayStr(), now=new Date();
-  const ws=new Date(now); ws.setDate(now.getDate()-((now.getDay()||7)-1));
-  const we=new Date(ws); we.setDate(ws.getDate()+6);
-  const wsS=ws.toISOString().slice(0,10), weS=we.toISOString().slice(0,10);
-  let fil=S.events.filter(e=>{
-    const ds=e.start.slice(0,10);
-    return S.calFilter==='today'?ds===today:S.calFilter==='week'?ds>=wsS&&ds<=weS:true;
-  });
+  const today=todayStr(),now=new Date();
+  const ws=new Date(now);ws.setDate(now.getDate()-((now.getDay()||7)-1));
+  const we=new Date(ws);we.setDate(ws.getDate()+6);
+  const wsS=ws.toISOString().slice(0,10),weS=we.toISOString().slice(0,10);
+  let fil=S.events.filter(e=>{const ds=e.start.slice(0,10);return S.calFilter==='today'?ds===today:S.calFilter==='week'?ds>=wsS&&ds<=weS:true;});
   $('cal-meta').textContent=fil.length+' event'+(fil.length!==1?'s':'');
-  if(!fil.length){
-    $('ev-list').innerHTML=`<div class="empty"><div class="empty-ico">◈</div>${S.events.length===0?(Object.keys(S.tokens).length===0?'Connect Google Calendar':'Syncing…'):'No events '+(S.calFilter==='today'?'today':'this period')}</div>`;
-    return;
-  }
-  const grp={};
-  fil.forEach(e=>{const ds=e.start.slice(0,10);if(!grp[ds])grp[ds]=[];grp[ds].push(e);});
-  const DIAB_COLORS={DIAB1:'blue',DIAB2:'purple',DIAB3:'green'};
+  if(!fil.length){$('ev-list').innerHTML=`<div class="empty">${S.events.length===0?'Connect Google Calendar':'No events '+(S.calFilter==='today'?'today':'this period')}</div>`;return;}
+  const grp={};fil.forEach(e=>{const ds=e.start.slice(0,10);if(!grp[ds])grp[ds]=[];grp[ds].push(e);});
+  const DC={DIAB1:'blue',DIAB2:'purple',DIAB3:'gold'};
   $('ev-list').innerHTML=Object.keys(grp).sort().map(date=>`
     <div class="sec-hdr">${date===today?'Today':fmtDate(date)}</div>
     ${grp[date].map(e=>{
-      const timeStr=e.allDay?'All day':fmtTime(e.start);
-      const cn=e.calName||'';
-      const dotColor=DIAB_COLORS[cn]||(e.account==='personal'?'green':'');
-      const tagColor=DIAB_COLORS[cn]||(e.account==='personal'?'green':'');
-      const calLabel=cn&&cn!=="Aswin's Appointment"&&cn!=='Personal GMAIL'?cn:(e.account==='work'?'Work':'Personal');
+      const cn=e.calName||'';const dc=DC[cn]||(e.account==='personal'?'green':'');
+      const lbl=cn&&cn!=="Aswin's Appointment"&&cn!=='Personal GMAIL'?cn:(e.account==='work'?'Work':'Personal');
       return `<div class="ev-item">
-        <div class="ev-time">${timeStr}</div>
-        <div class="ev-dot ${dotColor}"></div>
+        <div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div>
+        <div class="ev-dot ${dc}"></div>
         <div class="ev-body">
           <div class="ev-title">${e.title}</div>
-          ${e.location?`<div class="ev-loc">📍 ${e.location}</div>`:''}
-          <span class="etag ${tagColor}">${calLabel}</span>
-          ${e.zoomLink?`<a class="zoom-link" href="${e.zoomLink}" target="_blank">🎥 Join Zoom</a>`:''}
+          ${e.location?`<div class="ev-sub">📍 ${e.location}</div>`:''}
+          <span class="etag ${dc}">${lbl}</span>
+          ${e.zoomLink?`<a class="zoom-link" href="${e.zoomLink}" target="_blank">🎥 Join</a>`:''}
         </div>
       </div>`;
     }).join('')}`).join('');
 }
-
 function renderBatches(){
-  const today=todayStr();
-  const now=new Date(); const tMax=new Date(now); tMax.setDate(now.getDate()+14);
+  const today=todayStr(),now=new Date();
+  const tMax=new Date(now);tMax.setDate(now.getDate()+14);
   const tMaxS=tMax.toISOString().slice(0,10);
   const batches=['DIAB1','DIAB2','DIAB3'];
-  const data={};
-  batches.forEach(b=>{
-    data[b]=S.events.filter(e=>e.calName===b&&e.start.slice(0,10)>=today&&e.start.slice(0,10)<=tMaxS);
-  });
-  const total=batches.reduce((s,b)=>s+data[b].length,0);
-  if(total===0&&S.events.length===0){
-    $('batch-list').innerHTML=`<div class="empty"><div class="empty-ico">◉</div>Connect calendar to load batch sessions</div>`;
-    return;
-  }
+  const data={};batches.forEach(b=>{data[b]=S.events.filter(e=>e.calName===b&&e.start.slice(0,10)>=today&&e.start.slice(0,10)<=tMaxS);});
+  if(batches.every(b=>data[b].length===0)&&S.events.length===0){$('batch-list').innerHTML=`<div class="empty">Connect calendar to load batch sessions</div>`;return;}
   $('batch-list').innerHTML=batches.map(b=>`
-    <div class="batch-section">
+    <div class="batch-sec">
       <div class="batch-hdr" onclick="this.nextElementSibling.classList.toggle('open')">
         <span class="batch-name">${b}</span>
-        <span class="batch-count">${data[b].length} upcoming · next 14 days</span>
+        <span class="batch-count">${data[b].length} session${data[b].length!==1?'s':''} · next 14 days ▾</span>
       </div>
-      <div class="batch-events">
-        ${data[b].length?data[b].map(e=>`
-          <div class="ev-item">
-            <div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div>
-            <div class="ev-dot blue"></div>
-            <div class="ev-body"><div class="ev-title">${e.title}</div><div class="ev-loc">${fmtDate(e.start.slice(0,10))}</div></div>
-          </div>`).join(''):`<div class="empty" style="padding:12px">No sessions in next 14 days</div>`}
+      <div class="batch-body">
+        ${data[b].length?data[b].map(e=>`<div class="ev-item"><div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div><div class="ev-dot blue"></div><div class="ev-body"><div class="ev-title">${e.title}</div><div class="ev-sub">${fmtDate(e.start.slice(0,10))}</div></div></div>`).join(''):'<div class="empty" style="padding:12px">No sessions in next 14 days</div>'}
       </div>
     </div>`).join('');
 }
@@ -744,36 +862,34 @@ function renderBatches(){
 // ── EMAIL ─────────────────────────────────────────────────────────────────────
 async function syncEmail(){
   S.emails=[];
-  for(const acc of ['work','personal']){
-    if(!S.tokens[acc]) continue;
+  for(const acc of['work','personal']){
+    if(!S.tokens[acc])continue;
     try{
       const r=await gFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=20`,acc);
       if(r.messages){
-        const details=await Promise.all(r.messages.slice(0,15).map(m=>
-          gFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`,acc)
-        ));
+        const details=await Promise.all(r.messages.slice(0,15).map(m=>gFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`,acc)));
         details.forEach(msg=>{
-          if(!msg.payload) return;
+          if(!msg.payload)return;
           const hdrs=msg.payload.headers||[];
-          const get=name=>(hdrs.find(h=>h.name===name)||{}).value||'';
+          const get=n=>(hdrs.find(h=>h.name===n)||{}).value||'';
           S.emails.push({id:msg.id,sender:parseSender(get('From')),subject:get('Subject')||'(No subject)',date:get('Date'),snippet:msg.snippet||'',unread:(msg.labelIds||[]).includes('UNREAD'),account:acc});
         });
       }
-    }catch(e){console.error('Gmail',acc,e);if(e.status===401) delete S.tokens[acc];}
+    }catch(e){if(e.status===401)delete S.tokens[acc];}
   }
   S.emails.sort((a,b)=>new Date(b.date)-new Date(a.date));
-  renderEmails(); updateStats();
+  renderEmails();updateStats();
 }
 function parseSender(from){const m=from.match(/^"?([^"<]+)"?\s*<?/);return m?m[1].trim():from;}
 function setEF(f,btn){S.emailFilter=f;['ef-ur','ef-all'].forEach(id=>{const el=$(id);if(el)el.classList.remove('act');});btn.classList.add('act');syncEmail();}
 function setEA(f,btn){S.emailAcc=f;document.querySelectorAll('#sec-email .frow .chip').forEach(c=>c.classList.remove('active'));btn.classList.add('active');renderEmails();}
 function renderEmails(){
   let fil=S.emails;
-  if(S.emailAcc!=='both') fil=fil.filter(e=>e.account===S.emailAcc);
-  if(S.emailFilter==='unread') fil=fil.filter(e=>e.unread);
+  if(S.emailAcc!=='both')fil=fil.filter(e=>e.account===S.emailAcc);
+  if(S.emailFilter==='unread')fil=fil.filter(e=>e.unread);
   const ur=S.emails.filter(e=>e.unread).length;
-  $('em-meta').textContent=ur+' unread · '+S.emails.length+' total';
-  if(!fil.length){$('em-list').innerHTML=`<div class="empty"><div class="empty-ico">◎</div>${S.emails.length===0?(Object.keys(S.tokens).length===0?'Connect Gmail':'Syncing…'):'No '+S.emailFilter+' emails'}</div>`;return;}
+  $('em-meta').textContent=ur+' unread · '+S.emails.length+' loaded';
+  if(!fil.length){$('em-list').innerHTML=`<div class="empty">${S.emails.length===0?'Connect Gmail':'No '+S.emailFilter+' emails'}</div>`;return;}
   $('em-list').innerHTML=fil.map(e=>`
     <div class="em-item ${e.unread?'unread':''}">
       <div class="em-udot ${e.unread?'':'read'}"></div>
@@ -786,17 +902,216 @@ function renderEmails(){
     </div>`).join('');
 }
 
+// ── GOOGLE TASKS ──────────────────────────────────────────────────────────────
+async function syncTasks(){
+  if(!S.tokens.work&&!S.tokens.personal){renderLocalTasks();return;}
+  const acc=S.tokens.work?'work':'personal';
+  try{
+    // Get task lists
+    const lists=await gFetch('https://tasks.googleapis.com/tasks/v1/users/@me/lists?maxResults=10',acc);
+    if(!lists.items||!lists.items.length){renderLocalTasks();return;}
+    // Use first list (usually "My Tasks") or find default
+    const defaultList=lists.items.find(l=>l.title==='My Tasks')||lists.items[0];
+    S.googleTaskListId=defaultList.id;
+    // Get tasks
+    const r=await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${defaultList.id}/tasks?maxResults=50&showCompleted=true&showHidden=false`,acc);
+    S.tasks=(r.items||[]).map(t=>({
+      id:t.id,text:t.title||'',
+      due:t.due?t.due.slice(0,10):'',
+      done:t.status==='completed',
+      priority:'medium',cat:'Admin',
+      notes:t.notes||'',source:'google'
+    }));
+    // Merge local tasks not in Google
+    S.localTasks.forEach(lt=>{
+      if(!S.tasks.find(gt=>gt.text===lt.text)) S.tasks.push({...lt,source:'local'});
+    });
+    renderGoogleTasks();updateStats();
+  }catch(e){console.error('Tasks',e);renderLocalTasks();}
+}
+async function addTask(){
+  const text=$('nt-txt').value.trim();if(!text)return;
+  const due=$('nt-due').value,pri=$('nt-pri').value,cat=$('nt-cat').value;
+  const newTask={id:Date.now(),text,due,priority:pri,cat,done:false,source:'local'};
+  // Try to add to Google Tasks
+  if(S.googleTaskListId&&(S.tokens.work||S.tokens.personal)){
+    const acc=S.tokens.work?'work':'personal';
+    try{
+      const body={title:text,notes:`[${pri}] ${cat}`,status:'needsAction'};
+      if(due) body.due=due+'T00:00:00.000Z';
+      const created=await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks`,acc,'POST',body);
+      newTask.id=created.id;newTask.source='google';
+    }catch(e){console.warn('Could not add to Google Tasks, saving locally');}
+  }
+  S.tasks.unshift(newTask);
+  S.localTasks.unshift(newTask);
+  localStorage.setItem('cmd_tasks',JSON.stringify(S.localTasks));
+  $('nt-txt').value='';
+  renderGoogleTasks();updateStats();
+}
+async function toggleTask(id){
+  const task=S.tasks.find(t=>t.id==id);if(!task)return;
+  task.done=!task.done;
+  // Sync to Google
+  if(task.source==='google'&&S.googleTaskListId&&(S.tokens.work||S.tokens.personal)){
+    const acc=S.tokens.work?'work':'personal';
+    try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'PATCH',{status:task.done?'completed':'needsAction'});}
+    catch(e){console.warn('Could not sync task status');}
+  }
+  renderGoogleTasks();updateStats();
+}
+async function delTask(id){
+  const task=S.tasks.find(t=>t.id==id);
+  S.tasks=S.tasks.filter(t=>t.id!=id);
+  S.localTasks=S.localTasks.filter(t=>t.id!=id);
+  localStorage.setItem('cmd_tasks',JSON.stringify(S.localTasks));
+  if(task&&task.source==='google'&&S.googleTaskListId&&(S.tokens.work||S.tokens.personal)){
+    const acc=S.tokens.work?'work':'personal';
+    try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'DELETE');}
+    catch(e){}
+  }
+  renderGoogleTasks();updateStats();
+}
+function setTF(f,btn){S.taskFilter=f;['tf-all','tf-td','tf-pend','tf-done'].forEach(id=>{const el=$(id);if(el)el.classList.remove('act');});btn.classList.add('act');renderGoogleTasks();}
+function setTC(c,btn){S.taskCat=c;document.querySelectorAll('#cat-row .chip').forEach(ch=>ch.classList.remove('active'));btn.classList.add('active');renderGoogleTasks();}
+function renderGoogleTasks(){
+  const today=todayStr();
+  let fil=S.tasks.filter(t=>S.taskFilter==='today'?t.due===today:S.taskFilter==='pending'?!t.done:S.taskFilter==='done'?t.done:true);
+  if(S.taskCat!=='all')fil=fil.filter(t=>t.cat===S.taskCat);
+  const pOrd={high:0,medium:1,low:2};
+  fil.sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;if(pOrd[a.priority]!==pOrd[b.priority])return pOrd[a.priority]-pOrd[b.priority];return(a.due||'9').localeCompare(b.due||'9');});
+  const pend=fil.filter(t=>!t.done).length;
+  $('tk-meta').textContent=pend+' pending · '+S.tasks.filter(t=>t.done).length+' done';
+  if(!fil.length){$('tk-list').innerHTML=`<div class="empty">No tasks — add one below</div>`;return;}
+  $('tk-list').innerHTML=fil.map(t=>{
+    const dl=t.due?(t.due===today?'Today':t.due<today?'Overdue':fmtDate(t.due)):'';
+    const dc=!t.done&&t.due&&t.due<today?'ov':t.due===today?'td':'';
+    return `<div class="tk-item">
+      <div class="tk-chk ${t.done?'done':''}" onclick="toggleTask('${t.id}')">${t.done?'✓':''}</div>
+      <div class="tk-body">
+        <div class="tk-text ${t.done?'done':''}">${t.text}</div>
+        <div class="tk-meta">
+          ${dl?`<span class="tk-due ${dc}">${dl}</span>`:''}
+          <span class="tpri ${t.priority}">${t.priority}</span>
+          <span class="tcat">${t.cat}</span>
+          ${t.source==='google'?'<span class="tcat" style="color:var(--blue)">G</span>':''}
+        </div>
+      </div>
+      <button class="del" onclick="delTask('${t.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+function renderLocalTasks(){S.tasks=[...S.localTasks];renderGoogleTasks();}
+
+// ── TIDYCAL ───────────────────────────────────────────────────────────────────
+async function syncTidyCal(){
+  $('tc-list').innerHTML='<div class="empty">Loading bookings…</div>';
+  try{
+    const r=await fetch('https://app.tidycal.com/api/bookings?page=1',{headers:{Authorization:`Bearer ${TIDYCAL_TOKEN}`,'Accept':'application/json'}});
+    if(!r.ok)throw new Error('TidyCal API error: '+r.status);
+    const d=await r.json();
+    const bookings=(d.data||d.bookings||d||[]).filter(b=>{
+      const s=b.starts_at||b.start_time||b.scheduled_at||'';
+      return s&&new Date(s)>=new Date();
+    }).sort((a,b)=>{
+      const sa=a.starts_at||a.start_time||'',sb=b.starts_at||b.start_time||'';
+      return new Date(sa)-new Date(sb);
+    });
+    $('sn-tc').textContent=bookings.length;
+    $('ss-tc').textContent=bookings.length+' upcoming';
+    if(!bookings.length){$('tc-list').innerHTML='<div class="empty">No upcoming bookings</div>';return;}
+    $('tc-list').innerHTML=bookings.slice(0,15).map(b=>{
+      const dt=new Date(b.starts_at||b.start_time||'');
+      const name=b.contact_name||b.invitee_name||b.name||'Client';
+      const svc=b.booking_type_name||b.event_type||b.service||'Booking';
+      return `<div class="tc-item">
+        <div>
+          <div class="tc-date">${dt.getDate()}</div>
+          <div class="tc-month">${dt.toLocaleString('en-IN',{month:'short'})}</div>
+        </div>
+        <div class="tc-body">
+          <div class="tc-name">${name}</div>
+          <div class="tc-meta">${fmtTime(dt.toISOString())} · ${dt.toLocaleDateString('en-IN',{weekday:'short'})}</div>
+          <span class="tc-svc">${svc}</span>
+        </div>
+      </div>`;
+    }).join('');
+    $('tc-meta').textContent=bookings.length+' upcoming';
+  }catch(e){
+    console.error('TidyCal',e);
+    $('tc-list').innerHTML='<div class="empty">Could not load TidyCal bookings.<br><small style="font-family:monospace;font-size:10px">'+e.message+'</small></div>';
+    $('sn-tc').textContent='—';
+  }
+}
+
+// ── YOUTUBE ───────────────────────────────────────────────────────────────────
+async function syncYouTube(){
+  if(!S.tokens.work){$('yt-list').innerHTML='<div class="empty">Connect work account for YouTube</div>';return;}
+  try{
+    // Channel stats
+    const ch=await gFetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&mine=true','work');
+    if(ch.items&&ch.items.length){
+      const s=ch.items[0].statistics;
+      const subs=parseInt(s.subscriberCount||0);
+      $('yt-subs').textContent=fmtNum(subs);
+      $('yt-views').textContent=fmtNum(parseInt(s.viewCount||0));
+      $('yt-vids').textContent=fmtNum(parseInt(s.videoCount||0));
+      $('sn-yt').textContent=fmtNum(subs);
+      $('ss-yt').textContent=ch.items[0].snippet.title;
+      $('yt-meta').textContent=ch.items[0].snippet.title;
+    }
+    // Recent videos
+    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=5','work');
+    if(vids.items&&vids.items.length){
+      $('yt-list').innerHTML=vids.items.map(v=>`
+        <div class="yt-video">
+          <img class="yt-thumb" src="${v.snippet.thumbnails?.default?.url||''}" alt="" />
+          <div class="yt-vbody">
+            <div class="yt-vtitle">${v.snippet.title}</div>
+            <div class="yt-vmeta">${fmtEmailTime(v.snippet.publishedAt)}</div>
+          </div>
+        </div>`).join('');
+    }
+  }catch(e){console.error('YouTube',e);$('yt-list').innerHTML='<div class="empty">Could not load YouTube data</div>';}
+}
+
+// ── SENDFOX ───────────────────────────────────────────────────────────────────
+async function syncSendFox(){
+  try{
+    const headers={Authorization:`Bearer ${SENDFOX_TOKEN}`,'Accept':'application/json'};
+    // Lists
+    const lists=await fetch('https://api.sendfox.com/lists',{headers}).then(r=>r.json());
+    const totalSubs=(lists.data||[]).reduce((s,l)=>s+(l.count||l.subscribers_count||0),0);
+    $('sf-subs').textContent=fmtNum(totalSubs);
+    $('sf-lists').textContent=(lists.data||[]).length;
+    // Campaigns
+    const camps=await fetch('https://api.sendfox.com/campaigns',{headers}).then(r=>r.json());
+    const campData=camps.data||[];
+    $('sf-camps').textContent=campData.length;
+    $('sf-meta').textContent=campData.length+' campaigns · '+fmtNum(totalSubs)+' subscribers';
+    if(!campData.length){$('sf-list').innerHTML='<div class="empty">No campaigns yet</div>';return;}
+    $('sf-list').innerHTML=campData.slice(0,6).map(c=>`
+      <div class="sf-camp">
+        <div class="sf-cname">${c.name||c.subject||'Campaign'}</div>
+        <div class="sf-cstats">
+          ${c.open_rate?'Opens: '+Math.round(c.open_rate)+'%':''}
+          ${c.click_rate?' · Clicks: '+Math.round(c.click_rate)+'%':''}
+          ${c.sent_at?'<br>'+fmtEmailTime(c.sent_at):''}
+        </div>
+      </div>`).join('');
+  }catch(e){console.error('SendFox',e);$('sf-list').innerHTML='<div class="empty">Could not load SendFox data</div>';}
+}
+
 // ── DRIVE ─────────────────────────────────────────────────────────────────────
 async function syncDrive(){
   const acc=S.tokens.work?'work':'personal';
-  if(!S.tokens[acc]){$('dr-list').innerHTML=`<div class="empty"><div class="empty-ico">◫</div>Connect Google to load files</div>`;return;}
+  if(!S.tokens[acc]){return;}
   try{
     const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=10&orderBy=modifiedTime desc&fields=files(id,name,mimeType,modifiedTime,webViewLink)&q=trashed=false`,acc);
     const files=r.files||[];
     $('dr-meta').textContent=files.length+' recent files';
-    $('sn-drive').textContent=files.length;
-    if(!files.length){$('dr-list').innerHTML=`<div class="empty">No recent files</div>`;return;}
-    const icons={'application/vnd.google-apps.document':'📄','application/vnd.google-apps.spreadsheet':'📊','application/vnd.google-apps.presentation':'📑','application/vnd.google-apps.folder':'📁','application/pdf':'📋','application/vnd.openxmlformats-officedocument.wordprocessingml.document':'📝'};
+    $('sn-drive') && ($('sn-drive').textContent=files.length);
+    const icons={'application/vnd.google-apps.document':'📄','application/vnd.google-apps.spreadsheet':'📊','application/vnd.google-apps.presentation':'📑','application/vnd.google-apps.folder':'📁','application/pdf':'📋','application/vnd.google-apps.form':'📋'};
     $('dr-list').innerHTML=files.map(f=>`
       <a class="dr-item" href="${f.webViewLink}" target="_blank">
         <div class="dr-icon">${icons[f.mimeType]||'📄'}</div>
@@ -805,82 +1120,59 @@ async function syncDrive(){
           <div class="dr-meta">Modified ${fmtEmailTime(f.modifiedTime)}</div>
         </div>
       </a>`).join('');
-  }catch(e){console.error('Drive',e);$('dr-list').innerHTML=`<div class="empty">Could not load Drive files</div>`;}
+  }catch(e){$('dr-list').innerHTML='<div class="empty">Could not load Drive files</div>';}
 }
 
-// ── TASKS ─────────────────────────────────────────────────────────────────────
-function setTF(f,btn){S.taskFilter=f;['tf-all','tf-td','tf-pend','tf-done'].forEach(id=>{const el=$(id);if(el)el.classList.remove('act');});btn.classList.add('act');renderTasks();}
-function setTC(c,btn){S.taskCat=c;document.querySelectorAll('#cat-row .chip').forEach(ch=>ch.classList.remove('active'));btn.classList.add('active');renderTasks();}
-function addTask(){
-  const t=$('nt-txt').value.trim();if(!t)return;
-  S.tasks.push({id:Date.now(),text:t,due:$('nt-due').value,priority:$('nt-pri').value,cat:$('nt-cat').value,done:false});
-  localStorage.setItem('cmd_tasks',JSON.stringify(S.tasks));
-  $('nt-txt').value=''; renderTasks(); updateStats();
-}
-function toggleTask(id){
-  S.tasks=S.tasks.map(t=>t.id===id?{...t,done:!t.done}:t);
-  localStorage.setItem('cmd_tasks',JSON.stringify(S.tasks));
-  renderTasks(); updateStats();
-}
-function delTask(id){
-  S.tasks=S.tasks.filter(t=>t.id!==id);
-  localStorage.setItem('cmd_tasks',JSON.stringify(S.tasks));
-  renderTasks(); updateStats();
-}
-function renderTasks(){
-  const today=todayStr();
-  let fil=S.tasks.filter(t=>S.taskFilter==='today'?t.due===today:S.taskFilter==='pending'?!t.done:S.taskFilter==='done'?t.done:true);
-  if(S.taskCat!=='all') fil=fil.filter(t=>t.cat===S.taskCat);
-  const pOrd={high:0,medium:1,low:2};
-  fil.sort((a,b)=>{if(a.done!==b.done)return a.done?1:-1;if(pOrd[a.priority]!==pOrd[b.priority])return pOrd[a.priority]-pOrd[b.priority];return(a.due||'9').localeCompare(b.due||'9');});
-  const pend=fil.filter(t=>!t.done).length;
-  $('tk-meta').textContent=pend+' pending · '+S.tasks.filter(t=>t.done).length+' done';
-  if(!fil.length){$('tk-list').innerHTML=`<div class="empty"><div class="empty-ico">◻</div>No tasks here — add one below</div>`;return;}
-  $('tk-list').innerHTML=fil.map(t=>{
-    const dl=t.due?(t.due===today?'Today':t.due<today?'Overdue':fmtDate(t.due)):'';
-    const dc=!t.done&&t.due&&t.due<today?'ov':t.due===today?'td':'';
-    return `<div class="tk-item">
-      <div class="tk-chk ${t.done?'done':''}" onclick="toggleTask(${t.id})">${t.done?'✓':''}</div>
-      <div class="tk-body">
-        <div class="tk-text ${t.done?'done':''}">${t.text}</div>
-        <div class="tk-meta">
-          ${dl?`<span class="tk-due ${dc}">${dl}</span>`:''}
-          <span class="tpri ${t.priority}">${t.priority}</span>
-          <span class="tcat">${t.cat}</span>
+// ── FORMS ─────────────────────────────────────────────────────────────────────
+async function syncForms(){
+  const acc=S.tokens.work?'work':'personal';
+  if(!S.tokens[acc]){return;}
+  try{
+    // Find Google Forms in Drive
+    const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=10&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime,webViewLink)&q=mimeType='application/vnd.google-apps.form' and trashed=false`,acc);
+    const forms=r.files||[];
+    $('forms-meta').textContent=forms.length+' forms';
+    if(!forms.length){$('forms-list').innerHTML='<div class="empty">No Google Forms found</div>';return;}
+    // Get response counts via Forms API
+    const formDetails=await Promise.all(forms.slice(0,5).map(async f=>{
+      try{
+        const resp=await gFetch(`https://forms.googleapis.com/v1/forms/${f.id}/responses?pageSize=1`,acc);
+        return{...f,responseCount:resp.totalSize||0};
+      }catch(e){return{...f,responseCount:'?'};}
+    }));
+    $('forms-list').innerHTML=formDetails.map(f=>`
+      <a class="dr-item" href="${f.webViewLink}" target="_blank">
+        <div class="dr-icon">📋</div>
+        <div class="dr-body">
+          <div class="dr-name">${f.name}</div>
+          <div class="dr-meta">${f.responseCount} responses · Modified ${fmtEmailTime(f.modifiedTime)}</div>
         </div>
-      </div>
-      <button class="del" onclick="delTask(${t.id})">✕</button>
-    </div>`;
-  }).join('');
+      </a>`).join('');
+  }catch(e){$('forms-list').innerHTML='<div class="empty">Could not load Forms data</div>';}
 }
 
 // ── DEADLINES ─────────────────────────────────────────────────────────────────
-function toggleAddDL(){const f=$('add-dl-form');f.style.display=f.style.display==='none'?'block':'none';}
 function addDeadline(){
   const t=$('nd-title').value.trim(),d=$('nd-date').value;if(!t||!d)return;
   S.deadlines.push({id:Date.now(),title:t,date:d,cat:$('nd-cat').value});
   S.deadlines.sort((a,b)=>a.date.localeCompare(b.date));
   localStorage.setItem('cmd_dl',JSON.stringify(S.deadlines));
-  $('nd-title').value=''; $('add-dl-form').style.display='none';
-  renderDeadlines(); updateStats();
+  $('nd-title').value='';tog('add-dl-form');renderDeadlines();
 }
-function delDL(id){S.deadlines=S.deadlines.filter(d=>d.id!==id);localStorage.setItem('cmd_dl',JSON.stringify(S.deadlines));renderDeadlines();updateStats();}
+function delDL(id){S.deadlines=S.deadlines.filter(d=>d.id!==id);localStorage.setItem('cmd_dl',JSON.stringify(S.deadlines));renderDeadlines();}
 function renderDeadlines(){
   const today=todayStr();
-  const upcoming=S.deadlines.filter(d=>{const days=Math.ceil((new Date(d.date)-new Date(today))/86400000);return days<=30;}).length;
-  $('sn-dl').textContent=upcoming||S.deadlines.length;
-  $('ss-dl').textContent=upcoming+' in next 30 days';
-  if(!S.deadlines.length){$('dl-list').innerHTML=`<div class="empty"><div class="empty-ico">⏳</div>No deadlines yet</div>`;return;}
+  if(!S.deadlines.length){$('dl-list').innerHTML='<div class="empty">No deadlines yet</div>';return;}
   $('dl-list').innerHTML=S.deadlines.map(d=>{
     const days=Math.ceil((new Date(d.date)-new Date(today))/86400000);
     const cls=days<=3?'urgent':days<=10?'soon':'ok';
-    const label=days<0?`${Math.abs(days)}d ago`:days===0?'Today':`${days}d`;
+    const label=days<0?Math.abs(days)+'d ago':days===0?'Today':days+'d';
     return `<div class="dl-item">
       <div class="dl-days ${cls}">${label}</div>
       <div class="dl-sep"></div>
       <div class="dl-body">
         <div class="dl-title">${d.title}</div>
-        <div class="dl-date">${fmtDate(d.date)} &nbsp;<span class="dl-cat">${d.cat}</span></div>
+        <div class="dl-info">${fmtDate(d.date)} &nbsp;<span class="dl-cat">${d.cat}</span></div>
       </div>
       <button class="del" onclick="delDL(${d.id})">✕</button>
     </div>`;
@@ -889,8 +1181,7 @@ function renderDeadlines(){
 
 // ── NOTES ─────────────────────────────────────────────────────────────────────
 function saveNote(){
-  clearTimeout(S.noteTimer);
-  $('note-saved').textContent='saving…';
+  clearTimeout(S.noteTimer);$('note-saved').textContent='saving…';
   S.noteTimer=setTimeout(()=>{localStorage.setItem('cmd_note',$('note-ta').value);$('note-saved').textContent='saved ✓';},800);
 }
 
@@ -900,59 +1191,60 @@ function updateStats(){
   const ev=S.events.filter(e=>e.start.slice(0,10)===today).length;
   const tk=S.tasks.filter(t=>!t.done).length;
   const ur=S.emails.filter(e=>e.unread).length;
-  const dl=S.deadlines.filter(d=>Math.ceil((new Date(d.date)-new Date(today))/86400000)<=30).length;
-  $('sn-unread').textContent=ur; $('sn-unread').className='sb-num'+(ur===0?' zero':'');
-  $('sn-events').textContent=ev; $('sn-events').className='sb-num'+(ev===0?' zero':'');
-  $('sn-tasks').textContent=tk; $('sn-tasks').className='sb-num'+(tk===0?' zero':'');
-  $('sn-dl').textContent=dl; $('sn-dl').className='sb-num'+(dl===0?' zero':'');
-  $('ss-events').textContent=ev+' today from all calendars';
-  $('ss-tasks').textContent=tk+' pending across all categories';
+  $('sn-em').textContent=ur;$('sn-em').className='sc-num'+(ur===0?' zero':'');
+  $('sn-ev').textContent=ev;$('sn-ev').className='sc-num'+(ev===0?' zero':'');
+  $('sn-tk').textContent=tk;$('sn-tk').className='sc-num'+(tk===0?' zero':'');
+  $('ss-em').textContent=ur+' unread · both accounts';
+  $('ss-ev').textContent=ev+' event'+(ev!==1?'s':'')+' today';
+  $('ss-tk').textContent=tk+' pending task'+(tk!==1?'s':'');
 }
 
 // ── SCROLL ────────────────────────────────────────────────────────────────────
 function scrollTo2(id){$(id).scrollIntoView({behavior:'smooth',block:'start'});}
 
-// ── AI ────────────────────────────────────────────────────────────────────────
-const SYS=`You are the personal productivity assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author ("Essentials of Jyotiṣa"), PhD candidate, APAI Chronycle journal editor, Chennai. Projects: book production in Apple Pages, Diploma Programme (DIAB1, DIAB2, DIAB3 batches, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), journal editing, client consultations. Be concise, direct, practical.`;
+// ── AI (GEMINI) ───────────────────────────────────────────────────────────────
+const SYS_CTX=`You are the personal AI assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author (writing "Essentials of Jyotiṣa", Guru Press), PhD candidate, APAI Chronycle journal editor, Chennai. Projects: book production in Apple Pages, Diploma Programme (DIAB1/DIAB2/DIAB3, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), client consultations, journal editing. Income: consultations, courses, honorariums, editing, book sales. Be concise, direct, practical.`;
 
-async function callAI(prompt){
-  const el=$('ai-resp'); el.className='ai-resp'; el.textContent='Thinking…';
+async function callGemini(prompt){
+  const el=$('ai-resp');el.className='ai-resp';el.textContent='Thinking…';
   $('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYS,messages:[{role:'user',content:prompt}]})});
+    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{role:'user',parts:[{text:SYS_CTX+'\n\n'+prompt}]}],generationConfig:{maxOutputTokens:1000,temperature:0.7}})
+    });
     const d=await r.json();
-    el.textContent=d.content?.map(c=>c.text||'').join('')||'No response.';
-  }catch(e){el.textContent='Error reaching AI.';}
+    if(d.error) throw new Error(d.error.message);
+    el.textContent=d.candidates?.[0]?.content?.parts?.[0]?.text||'No response.';
+  }catch(e){el.textContent='AI error: '+e.message;console.error('Gemini',e);}
 }
 function getCtx(){
   const today=todayStr();
   return `Today: ${today}
 Events today: ${S.events.filter(e=>e.start.slice(0,10)===today).map(e=>`${fmtTime(e.start)} ${e.title} [${e.calName||e.account}]`).join(', ')||'none'}
 Deadlines: ${S.deadlines.slice(0,5).map(d=>`${d.title} ${d.date} (${d.cat})`).join(', ')||'none'}
-Tasks pending: ${S.tasks.filter(t=>!t.done).slice(0,10).map(t=>`[${t.priority}] ${t.text} due:${t.due||'—'} ${t.cat}`).join('; ')||'none'}
+Pending tasks: ${S.tasks.filter(t=>!t.done).slice(0,10).map(t=>`[${t.priority}] ${t.text} due:${t.due||'—'} ${t.cat}`).join('; ')||'none'}
 Unread emails: ${S.emails.filter(e=>e.unread).slice(0,8).map(e=>`[${e.account}] ${e.sender}: ${e.subject}`).join('; ')||'none'}
 Notes: ${(localStorage.getItem('cmd_note')||'').slice(0,300)||'none'}`;
 }
-function askAI(){const q=$('ai-in').value.trim();if(!q)return;$('ai-in').value='';callAI(`Context:\n${getCtx()}\n\nQuestion: ${q}`);}
-function aiBriefing(){callAI(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, deadlines coming up, top 3 focus items. Under 200 words.`);}
+function askAI(){const q=$('ai-in').value.trim();if(!q)return;$('ai-in').value='';callGemini(`Context:\n${getCtx()}\n\nQuestion: ${q}`);}
+function aiBriefing(){callGemini(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, any deadlines coming up soon, top 3 focus items. Under 200 words.`);}
 function aiSummariseEmails(){
-  if(!S.emails.length){alert('No emails loaded.');return;}
+  if(!S.emails.length){alert('No emails loaded yet.');return;}
   const list=S.emails.slice(0,15).map(e=>`[${e.account}] ${e.sender}: ${e.subject} | ${e.unread?'UNREAD':'read'}\n${e.snippet}`).join('\n\n');
-  callAI(`Summarise these emails, flag what needs reply or action:\n\n${list}`);
+  callGemini(`Summarise these emails and flag what needs reply or action:\n\n${list}`);
 }
-function aiExpandNote(){
-  const t=$('note-ta').value.trim();if(!t){alert('Notes empty.');return;}
-  callAI(`Structure/expand these notes into actionable items:\n\n${t}`);
-}
+function aiExpandNote(){const t=$('note-ta').value.trim();if(!t){alert('Notes are empty.');return;}callGemini(`Structure and expand these raw notes into clear, actionable items:\n\n${t}`);}
 $('ai-in').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
 // ── GOOGLE FETCH ──────────────────────────────────────────────────────────────
 async function gFetch(url,account,method='GET',body=null){
   const token=S.tokens[account];
-  if(!token) throw{status:401,message:'No token for '+account};
+  if(!token)throw{status:401,message:'No token for '+account};
   const opts={method,headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'}};
-  if(body) opts.body=JSON.stringify(body);
+  if(body)opts.body=JSON.stringify(body);
   const r=await fetch(url,opts);
+  if(r.status===204)return{};
   if(!r.ok){const err=await r.json().catch(()=>({}));throw{status:r.status,message:err.error?.message||r.statusText};}
   return r.json();
 }
@@ -962,6 +1254,7 @@ function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.get
 function fmtDate(ds){if(!ds)return'';const d=new Date(ds+'T00:00:00');return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});}
 function fmtTime(dt){if(!dt||dt.length===10)return'All day';const d=new Date(dt);return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});}
 function fmtEmailTime(ds){if(!ds)return'';const d=new Date(ds),t=new Date();t.setHours(0,0,0,0);const y=new Date(t);y.setDate(t.getDate()-1);if(d>=t)return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});if(d>=y)return'Yesterday';return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});}
+function fmtNum(n){if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return(n/1000).toFixed(1)+'K';return String(n);}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 window.onload=()=>{
