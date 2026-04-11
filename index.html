@@ -4,31 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Command. — Aswin's Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://accounts.google.com/gsi/client"></script>
+<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 <style>
 :root{
   --bg:#fbf6ee;--surface:#f5ede0;--surface2:#ede3d3;
-  --border:#e2d6c4;--border-dark:#c9baA8;
+  --border:#e2d6c4;--border-dark:#c9baa8;
   --text:#1a1208;--text-muted:#8a7a68;--text-dim:#c4b8a8;
   --accent:#ff610b;--accent-bg:rgba(255,97,11,0.07);
   --green:#2d7a4f;--green-bg:rgba(45,122,79,0.07);
   --blue:#1a5c8a;--blue-bg:rgba(26,92,138,0.07);
   --red:#b83232;--red-bg:rgba(184,50,50,0.07);
   --purple:#6b3fa0;--purple-bg:rgba(107,63,160,0.07);
-  --gold:#b8860b;--gold-bg:rgba(184,134,11,0.07);
-  --radius:10px;--shadow:0 2px 12px rgba(0,0,0,0.06);
+  --gold:#9a7200;--gold-bg:rgba(154,114,0,0.07);
+  --radius:10px;--shadow:0 2px 14px rgba(0,0,0,0.055);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-weight:300;min-height:100vh;font-size:14px;line-height:1.5;}
-h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
-.mono{font-family:'IBM Plex Mono',monospace;}
+body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-weight:300;min-height:100vh;font-size:14px;line-height:1.55;}
 
 /* ── TOPBAR ── */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:var(--text);position:sticky;top:0;z-index:400;gap:10px;flex-wrap:wrap;}
-.t-logo{font-family:'EB Garamond',serif;font-size:20px;color:var(--bg);letter-spacing:0.01em;}
+.t-logo{font-family:'EB Garamond',serif;font-size:20px;color:var(--bg);}
 .t-logo span{color:var(--accent);}
 .t-tag{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#666;letter-spacing:0.16em;text-transform:uppercase;}
 .t-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
@@ -39,27 +38,27 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .badge.on{border-color:var(--accent);color:var(--accent);}
 .badge .dot{width:5px;height:5px;border-radius:50%;background:#333;}
 .badge.on .dot{background:var(--accent);}
-.btn-refresh{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;padding:4px 10px;border-radius:4px;border:1px solid #444;cursor:pointer;background:transparent;color:#888;transition:all 0.15s;}
-.btn-refresh:hover{border-color:var(--accent);color:var(--accent);}
+.btn-ref{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;padding:4px 10px;border-radius:4px;border:1px solid #444;cursor:pointer;background:transparent;color:#888;transition:all 0.15s;}
+.btn-ref:hover{border-color:var(--accent);color:var(--accent);}
 
 /* ── SUMMARY BAR ── */
 .sumbar{display:grid;grid-template-columns:repeat(6,1fr);background:#fff;border-bottom:2px solid var(--accent);box-shadow:var(--shadow);}
-.sc{padding:14px 16px;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;position:relative;overflow:hidden;}
+.sc{padding:13px 16px;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;position:relative;}
 .sc:last-child{border-right:none;}
 .sc:hover{background:var(--surface);}
-.sc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--accent);transform:scaleX(0);transition:transform 0.2s;}
-.sc:hover::after{transform:scaleX(1);}
-.sc-num{font-family:'EB Garamond',serif;font-size:32px;color:var(--accent);line-height:1;font-weight:500;}
+.sc-num{font-family:'EB Garamond',serif;font-size:30px;color:var(--accent);line-height:1;font-weight:500;}
 .sc-num.zero{color:var(--text-dim);}
-.sc-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-top:3px;}
+.sc-label{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-top:3px;}
 .sc-sub{font-size:11px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
 /* ── MAIN ── */
-.main{padding:20px 22px;display:flex;flex-direction:column;gap:16px;max-width:1600px;margin:0 auto;}
+.main{padding:18px 22px;display:flex;flex-direction:column;gap:16px;max-width:1600px;margin:0 auto;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 
 /* ── PANEL ── */
 .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.ph{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:8px;}
+.ph{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:8px;}
 .pt{font-family:'EB Garamond',serif;font-size:16px;font-weight:500;display:flex;align-items:center;gap:7px;}
 .pmeta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
 .pacts{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
@@ -75,24 +74,23 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .ai-hdr{padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
 .ai-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-.ai-ttl{font-family:'EB Garamond',serif;font-size:15px;flex:1;}
-.ai-resp{padding:14px 16px;min-height:52px;font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
-.ai-resp.empty{color:var(--text-muted);font-style:italic;font-family:'EB Garamond',serif;}
+.ai-ttl{font-family:'EB Garamond',serif;font-size:16px;flex:1;}
+.ai-resp{padding:14px 16px;min-height:54px;font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;}
+.ai-resp.empty{color:var(--text-muted);font-style:italic;font-family:'EB Garamond',serif;font-size:15px;}
 .ai-row{display:flex;gap:7px;padding:9px 16px;border-top:1px solid var(--border);background:var(--surface);}
 .ai-inp{flex:1;background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:7px 11px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);outline:none;transition:border-color 0.15s;}
 .ai-inp:focus{border-color:var(--accent);}
 .ai-inp::placeholder{color:var(--text-dim);font-style:italic;}
 
-/* ── ROWS ── */
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+/* ── TODAY'S FOCUS ── */
+.focus-wrap{padding:14px 16px;display:flex;gap:12px;flex-wrap:wrap;}
+.focus-item{flex:1;min-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.focus-num{font-family:'EB Garamond',serif;font-size:22px;color:var(--accent);line-height:1;flex-shrink:0;}
+.focus-inp{flex:1;background:transparent;border:none;outline:none;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);font-weight:400;}
+.focus-inp::placeholder{color:var(--text-dim);font-style:italic;}
 
-/* ── TABS ── */
-.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);}
-.tab{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;padding:9px 14px;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap;}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
-.tab-content{display:none;}
-.tab-content.active{display:block;}
+/* ── SECTION HEADER ── */
+.sec-hdr{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);padding:5px 16px;border-bottom:1px solid var(--border);background:var(--surface);}
 
 /* ── FILTER ROW ── */
 .frow{display:flex;gap:5px;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;}
@@ -100,10 +98,7 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 .chip:hover:not(.active){border-color:var(--text);color:var(--text);}
 
-/* ── SECTION HEADER ── */
-.sec-hdr{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);padding:5px 16px;border-bottom:1px solid var(--border);background:var(--surface);}
-
-/* ── EVENT ITEMS ── */
+/* ── EVENTS ── */
 .ev-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .ev-item:last-child{border-bottom:none;}
 .ev-item:hover{background:var(--surface);}
@@ -114,7 +109,7 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .ev-dot.purple{background:var(--purple);}
 .ev-dot.gold{background:var(--gold);}
 .ev-body{flex:1;}
-.ev-title{font-size:13.5px;line-height:1.3;font-weight:400;}
+.ev-title{font-size:13.5px;line-height:1.3;}
 .ev-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
 .etag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;margin-top:3px;background:var(--accent-bg);color:var(--accent);}
 .etag.blue{background:var(--blue-bg);color:var(--blue);}
@@ -122,7 +117,6 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .etag.purple{background:var(--purple-bg);color:var(--purple);}
 .etag.gold{background:var(--gold-bg);color:var(--gold);}
 .zoom-link{display:inline-flex;align-items:center;gap:3px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--blue);text-decoration:none;margin-top:3px;}
-.zoom-link:hover{text-decoration:underline;}
 
 /* ── EMAIL ── */
 .em-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
@@ -133,7 +127,7 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .em-udot.read{background:transparent;}
 .em-body{flex:1;min-width:0;}
 .em-top{display:flex;justify-content:space-between;gap:8px;}
-.em-sender{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400;}
+.em-sender{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .em-item.unread .em-sender{font-weight:500;}
 .em-time{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);flex-shrink:0;}
 .em-subj{font-size:12.5px;color:var(--text);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -161,6 +155,28 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .tpri.low{background:var(--green-bg);color:var(--green);}
 .tcat{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-dim);}
 
+/* ── YOUTUBE ── */
+.yt-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);}
+.yt-stat{padding:12px 14px;border-right:1px solid var(--border);text-align:center;}
+.yt-stat:last-child{border-right:none;}
+.yt-num{font-family:'EB Garamond',serif;font-size:24px;font-weight:500;color:var(--accent);}
+.yt-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
+.yt-video{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.yt-video:last-child{border-bottom:none;}
+.yt-thumb{width:64px;height:36px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--surface2);}
+.yt-vbody{flex:1;min-width:0;}
+.yt-vtitle{font-size:12.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.yt-vmeta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
+
+/* ── DRIVE ── */
+.dr-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.1s;text-decoration:none;color:inherit;}
+.dr-item:last-child{border-bottom:none;}
+.dr-item:hover{background:var(--surface);}
+.dr-icon{font-size:17px;flex-shrink:0;}
+.dr-body{flex:1;min-width:0;}
+.dr-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dr-meta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:1px;}
+
 /* ── DEADLINES ── */
 .dl-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;}
 .dl-item:last-child{border-bottom:none;}
@@ -174,69 +190,56 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .dl-info{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
 .dl-cat{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--blue-bg);color:var(--blue);}
 
-/* ── TIDYCAL ── */
-.tc-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
-.tc-item:last-child{border-bottom:none;}
-.tc-date{font-family:'EB Garamond',serif;font-size:18px;font-weight:500;color:var(--accent);width:38px;text-align:center;flex-shrink:0;line-height:1.1;}
-.tc-month{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;color:var(--text-muted);text-align:center;}
-.tc-body{flex:1;}
-.tc-name{font-size:13.5px;}
-.tc-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:2px;}
-.tc-svc{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--purple-bg);color:var(--purple);margin-top:3px;display:inline-block;}
+/* ── MILESTONES ── */
+.ms-item{padding:12px 16px;border-bottom:1px solid var(--border);}
+.ms-item:last-child{border-bottom:none;}
+.ms-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.ms-title{font-family:'EB Garamond',serif;font-size:15px;}
+.ms-status{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
+.ms-bar-wrap{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:5px;}
+.ms-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.4s;}
+.ms-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
+.ms-timeline{margin-top:8px;display:flex;flex-direction:column;gap:3px;}
+.ms-chap{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:8.5px;padding:2px 0;}
+.ms-chap.current{color:var(--accent);font-weight:500;}
+.ms-chap.done{color:var(--text-dim);text-decoration:line-through;}
+.ms-chap.future{color:var(--text-muted);}
+.ms-edit-btn{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 6px;border-radius:3px;border:1px solid var(--border-dark);background:transparent;cursor:pointer;color:var(--text-muted);}
+.ms-edit-btn:hover{border-color:var(--accent);color:var(--accent);}
 
-/* ── YOUTUBE ── */
-.yt-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);}
-.yt-stat{padding:12px 14px;border-right:1px solid var(--border);text-align:center;}
-.yt-stat:last-child{border-right:none;}
-.yt-num{font-family:'EB Garamond',serif;font-size:24px;font-weight:500;color:var(--accent);}
-.yt-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
-.yt-video{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
-.yt-video:last-child{border-bottom:none;}
-.yt-thumb{width:60px;height:34px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--surface2);}
-.yt-vbody{flex:1;min-width:0;}
-.yt-vtitle{font-size:12.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.yt-vmeta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
-
-/* ── SENDFOX ── */
-.sf-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);}
-.sf-stat{padding:12px 14px;border-right:1px solid var(--border);text-align:center;}
-.sf-stat:last-child{border-right:none;}
-.sf-num{font-family:'EB Garamond',serif;font-size:24px;font-weight:500;color:var(--green);}
-.sf-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
-.sf-camp{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--border);}
-.sf-camp:last-child{border-bottom:none;}
-.sf-cname{font-size:13px;}
-.sf-cstats{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);text-align:right;}
-
-/* ── DRIVE ── */
-.dr-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.1s;text-decoration:none;color:inherit;}
-.dr-item:last-child{border-bottom:none;}
-.dr-item:hover{background:var(--surface);}
-.dr-icon{font-size:18px;flex-shrink:0;}
-.dr-body{flex:1;min-width:0;}
-.dr-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.dr-meta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:1px;}
-
-/* ── MOON ── */
-.moon-wrap{padding:16px;display:flex;gap:16px;align-items:center;}
-.moon-glyph{font-size:48px;line-height:1;flex-shrink:0;}
-.moon-info{flex:1;}
-.moon-phase{font-family:'EB Garamond',serif;font-size:18px;color:var(--text);margin-bottom:5px;}
-.moon-row{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text-muted);margin-bottom:3px;}
-.moon-row span{color:var(--accent);}
-.moon-date-full{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);margin-top:6px;}
+/* ── PANCHANGA ── */
+.pancha-top{padding:14px 16px;display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid var(--border);}
+.moon-glyph{font-size:44px;line-height:1;flex-shrink:0;}
+.moon-main{}
+.moon-phase{font-family:'EB Garamond',serif;font-size:17px;margin-bottom:4px;}
+.moon-row{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);margin-bottom:3px;}
+.moon-row span{color:var(--text);}
+.pancha-planets{padding:8px 0;}
+.planet-row{display:grid;grid-template-columns:80px 1fr 1fr 1fr;gap:0;padding:5px 16px;border-bottom:1px solid var(--border);font-size:12.5px;align-items:center;}
+.planet-row:last-child{border-bottom:none;}
+.planet-row:hover{background:var(--surface);}
+.pl-name{font-family:'EB Garamond',serif;font-size:13px;font-weight:500;}
+.pl-deg{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent);}
+.pl-sign{font-size:12px;}
+.pl-nak{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
+.planet-hdr{display:grid;grid-template-columns:80px 1fr 1fr 1fr;gap:0;padding:4px 16px 4px;background:var(--surface);border-bottom:1px solid var(--border);}
+.planet-hdr span{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);}
 
 /* ── BATCH ── */
 .batch-sec{border-bottom:1px solid var(--border);}
 .batch-sec:last-child{border-bottom:none;}
 .batch-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);cursor:pointer;user-select:none;}
-.batch-name{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;}
+.batch-name{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;font-weight:500;}
+.batch-right{display:flex;align-items:center;gap:8px;}
 .batch-count{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
-.batch-body{display:none;}
+.batch-body{display:none;padding:12px 14px;}
 .batch-body.open{display:block;}
+.batch-notes{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:8px 10px;font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;min-height:60px;line-height:1.5;}
+.batch-notes:focus{border-color:var(--accent);background:#fff;}
+.batch-notes-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:5px;}
 
 /* ── NOTES ── */
-.note-ta{width:100%;min-height:130px;background:var(--surface);border:none;border-top:1px solid var(--border);padding:14px 16px;font-family:'EB Garamond',serif;font-size:15px;color:var(--text);resize:vertical;outline:none;line-height:1.7;}
+.note-ta{width:100%;min-height:130px;background:var(--surface);border:none;border-top:1px solid var(--border);padding:14px 16px;font-family:'EB Garamond',serif;font-size:15px;color:var(--text);resize:vertical;outline:none;line-height:1.75;}
 .note-ta:focus{background:#fffdf9;}
 .note-saved{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-dim);padding:5px 16px;border-top:1px solid var(--border);text-align:right;background:var(--surface);}
 
@@ -247,7 +250,14 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .inp::placeholder{color:var(--text-dim);}
 .sel{background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 7px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);outline:none;cursor:pointer;}
 
-/* ── EMPTY / UTILS ── */
+/* ── QUICK COMPOSE ── */
+.compose-area{padding:12px 16px;}
+.compose-ta{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);resize:vertical;outline:none;min-height:80px;line-height:1.6;}
+.compose-ta:focus{border-color:var(--accent);background:#fff;}
+.compose-result{margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:13.5px;line-height:1.6;display:none;white-space:pre-wrap;}
+.compose-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+
+/* ── EMPTY ── */
 .empty{padding:22px 14px;text-align:center;color:var(--text-muted);font-family:'EB Garamond',serif;font-style:italic;font-size:14px;}
 .del{background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:12px;padding:0 3px;flex-shrink:0;}
 .del:hover{color:var(--red);}
@@ -255,12 +265,12 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 ::-webkit-scrollbar{width:3px;height:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border-dark);border-radius:2px;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .panel,.ai-strip{animation:fadeUp 0.2s ease both;}
 
 /* ── LOGIN ── */
 #login{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:22px;padding:20px;}
-.login-logo{font-family:'EB Garamond',serif;font-size:42px;color:var(--text);}
+.login-logo{font-family:'EB Garamond',serif;font-size:44px;color:var(--text);}
 .login-logo span{color:var(--accent);}
 .login-sub{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);}
 .lcards{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
@@ -269,31 +279,29 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 .lcard-ico{font-size:26px;margin-bottom:8px;}
 .lcard-title{font-family:'EB Garamond',serif;font-size:17px;margin-bottom:3px;}
 .lcard-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
-#login-msg{font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--text-muted);text-align:center;max-width:380px;line-height:1.6;}
+#login-msg{font-size:13px;color:var(--text-muted);text-align:center;max-width:380px;line-height:1.6;}
 .skip-btn{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);background:none;border:1px solid var(--border);padding:6px 14px;border-radius:4px;cursor:pointer;}
 .skip-btn:hover{color:var(--text);border-color:var(--text);}
 
 /* ── MOBILE ── */
-@media(max-width:768px){
+@media(max-width:900px){
+  .row2,.row3{grid-template-columns:1fr;}
   .sumbar{grid-template-columns:repeat(3,1fr);}
   .sc:nth-child(3){border-right:none;}
   .sc:nth-child(4){border-top:1px solid var(--border);}
-  .row2,.row3{grid-template-columns:1fr;}
-  .topbar{padding:10px 14px;}
-  .t-tag,.wpill{display:none;}
-  .main{padding:12px 14px;gap:12px;}
-  .yt-stats,.sf-stats{grid-template-columns:repeat(3,1fr);}
-  .moon-glyph{font-size:36px;}
 }
-@media(max-width:480px){
+@media(max-width:600px){
   .sumbar{grid-template-columns:repeat(2,1fr);}
   .sc:nth-child(2){border-right:none;}
   .sc:nth-child(3){border-top:1px solid var(--border);border-right:1px solid var(--border);}
   .sc:nth-child(4){border-right:none;}
   .sc:nth-child(5){border-top:1px solid var(--border);border-right:1px solid var(--border);}
   .sc:nth-child(6){border-top:1px solid var(--border);}
-  .badges{display:none;}
-  #clock{font-size:9.5px;}
+  .topbar{padding:9px 14px;}
+  .t-tag,.wpill,.badges{display:none;}
+  .main{padding:10px 12px;gap:12px;}
+  .planet-row{grid-template-columns:70px 1fr 1fr;}
+  .pl-nak{display:none;}
 }
 </style>
 </head>
@@ -315,8 +323,8 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
       <div class="lcard-sub">theabverdict@gmail.com</div>
     </div>
   </div>
-  <div id="login-msg">Connect one or both accounts. Data stays in your browser — nothing is stored on any server.</div>
-  <button class="skip-btn" onclick="launchDashboard()">Skip — use offline features only</button>
+  <div id="login-msg">Connect one or both accounts. Your data stays in your browser — nothing stored on any server.</div>
+  <button class="skip-btn" onclick="launchDashboard()">Skip — offline mode</button>
 </div>
 
 <!-- TOPBAR -->
@@ -332,41 +340,41 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
       <div class="badge" id="b-work" onclick="signIn('work')"><div class="dot"></div>Work</div>
       <div class="badge" id="b-personal" onclick="signIn('personal')"><div class="dot"></div>Personal</div>
     </div>
-    <button class="btn-refresh" onclick="refreshAll()">↻ Refresh</button>
+    <button class="btn-ref" onclick="refreshAll()">↻ Refresh</button>
   </div>
 </div>
 
 <!-- SUMMARY BAR -->
 <div class="sumbar">
-  <div class="sc" onclick="scrollTo2('sec-email')">
+  <div class="sc" onclick="scr('sec-email')">
     <div class="sc-num" id="sn-em">—</div>
     <div class="sc-label">Unread Email</div>
     <div class="sc-sub" id="ss-em">both accounts</div>
   </div>
-  <div class="sc" onclick="scrollTo2('sec-cal')">
+  <div class="sc" onclick="scr('sec-cal')">
     <div class="sc-num" id="sn-ev">—</div>
     <div class="sc-label">Events Today</div>
     <div class="sc-sub" id="ss-ev">all calendars</div>
   </div>
-  <div class="sc" onclick="scrollTo2('sec-tasks')">
+  <div class="sc" onclick="scr('sec-tasks')">
     <div class="sc-num" id="sn-tk">—</div>
     <div class="sc-label">Tasks Pending</div>
     <div class="sc-sub" id="ss-tk">Google Tasks</div>
   </div>
-  <div class="sc" onclick="scrollTo2('sec-tc')">
-    <div class="sc-num" id="sn-tc">—</div>
-    <div class="sc-label">Bookings</div>
-    <div class="sc-sub" id="ss-tc">upcoming · TidyCal</div>
-  </div>
-  <div class="sc" onclick="scrollTo2('sec-yt')">
+  <div class="sc" onclick="scr('sec-yt')">
     <div class="sc-num" id="sn-yt">—</div>
     <div class="sc-label">YT Subscribers</div>
     <div class="sc-sub" id="ss-yt">YouTube</div>
   </div>
-  <div class="sc" onclick="scrollTo2('sec-moon')">
-    <div class="sc-num" id="sn-moon" style="font-size:22px">🌙</div>
-    <div class="sc-label">Pañcāṅga</div>
-    <div class="sc-sub" id="ss-moon">today's tithi</div>
+  <div class="sc" onclick="scr('sec-dl')">
+    <div class="sc-num" id="sn-dl">—</div>
+    <div class="sc-label">Deadlines</div>
+    <div class="sc-sub" id="ss-dl">next 30 days</div>
+  </div>
+  <div class="sc" onclick="scr('sec-moon')">
+    <div class="sc-num" id="sn-moon" style="font-size:20px;line-height:1.6">🌙</div>
+    <div class="sc-label">Moon</div>
+    <div class="sc-sub" id="ss-moon">loading…</div>
   </div>
 </div>
 
@@ -379,17 +387,29 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
       <div class="ai-dot"></div>
       <div class="ai-ttl">✦ AI Assistant</div>
       <button class="btn p" onclick="aiBriefing()">Daily Briefing</button>
-      <button class="btn" onclick="aiSummariseEmails()">Summarise Emails</button>
       <button class="btn" onclick="aiExpandNote()">Expand Notes</button>
     </div>
-    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a full summary of your day, or ask anything below…</div>
+    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a summary of your day, or ask anything below…</div>
     <div class="ai-row">
-      <input class="ai-inp" id="ai-in" placeholder="What's urgent today? · Draft a response to… · Summarise my week…" />
+      <input class="ai-inp" id="ai-in" placeholder="What should I focus on today? · Help me draft a reply · Summarise my week…"/>
       <button class="btn p" onclick="askAI()">Ask ↵</button>
     </div>
   </div>
 
-  <!-- ROW 1: EMAIL + CALENDAR -->
+  <!-- TODAY'S FOCUS -->
+  <div class="panel">
+    <div class="ph">
+      <div class="pt">◎ Today's Focus</div>
+      <div class="pacts"><span class="pmeta">Three things. That's it.</span><button class="btn" onclick="clearFocus()">Clear</button></div>
+    </div>
+    <div class="focus-wrap">
+      <div class="focus-item"><div class="focus-num">1</div><input class="focus-inp" id="f1" placeholder="Most important thing today…" oninput="saveFocus()"/></div>
+      <div class="focus-item"><div class="focus-num">2</div><input class="focus-inp" id="f2" placeholder="Second priority…" oninput="saveFocus()"/></div>
+      <div class="focus-item"><div class="focus-num">3</div><input class="focus-inp" id="f3" placeholder="Third priority…" oninput="saveFocus()"/></div>
+    </div>
+  </div>
+
+  <!-- EMAIL + CALENDAR -->
   <div class="row2">
 
     <!-- EMAIL -->
@@ -444,7 +464,7 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 
   </div>
 
-  <!-- GOOGLE TASKS FULL WIDTH -->
+  <!-- TASKS FULL WIDTH -->
   <div class="panel" id="sec-tasks">
     <div class="ph">
       <div class="pt">◻ Tasks</div>
@@ -454,55 +474,93 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
         <button class="btn" id="tf-td" onclick="setTF('today',this)">Today</button>
         <button class="btn" id="tf-pend" onclick="setTF('pending',this)">Pending</button>
         <button class="btn" id="tf-done" onclick="setTF('done',this)">Done</button>
-        <button class="btn" onclick="syncTasks()">↻ Sync</button>
+        <button class="btn" onclick="syncTasks()">↻ Sync Google</button>
       </div>
     </div>
     <div class="frow" id="cat-row">
       <button class="chip active" onclick="setTC('all',this)">All</button>
-      <button class="chip" onclick="setTC('Consultations',this)">Consultations</button>
-      <button class="chip" onclick="setTC('Book',this)">Book</button>
-      <button class="chip" onclick="setTC('Teaching',this)">Teaching</button>
-      <button class="chip" onclick="setTC('Admin',this)">Admin</button>
-      <button class="chip" onclick="setTC('Research',this)">Research</button>
       <button class="chip" onclick="setTC('Personal',this)">Personal</button>
+      <button class="chip" onclick="setTC('Client',this)">Client</button>
+      <button class="chip" onclick="setTC('Students',this)">Students</button>
+      <button class="chip" onclick="setTC('APAI',this)">APAI</button>
+      <button class="chip" onclick="setTC('Friends',this)">Friends</button>
+      <button class="chip" onclick="setTC('Work',this)">Work</button>
     </div>
-    <div id="tk-list" class="scrollable" style="max-height:340px"></div>
+    <div id="tk-list" class="scrollable" style="max-height:360px"></div>
     <div class="add-row">
       <input class="inp" id="nt-txt" placeholder="Add task… (Enter to save)" style="flex:3" onkeydown="if(event.key==='Enter')addTask()"/>
       <input class="inp" id="nt-due" type="date" style="flex:1;min-width:110px"/>
       <select class="sel" id="nt-pri"><option value="high">High</option><option value="medium" selected>Med</option><option value="low">Low</option></select>
       <select class="sel" id="nt-cat">
-        <option>Consultations</option><option>Book</option><option>Teaching</option>
-        <option>Admin</option><option>Research</option><option>Personal</option>
+        <option>Personal</option><option>Client</option><option>Students</option>
+        <option>APAI</option><option>Friends</option><option>Work</option>
       </select>
       <button class="btn p" onclick="addTask()">Add</button>
     </div>
   </div>
 
-  <!-- ROW 2: TIDYCAL + DEADLINES -->
+  <!-- YOUTUBE + FORMS -->
   <div class="row2">
 
-    <!-- TIDYCAL -->
-    <div class="panel" id="sec-tc">
+    <!-- YOUTUBE -->
+    <div class="panel" id="sec-yt">
       <div class="ph">
-        <div class="pt">📅 Bookings</div>
+        <div class="pt">▶ YouTube</div>
         <div class="pacts">
-          <span class="pmeta" id="tc-meta"></span>
-          <button class="btn" onclick="syncTidyCal()">↻ Sync</button>
+          <span class="pmeta" id="yt-meta"></span>
+          <button class="btn" onclick="syncYouTube()">↻ Sync</button>
         </div>
       </div>
-      <div id="tc-list" class="scrollable" style="max-height:320px">
-        <div class="empty">Loading TidyCal bookings…</div>
+      <div class="yt-stats">
+        <div class="yt-stat"><div class="yt-num" id="yt-subs">—</div><div class="yt-label">Subscribers</div></div>
+        <div class="yt-stat"><div class="yt-num" id="yt-views">—</div><div class="yt-label">Total Views</div></div>
+        <div class="yt-stat"><div class="yt-num" id="yt-vids">—</div><div class="yt-label">Videos</div></div>
+      </div>
+      <div id="yt-list" class="scrollable" style="max-height:220px">
+        <div class="empty">Connect personal account for YouTube</div>
+      </div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="panel" id="sec-forms">
+      <div class="ph">
+        <div class="pt">📋 Form Responses</div>
+        <div class="pacts">
+          <span class="pmeta" id="forms-meta"></span>
+          <button class="btn" onclick="syncForms()">↻ Sync</button>
+        </div>
+      </div>
+      <div id="forms-list" class="scrollable" style="max-height:300px">
+        <div class="empty">Connect Google to load forms</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DRIVE + DEADLINES -->
+  <div class="row2">
+
+    <!-- DRIVE -->
+    <div class="panel" id="sec-drive">
+      <div class="ph">
+        <div class="pt">◫ Drive</div>
+        <div class="pacts">
+          <span class="pmeta" id="dr-meta"></span>
+          <button class="btn" onclick="syncDrive()">↻ Sync</button>
+        </div>
+      </div>
+      <div id="dr-list" class="scrollable" style="max-height:300px">
+        <div class="empty">Connect Google to load recent files</div>
       </div>
     </div>
 
     <!-- DEADLINES -->
-    <div class="panel">
+    <div class="panel" id="sec-dl">
       <div class="ph">
         <div class="pt">⏳ Deadlines</div>
         <div class="pacts"><button class="btn p" onclick="tog('add-dl-form')">+ Add</button></div>
       </div>
-      <div id="dl-list" class="scrollable" style="max-height:270px">
+      <div id="dl-list" class="scrollable" style="max-height:260px">
         <div class="empty">No deadlines yet</div>
       </div>
       <div id="add-dl-form" style="display:none">
@@ -518,124 +576,80 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 
   </div>
 
-  <!-- ROW 3: YOUTUBE + SENDFOX -->
+  <!-- MILESTONES + PANCHANGA -->
   <div class="row2">
 
-    <!-- YOUTUBE -->
-    <div class="panel" id="sec-yt">
+    <!-- MILESTONES -->
+    <div class="panel" id="sec-ms">
       <div class="ph">
-        <div class="pt">▶ YouTube</div>
-        <div class="pacts">
-          <span class="pmeta" id="yt-meta"></span>
-          <button class="btn" onclick="syncYouTube()">↻ Sync</button>
-        </div>
+        <div class="pt">◉ Milestones</div>
+        <div class="pacts"><span class="pmeta">Manual update</span></div>
       </div>
-      <div id="yt-stats" class="yt-stats">
-        <div class="yt-stat"><div class="yt-num" id="yt-subs">—</div><div class="yt-label">Subscribers</div></div>
-        <div class="yt-stat"><div class="yt-num" id="yt-views">—</div><div class="yt-label">Total Views</div></div>
-        <div class="yt-stat"><div class="yt-num" id="yt-vids">—</div><div class="yt-label">Videos</div></div>
-      </div>
-      <div id="yt-list" class="scrollable" style="max-height:200px">
-        <div class="empty">Connect work account to load YouTube data</div>
-      </div>
+      <div id="ms-list"></div>
     </div>
-
-    <!-- SENDFOX -->
-    <div class="panel" id="sec-sf">
-      <div class="ph">
-        <div class="pt">✉ SendFox</div>
-        <div class="pacts">
-          <span class="pmeta" id="sf-meta"></span>
-          <button class="btn" onclick="syncSendFox()">↻ Sync</button>
-        </div>
-      </div>
-      <div class="sf-stats">
-        <div class="sf-stat"><div class="sf-num" id="sf-subs">—</div><div class="sf-label">Subscribers</div></div>
-        <div class="sf-stat"><div class="sf-num" id="sf-lists">—</div><div class="sf-label">Lists</div></div>
-        <div class="sf-stat"><div class="sf-num" id="sf-camps">—</div><div class="sf-label">Campaigns</div></div>
-      </div>
-      <div id="sf-list" class="scrollable" style="max-height:200px">
-        <div class="empty">Loading SendFox data…</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ROW 4: DRIVE + FORMS -->
-  <div class="row2">
-
-    <!-- DRIVE -->
-    <div class="panel" id="sec-drive">
-      <div class="ph">
-        <div class="pt">◫ Drive</div>
-        <div class="pacts">
-          <span class="pmeta" id="dr-meta"></span>
-          <button class="btn" onclick="syncDrive()">↻ Sync</button>
-        </div>
-      </div>
-      <div id="dr-list" class="scrollable" style="max-height:280px">
-        <div class="empty">Connect Google to load recent files</div>
-      </div>
-    </div>
-
-    <!-- GOOGLE FORMS RESPONSES -->
-    <div class="panel" id="sec-forms">
-      <div class="ph">
-        <div class="pt">📋 Form Responses</div>
-        <div class="pacts">
-          <span class="pmeta" id="forms-meta"></span>
-          <button class="btn" onclick="syncForms()">↻ Sync</button>
-        </div>
-      </div>
-      <div id="forms-list" class="scrollable" style="max-height:280px">
-        <div class="empty">Connect Google to load form responses</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ROW 5: MOON + NOTES -->
-  <div class="row2">
 
     <!-- PANCHANGA -->
     <div class="panel" id="sec-moon">
       <div class="ph">
         <div class="pt">🌙 Pañcāṅga</div>
-        <div class="pacts"><span class="pmeta" id="moon-meta">Rāman Ayanāṁśa · Sidereal</span></div>
+        <div class="pacts"><span class="pmeta">Rāman Ayanāṁśa · Sidereal</span></div>
       </div>
-      <div class="moon-wrap">
+      <div class="pancha-top">
         <div class="moon-glyph" id="moon-glyph">🌙</div>
-        <div class="moon-info">
+        <div class="moon-main">
           <div class="moon-phase" id="moon-phase">Calculating…</div>
           <div class="moon-row">Tithi: <span id="moon-tithi">—</span></div>
-          <div class="moon-row">Moon (Sidereal): <span id="moon-rasi">—</span></div>
+          <div class="moon-row">Moon: <span id="moon-pos">—</span></div>
           <div class="moon-row">Nakṣatra: <span id="moon-nak">—</span></div>
-          <div class="moon-row">Moon Age: <span id="moon-age">—</span></div>
-          <div class="moon-date-full" id="moon-date"></div>
+          <div class="moon-row" id="moon-date-row" style="margin-top:6px;font-size:8.5px;color:var(--text-dim)"></div>
         </div>
       </div>
-    </div>
-
-    <!-- NOTES -->
-    <div class="panel">
-      <div class="ph">
-        <div class="pt">◇ Notes</div>
-        <div class="pacts">
-          <button class="btn p" onclick="aiExpandNote()">AI Expand</button>
-          <button class="btn" onclick="if(confirm('Clear notes?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
-        </div>
+      <div class="planet-hdr">
+        <span>Planet</span><span>Longitude</span><span>Sign</span><span>Nakṣatra</span>
       </div>
-      <textarea class="note-ta" id="note-ta" placeholder="Quick notes, ideas, reminders, draft thoughts…" oninput="saveNote()"></textarea>
-      <div class="note-saved" id="note-saved"></div>
+      <div class="pancha-planets" id="planet-list"></div>
     </div>
 
   </div>
 
-  <!-- DIPLOMA BATCHES -->
+  <!-- QUICK COMPOSE -->
+  <div class="panel" id="sec-compose">
+    <div class="ph">
+      <div class="pt">✍ Quick Compose</div>
+      <div class="pacts"><span class="pmeta">Write rough · AI polishes · Copy to Gmail</span></div>
+    </div>
+    <div class="compose-area">
+      <textarea class="compose-ta" id="compose-in" placeholder="Write your rough message here… e.g. 'tell student Priya her assignment was good but needs more detail on house lords, submission was on time'"></textarea>
+      <div class="compose-actions">
+        <button class="btn p" onclick="composeEmail()">✦ Polish as Email</button>
+        <button class="btn" onclick="composeWhatsApp()">Polish as WhatsApp</button>
+        <button class="btn" onclick="clearCompose()">Clear</button>
+      </div>
+      <div class="compose-result" id="compose-result"></div>
+      <div class="compose-actions" id="compose-copy-row" style="display:none">
+        <button class="btn g" onclick="copyCompose()">Copy to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES FULL WIDTH -->
+  <div class="panel">
+    <div class="ph">
+      <div class="pt">◇ Notes</div>
+      <div class="pacts">
+        <button class="btn p" onclick="aiExpandNote()">AI Expand</button>
+        <button class="btn" onclick="if(confirm('Clear notes?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
+      </div>
+    </div>
+    <textarea class="note-ta" id="note-ta" placeholder="Quick notes, ideas, reminders, draft thoughts…" oninput="saveNote()"></textarea>
+    <div class="note-saved" id="note-saved"></div>
+  </div>
+
+  <!-- DIPLOMA BATCHES FULL WIDTH -->
   <div class="panel" id="sec-batches">
     <div class="ph">
       <div class="pt">◉ Diploma Programme</div>
-      <div class="pacts"><span class="pmeta">DIAB1 · DIAB2 · DIAB3 — next 14 days</span></div>
+      <div class="pacts"><span class="pmeta">Upcoming sessions · Next 14 days · Batch notes</span></div>
     </div>
     <div id="batch-list"><div class="empty">Connect calendar to load batch sessions</div></div>
   </div>
@@ -645,10 +659,9 @@ h1,h2,h3,.serif{font-family:'EB Garamond',serif;}
 <script>
 // ── KEYS ─────────────────────────────────────────────────────────────────────
 const CLIENT_ID='628443819075-2chd41al5oegn74fdfk6186pq7ke5iu9.apps.googleusercontent.com';
-const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly';
-const GEMINI_KEY='AIzaSyAwmxvj2TeG4Jl1Rt-5ejyYAUQKAORcVZc';
-const SENDFOX_TOKEN='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5MzciLCJqdGkiOiJjZDc3YTgxN2E5ZDY0NzZhNjQwM2I0NmQ2ODIzYzEwMzAwZDY4ZjMwODA5MjEzOTFkZGQyMmI0ZTAyYTRhYmQyNmU2NThiN2E0NTU4ZTM5NSIsImlhdCI6MTc3NTg4NDI5My4xNDQ2MDYsIm5iZiI6MTc3NTg4NDI5My4xNDQ2MDcsImV4cCI6NDkzMTU1Nzg5My4xMzY4NDEsInN1YiI6IjE4NDg4OSIsInNjb3BlcyI6W119.DprO_b1p0kVFKmwEvycc_mccwQntAb6bLVA2ve32wr9Obpmc5lzhaDK-xIM1NXL7c6-0Io1eIs0pMvkqwff3VfU3MVOsHKIJ2soz0E0CMqZajWPezK-CcylFHipTZw3T6anlOjj5ViKv2-yZW0bXZG3hrIRoITkY3fU_0SXbz-ttBRwNo0cvi38DGmgUxOtv4rjJlQEyhoYcP0C-wt5GFaW_AvRfxhG1t7dNp4Ws8TceXFP79MURc43JjUaNpaUAFuIFjP82_ovnTN6xtfgFY15FqgLlPCfyAicqllNCUblSiWmI99zSHKqlsZxMC_8etjdx_ggSGmm07uAHPDZ13u49HJ4ZLKDksA-tIB4OTcgD-CslzVWfnIHZ1SPmHP3HJo-NQF7E6otgL0Fn4mnSugipj20ih0kXiuC6N8KsEm2F7OglO6ua-LRnDS5hzM41w_MvxA2nLJ5dIFXks7JUg0-Fvi-Bz8vFhimcoqHcJsq0JFzTVDLfMoHv0Vy5rfKDjxpGdOEvbfoJAr7nFiVXF7xVITwXoQWvNJAZ00A5Fv3XEMvplISil5K6eopWbbtOiS5JUjaNnJ3GiqEWn8VpGrRpMp_UAP93sFk1qx97dBEut0HzRjQ01PtATeCM-F7zV_WHJttgDCgg9m0yD5DDq1VQnGjy-s0F5FHFJxkU';
-const TIDYCAL_TOKEN='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNmE1Yzk2MDA0ZjY5MGRmMzg2YzNmN2JmOGNhYjk4OTY1MzljMDdiN2I2NmVjMWFhODllYjA5Zjg1MzkzY2M2M2E3OGJkNGU4NmEzYTg2NmUiLCJpYXQiOjE3NzU4ODQ0MDQuODEyNzc3LCJuYmYiOjE3NzU4ODQ0MDQuODEyNzc5LCJleHAiOjQ5MzE1NTgwMDQuNzk5NTgsInN1YiI6IjI0ODcwMSIsInNjb3BlcyI6W119.JCxvLVsuPhy4dVi6tJgOiJG-u7dd3_NZV9bDKg3pf9ec-CK0ObbjAA15GojivRRoFH9AIVQ7wZ461Y1LWt5ctI8XhjD_6-qbO0kQ5AjF2hXd9tophKEUL6drE-5S8BAjuOpCsrWj-1YkzuJ2W_Bfj0bf0YiEhd9FVkBL8QwNj0g73cD-G89VQoG1ioWUvdVqNJWWw0q9T7GY6JmEPlhgO24Oar8sagxTguqmSAetqUEJ4U6wZHcoa2TPwOVA0WPErrXfs7_2j17XbE1fJTzdkrCgUpkN1m-P65eg4ZZFSakeL6WbjfffkeBwqqnMkMFO2rYzjYcv42TytoiaSe4JW9MomeHTUDM5w41NlS5w4HYW186Q1Foes39msmZZzI20Fczjk-u6bR0Y85LoM5YScUVpGFnLJCZ6pCqbe8v-HnVHAz5-SOMU5Di7v5Gyp7vNg5SxLTowaZz7kDbTlozqUgyTOzCkTMJZp9qwtK2nhzRipjSGyNZkut8I1EJ5ltg54C64Z8K8smDHfI9pFUU6K7tVPqWCZWEd-bo3mnKl3Yis6CTkeu-lm2DWSCSTcnm4TGFxMbCjRSkcykcihzVjPxvG7GHRWiMRHNFLWIkXzrGRg2ZUONUI1tiP2rkCp_m04K4xjQEjMTCcUEZsb4iwvh7fXWfuevEzgOWzmkWTMDU';
+const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/forms.responses.readonly';
+const GEMINI_KEY='AIzaSyDH_hdYgT_5_gbyYI4xLfQNOVSg9eo49aY';
+const GEMINI_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const S={
@@ -659,10 +672,13 @@ const S={
   googleTaskListId:null,
   emailFilter:'unread',emailAcc:'both',
   taskFilter:'all',taskCat:'all',calFilter:'today',
-  noteTimer:null
+  noteTimer:null,focusTimer:null,
+  batchNotes:JSON.parse(localStorage.getItem('cmd_batch_notes')||'{}'),
+  milestones:JSON.parse(localStorage.getItem('cmd_milestones')||'null')
 };
 const $=id=>document.getElementById(id);
 const tog=id=>{const f=$(id);f.style.display=f.style.display==='none'?'block':'none';};
+const scr=id=>{$(id)&&$(id).scrollIntoView({behavior:'smooth',block:'start'});};
 
 // ── CLOCK ─────────────────────────────────────────────────────────────────────
 function tick(){
@@ -684,64 +700,195 @@ async function loadWeather(){
 }
 loadWeather();
 
-// ── PANCHANGA (Raman Ayanamsa, Sidereal) ─────────────────────────────────────
-function calcPanchanga(){
-  const now=new Date();
-  const y=now.getFullYear(),m=now.getMonth()+1,d=now.getDate();
-  const h=now.getHours()+now.getMinutes()/60+now.getSeconds()/3600;
-  // Julian Day Number
-  const A=Math.floor((14-m)/12),YY=y+4800-A,MM=m+12*A-3;
-  let jd=d+Math.floor((153*MM+2)/5)+365*YY+Math.floor(YY/4)-Math.floor(YY/100)+Math.floor(YY/400)-32045+(h-12)/24;
-  // Raman Ayanamsa (approx 22°27' in 2000, precessing at ~50.3"/yr)
-  const ramanAyanamsa2000=22.4611; // degrees
+// ── PANCHANGA (Raman Ayanamsa + Astronomy Engine) ─────────────────────────────
+const RAMAN_AYANAMSA_2000=22.4600;// degrees at J2000
+const AYANAMSA_RATE=50.2388475/3600;// degrees per year
+function getRamanAyanamsa(date){
+  const jd=(date.getTime()/86400000)+2440587.5;
   const yearsFrom2000=(jd-2451545.0)/365.25;
-  const ayanamsa=ramanAyanamsa2000+(yearsFrom2000*50.3/3600);
-  // Tropical moon longitude (simplified)
-  const T=(jd-2451545.0)/36525;
-  let moonLonTropical=218.316+13.176396*( jd-2451545.0);
-  moonLonTropical=((moonLonTropical%360)+360)%360;
-  // Sun longitude (simplified)
-  let sunLon=280.460+0.9856474*(jd-2451545.0);
-  sunLon=((sunLon%360)+360)%360;
-  // Sidereal positions (subtract ayanamsa)
-  const moonSidereal=((moonLonTropical-ayanamsa)%360+360)%360;
-  const sunSidereal=((sunLon-ayanamsa)%360+360)%360;
-  // Elongation for tithi
-  let elong=((moonLonTropical-sunLon)%360+360)%360;
+  return RAMAN_AYANAMSA_2000+(yearsFrom2000*AYANAMSA_RATE);
+}
+function toSidereal(tropLon,ayanamsa){return((tropLon-ayanamsa)%360+360)%360;}
+function lonToDMS(lon){
+  const d=Math.floor(lon),m=Math.floor((lon-d)*60),s=Math.round(((lon-d)*60-m)*60);
+  return`${d}°${String(m).padStart(2,'0')}'${String(s).padStart(2,'0')}''`;
+}
+function sidToSign(sid){
+  const signs=[['Meṣa','Aries'],['Vṛṣabha','Taurus'],['Mithuna','Gemini'],['Karkaṭa','Cancer'],['Siṃha','Leo'],['Kanyā','Virgo'],['Tulā','Libra'],['Vṛścika','Scorpio'],['Dhanus','Sagittarius'],['Makara','Capricorn'],['Kumbha','Aquarius'],['Mīna','Pisces']];
+  const idx=Math.floor(sid/30)%12;
+  const deg=sid%30;
+  return{sanskrit:signs[idx][0],english:signs[idx][1],deg,idx};
+}
+const NAKS=['Aśvinī','Bharaṇī','Kṛttikā','Rohiṇī','Mṛgaśīrṣa','Ārdrā','Punarvasu','Puṣya','Āśleṣā','Maghā','Pūrvā Phālgunī','Uttarā Phālgunī','Hasta','Citrā','Svātī','Viśākhā','Anurādhā','Jyeṣṭhā','Mūla','Pūrvāṣāḍhā','Uttarāṣāḍhā','Śravaṇa','Dhaniṣṭhā','Śatabhiṣā','Pūrva Bhādrapadā','Uttara Bhādrapadā','Revatī'];
+function getNakshatra(sidLon){return NAKS[Math.floor(sidLon/(360/27))%27];}
+function calcPanchanga(){
+  if(typeof Astronomy==='undefined'){setTimeout(calcPanchanga,500);return;}
+  const now=new Date();
+  const ayanamsa=getRamanAyanamsa(now);
+  const astroDate=new Astronomy.AstroTime(now);
+  // Get equatorial then ecliptic for each body
+  const bodies={
+    'Sun':Astronomy.Body.Sun,'Moon':Astronomy.Body.Moon,
+    'Mars':Astronomy.Body.Mars,'Mercury':Astronomy.Body.Mercury,
+    'Jupiter':Astronomy.Body.Jupiter,'Venus':Astronomy.Body.Venus,
+    'Saturn':Astronomy.Body.Saturn
+  };
+  const results={};
+  for(const[name,body]of Object.entries(bodies)){
+    try{
+      const ecl=Astronomy.EclipticLongitude(body,astroDate);
+      const sid=toSidereal(ecl,ayanamsa);
+      const sign=sidToSign(sid);
+      const nak=getNakshatra(sid);
+      results[name]={trop:ecl,sid,sign,nak,lon:lonToDMS(sid)};
+    }catch(e){results[name]={sid:0,sign:{sanskrit:'—',english:'—',deg:0},nak:'—',lon:'—'};}
+  }
+  // Rahu/Ketu (mean nodes) — simplified calculation
+  try{
+    const T=(astroDate.tt-2451545.0)/36525;
+    const rahuTrop=((125.0445479-1934.1362608*T+0.0020754*T*T)%360+360)%360;
+    const rahuSid=toSidereal(rahuTrop,ayanamsa);
+    const ketuSid=((rahuSid+180)%360+360)%360;
+    results['Rāhu']={sid:rahuSid,sign:sidToSign(rahuSid),nak:getNakshatra(rahuSid),lon:lonToDMS(rahuSid)};
+    results['Ketu']={sid:ketuSid,sign:sidToSign(ketuSid),nak:getNakshatra(ketuSid),lon:lonToDMS(ketuSid)};
+  }catch(e){}
+
+  // Moon phase
+  const moonSid=results['Moon']?.sid||0;
+  const sunSid=results['Sun']?.sid||0;
+  let elong=((moonSid-sunSid)%360+360)%360;
   const tithiNum=Math.floor(elong/12)+1;
   const paksha=tithiNum<=15?'Śukla':'Kṛṣṇa';
-  const tithiInPaksha=tithiNum<=15?tithiNum:tithiNum-15;
+  const tithiInPk=tithiNum<=15?tithiNum:tithiNum-15;
   const tNames=['Pratipadā','Dvitīyā','Tṛtīyā','Caturthī','Pañcamī','Ṣaṣṭhī','Saptamī','Aṣṭamī','Navamī','Daśamī','Ekādaśī','Dvādaśī','Trayodaśī','Caturdaśī','Pūrṇimā'];
-  const tithiLabel=tNames[Math.min(tithiInPaksha-1,14)];
-  // Nakshatra (sidereal)
-  const naks=['Aśvinī','Bharaṇī','Kṛttikā','Rohiṇī','Mṛgaśīrṣa','Ārdrā','Punarvasu','Puṣya','Āśleṣā','Maghā','Pūrvā Phālgunī','Uttarā Phālgunī','Hasta','Citrā','Svātī','Viśākhā','Anurādhā','Jyeṣṭhā','Mūla','Pūrvāṣāḍhā','Uttarāṣāḍhā','Śravaṇa','Dhaniṣṭhā','Śatabhiṣā','Pūrva Bhādrapadā','Uttara Bhādrapadā','Revatī'];
-  const nakIdx=Math.floor(moonSidereal/(360/27));
-  const nakshatra=naks[nakIdx%27];
-  // Rashi (sidereal)
-  const rasis=['Meṣa','Vṛṣabha','Mithuna','Karkaṭa','Siṃha','Kanyā','Tulā','Vṛścika','Dhanus','Makara','Kumbha','Mīna'];
-  const rasiIdx=Math.floor(moonSidereal/30);
-  const rasi=rasis[rasiIdx%12];
-  // Moon phase glyph
-  const synodicPeriod=29.53058867;
-  const knownNew=2451550.1;
-  const moonAge=((jd-knownNew)%synodicPeriod+synodicPeriod)%synodicPeriod;
+  const tithi=tNames[Math.min(tithiInPk-1,14)];
+  // Moon age for phase glyph
+  const syno=29.53058867;
+  const jd=(now.getTime()/86400000)+2440587.5;
+  const moonAge=((jd-2451550.1)%syno+syno)%syno;
   const glyphs=['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
   const phases=['New Moon','Waxing Crescent','First Quarter','Waxing Gibbous','Full Moon','Waning Gibbous','Last Quarter','Waning Crescent'];
-  const gIdx=Math.round(moonAge/(synodicPeriod/8))%8;
+  const gIdx=Math.round(moonAge/(syno/8))%8;
 
+  // Update summary bar
+  const ms=results['Moon'];
+  if(ms){
+    $('sn-moon').textContent=glyphs[gIdx];
+    $('ss-moon').textContent=`${ms.sign.english} ${ms.sign.deg.toFixed(1)}° · ${ms.nak}`;
+  }
+
+  // Update panel top
   $('moon-glyph').textContent=glyphs[gIdx];
   $('moon-phase').textContent=phases[gIdx];
-  $('moon-tithi').textContent=`${paksha} ${tithiLabel} (${tithiNum})`;
-  $('moon-rasi').textContent=`${rasi} (${moonSidereal.toFixed(2)}°)`;
-  $('moon-nak').textContent=nakshatra;
-  $('moon-age').textContent=`${moonAge.toFixed(1)} days`;
-  $('moon-date').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  $('sn-moon').textContent=glyphs[gIdx];
-  $('ss-moon').textContent=`${paksha} ${tithiLabel}`;
+  $('moon-tithi').textContent=`${paksha} ${tithi} (${tithiNum})`;
+  if(ms) $('moon-pos').textContent=`${ms.sign.deg.toFixed(2)}° ${ms.sign.sanskrit} (${ms.sign.english}) · ${ms.lon}`;
+  if(ms) $('moon-nak').textContent=ms.nak;
+  $('moon-date-row').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+` · Ayanāṁśa ${ayanamsa.toFixed(4)}°`;
+
+  // Planet table
+  const order=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rāhu','Ketu'];
+  $('planet-list').innerHTML=order.map(n=>{
+    const p=results[n];if(!p)return'';
+    return`<div class="planet-row">
+      <div class="pl-name">${n}</div>
+      <div class="pl-deg">${p.lon}</div>
+      <div class="pl-sign">${p.sign.deg.toFixed(2)}° ${p.sign.sanskrit}<br><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-muted)">${p.sign.english}</span></div>
+      <div class="pl-nak">${p.nak}</div>
+    </div>`;
+  }).join('');
 }
 calcPanchanga();
 
-// ── GOOGLE AUTH ───────────────────────────────────────────────────────────────
+// ── MILESTONES ────────────────────────────────────────────────────────────────
+function getDefaultMilestones(){
+  const today=new Date();
+  // PhD: Chapter 2 current, 9 chapters total, 2 weeks each
+  const phdChaps=[];
+  for(let i=1;i<=9;i++){
+    const d=new Date(today);
+    d.setDate(today.getDate()+(i-2)*14);// ch2 is now, each +2 weeks
+    phdChaps.push({ch:i,date:d.toISOString().slice(0,10)});
+  }
+  return[
+    {id:'book',title:'Essentials of Jyotiṣa',subtitle:'Formatting · Apple Pages',current:4,total:12,unit:'Chapter',extra:''},
+    {id:'phd',title:'PhD Thesis',subtitle:'Chapter timeline · 2 weeks/chapter',current:2,total:9,unit:'Chapter',timeline:phdChaps,extra:''},
+    {id:'journal',title:'APAI Chronycle',subtitle:'',current:0,total:0,unit:'',status:'Vol 3 — In layout',extra:''},
+    {id:'diab',title:'Diploma Programme',subtitle:'',current:0,total:0,unit:'',status:'DIAB1: Module — · DIAB2: Module — · DIAB3: Module —',extra:''}
+  ];
+}
+function renderMilestones(){
+  const ms=S.milestones||getDefaultMilestones();
+  $('ms-list').innerHTML=ms.map(m=>{
+    if(m.total>0){
+      const pct=Math.round(m.current/m.total*100);
+      let chapHtml='';
+      if(m.timeline){
+        const today=todayStr();
+        chapHtml=`<div class="ms-timeline">${m.timeline.map(c=>{
+          const cls=c.ch<m.current?'done':c.ch===m.current?'current':'future';
+          return`<div class="ms-chap ${cls}"><span>Ch ${c.ch}${c.ch===m.current?' ← current':''}</span><span>${fmtDate(c.date)}</span></div>`;
+        }).join('')}</div>`;
+      }
+      return`<div class="ms-item">
+        <div class="ms-top">
+          <div class="ms-title">${m.title}</div>
+          <div style="display:flex;gap:5px;align-items:center">
+            <span class="ms-status">${m.current} / ${m.total} ${m.unit}s</span>
+            <button class="ms-edit-btn" onclick="editMilestone('${m.id}')">Edit</button>
+          </div>
+        </div>
+        <div class="ms-bar-wrap"><div class="ms-bar" style="width:${pct}%"></div></div>
+        <div class="ms-sub">${m.subtitle} · ${pct}% complete</div>
+        ${chapHtml}
+      </div>`;
+    }else{
+      return`<div class="ms-item">
+        <div class="ms-top">
+          <div class="ms-title">${m.title}</div>
+          <button class="ms-edit-btn" onclick="editMilestone('${m.id}')">Edit</button>
+        </div>
+        <div class="ms-sub" id="ms-status-${m.id}">${m.status||'—'}</div>
+      </div>`;
+    }
+  }).join('');
+}
+function editMilestone(id){
+  const ms=S.milestones||getDefaultMilestones();
+  const m=ms.find(x=>x.id===id);if(!m)return;
+  if(m.total>0){
+    const val=prompt(`${m.title}\nCurrent ${m.unit} (1-${m.total}):`,m.current);
+    if(val!==null){m.current=Math.max(1,Math.min(parseInt(val)||m.current,m.total));}
+    if(m.id==='phd'){
+      // Recalculate timeline from current chapter
+      const today=new Date();
+      m.timeline=m.timeline.map((c,i)=>{
+        const d=new Date(today);
+        d.setDate(today.getDate()+(c.ch-m.current)*14);
+        return{...c,date:d.toISOString().slice(0,10)};
+      });
+    }
+  }else{
+    const val=prompt(`${m.title}\nStatus:`,m.status||'');
+    if(val!==null)m.status=val;
+  }
+  S.milestones=ms;
+  localStorage.setItem('cmd_milestones',JSON.stringify(ms));
+  renderMilestones();
+}
+
+// ── TODAY'S FOCUS ─────────────────────────────────────────────────────────────
+function saveFocus(){
+  clearTimeout(S.focusTimer);
+  S.focusTimer=setTimeout(()=>{
+    localStorage.setItem('cmd_focus',JSON.stringify([$('f1').value,$('f2').value,$('f3').value]));
+  },600);
+}
+function clearFocus(){$('f1').value='';$('f2').value='';$('f3').value='';localStorage.removeItem('cmd_focus');}
+function loadFocus(){
+  try{const f=JSON.parse(localStorage.getItem('cmd_focus')||'[]');if(f.length){$('f1').value=f[0]||'';$('f2').value=f[1]||'';$('f3').value=f[2]||'';}}catch(e){}
+}
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
 let tokenClient=null,signingIn=null;
 function initGoogleAuth(){
   tokenClient=google.accounts.oauth2.initTokenClient({
@@ -752,10 +899,10 @@ function initGoogleAuth(){
       localStorage.setItem('cmd_tokens',JSON.stringify(S.tokens));
       updateBadges();
       $('login-msg').textContent=`✓ ${signingIn==='work'?'Work':'Personal'} connected. ${Object.keys(S.tokens).length===1?'Connect the second account or skip.':'Both accounts connected!'}`;
-      if(Object.keys(S.tokens).length>=1) setTimeout(launchDashboard,800);
+      if(Object.keys(S.tokens).length>=1)setTimeout(launchDashboard,800);
     }
   });
-  if(Object.keys(S.tokens).length>0) launchDashboard();
+  if(Object.keys(S.tokens).length>0)launchDashboard();
 }
 function signIn(acc){signingIn=acc;if(!tokenClient){setTimeout(()=>signIn(acc),500);return;}tokenClient.requestAccessToken({prompt:''});}
 function launchDashboard(){
@@ -764,15 +911,15 @@ function launchDashboard(){
   const td=todayStr();
   $('nt-due').value=td;$('ne-date').value=td;$('nd-date').value=td;
   $('note-ta').value=localStorage.getItem('cmd_note')||'';
-  renderDeadlines();renderLocalTasks();updateStats();
+  loadFocus();renderDeadlines();renderMilestones();renderLocalTasks();updateStats();
   if(Object.keys(S.tokens).length>0){
-    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncYouTube();syncSendFox();syncTidyCal();
+    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncYouTube();
   }
 }
 function updateBadges(){['work','personal'].forEach(a=>{const b=$('b-'+a);b.classList.toggle('on',!!S.tokens[a]);});}
 async function refreshAll(){
-  if(Object.keys(S.tokens).length===0){alert('Connect a Google account first.');return;}
-  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncYouTube(),syncSendFox(),syncTidyCal()]);
+  if(!Object.keys(S.tokens).length){alert('Connect a Google account first.');return;}
+  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncYouTube()]);
   updateStats();
 }
 
@@ -828,7 +975,7 @@ function renderCal(){
     ${grp[date].map(e=>{
       const cn=e.calName||'';const dc=DC[cn]||(e.account==='personal'?'green':'');
       const lbl=cn&&cn!=="Aswin's Appointment"&&cn!=='Personal GMAIL'?cn:(e.account==='work'?'Work':'Personal');
-      return `<div class="ev-item">
+      return`<div class="ev-item">
         <div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div>
         <div class="ev-dot ${dc}"></div>
         <div class="ev-body">
@@ -846,17 +993,30 @@ function renderBatches(){
   const tMaxS=tMax.toISOString().slice(0,10);
   const batches=['DIAB1','DIAB2','DIAB3'];
   const data={};batches.forEach(b=>{data[b]=S.events.filter(e=>e.calName===b&&e.start.slice(0,10)>=today&&e.start.slice(0,10)<=tMaxS);});
-  if(batches.every(b=>data[b].length===0)&&S.events.length===0){$('batch-list').innerHTML=`<div class="empty">Connect calendar to load batch sessions</div>`;return;}
+  const hasData=batches.some(b=>data[b].length>0)||S.events.length>0;
+  if(!hasData){$('batch-list').innerHTML=`<div class="empty">Connect calendar to load batch sessions</div>`;return;}
   $('batch-list').innerHTML=batches.map(b=>`
     <div class="batch-sec">
-      <div class="batch-hdr" onclick="this.nextElementSibling.classList.toggle('open')">
+      <div class="batch-hdr" onclick="toggleBatch('${b}',this)">
         <span class="batch-name">${b}</span>
-        <span class="batch-count">${data[b].length} session${data[b].length!==1?'s':''} · next 14 days ▾</span>
+        <div class="batch-right">
+          <span class="batch-count">${data[b].length} session${data[b].length!==1?'s':''} · next 14 days</span>
+          <span>▾</span>
+        </div>
       </div>
-      <div class="batch-body">
-        ${data[b].length?data[b].map(e=>`<div class="ev-item"><div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div><div class="ev-dot blue"></div><div class="ev-body"><div class="ev-title">${e.title}</div><div class="ev-sub">${fmtDate(e.start.slice(0,10))}</div></div></div>`).join(''):'<div class="empty" style="padding:12px">No sessions in next 14 days</div>'}
+      <div class="batch-body" id="batch-body-${b}">
+        ${data[b].length?data[b].map(e=>`<div class="ev-item"><div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div><div class="ev-dot blue"></div><div class="ev-body"><div class="ev-title">${e.title}</div><div class="ev-sub">${fmtDate(e.start.slice(0,10))}</div></div></div>`).join(''):`<div style="padding:8px 0;font-size:12.5px;color:var(--text-muted);font-style:italic;">No sessions in next 14 days</div>`}
+        <div style="margin-top:10px">
+          <div class="batch-notes-label">Batch Notes</div>
+          <textarea class="batch-notes" id="bn-${b}" placeholder="Notes for ${b}…" oninput="saveBatchNote('${b}')">${S.batchNotes[b]||''}</textarea>
+        </div>
       </div>
     </div>`).join('');
+}
+function toggleBatch(b,hdr){const body=$('batch-body-'+b);body.classList.toggle('open');}
+function saveBatchNote(b){
+  S.batchNotes[b]=$('bn-'+b).value;
+  localStorage.setItem('cmd_batch_notes',JSON.stringify(S.batchNotes));
 }
 
 // ── EMAIL ─────────────────────────────────────────────────────────────────────
@@ -888,7 +1048,7 @@ function renderEmails(){
   if(S.emailAcc!=='both')fil=fil.filter(e=>e.account===S.emailAcc);
   if(S.emailFilter==='unread')fil=fil.filter(e=>e.unread);
   const ur=S.emails.filter(e=>e.unread).length;
-  $('em-meta').textContent=ur+' unread · '+S.emails.length+' loaded';
+  $('em-meta').textContent=ur+' unread';
   if(!fil.length){$('em-list').innerHTML=`<div class="empty">${S.emails.length===0?'Connect Gmail':'No '+S.emailFilter+' emails'}</div>`;return;}
   $('em-list').innerHTML=fil.map(e=>`
     <div class="em-item ${e.unread?'unread':''}">
@@ -902,30 +1062,18 @@ function renderEmails(){
     </div>`).join('');
 }
 
-// ── GOOGLE TASKS ──────────────────────────────────────────────────────────────
+// ── TASKS ─────────────────────────────────────────────────────────────────────
 async function syncTasks(){
   if(!S.tokens.work&&!S.tokens.personal){renderLocalTasks();return;}
   const acc=S.tokens.work?'work':'personal';
   try{
-    // Get task lists
     const lists=await gFetch('https://tasks.googleapis.com/tasks/v1/users/@me/lists?maxResults=10',acc);
-    if(!lists.items||!lists.items.length){renderLocalTasks();return;}
-    // Use first list (usually "My Tasks") or find default
+    if(!lists.items?.length){renderLocalTasks();return;}
     const defaultList=lists.items.find(l=>l.title==='My Tasks')||lists.items[0];
     S.googleTaskListId=defaultList.id;
-    // Get tasks
-    const r=await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${defaultList.id}/tasks?maxResults=50&showCompleted=true&showHidden=false`,acc);
-    S.tasks=(r.items||[]).map(t=>({
-      id:t.id,text:t.title||'',
-      due:t.due?t.due.slice(0,10):'',
-      done:t.status==='completed',
-      priority:'medium',cat:'Admin',
-      notes:t.notes||'',source:'google'
-    }));
-    // Merge local tasks not in Google
-    S.localTasks.forEach(lt=>{
-      if(!S.tasks.find(gt=>gt.text===lt.text)) S.tasks.push({...lt,source:'local'});
-    });
+    const r=await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${defaultList.id}/tasks?maxResults=100&showCompleted=true`,acc);
+    S.tasks=(r.items||[]).filter(t=>t.title).map(t=>({id:t.id,text:t.title,due:t.due?t.due.slice(0,10):'',done:t.status==='completed',priority:'medium',cat:'Work',notes:t.notes||'',source:'google'}));
+    S.localTasks.forEach(lt=>{if(!S.tasks.find(gt=>gt.text===lt.text&&gt.source==='google'))S.tasks.push({...lt,source:'local'});});
     renderGoogleTasks();updateStats();
   }catch(e){console.error('Tasks',e);renderLocalTasks();}
 }
@@ -933,30 +1081,27 @@ async function addTask(){
   const text=$('nt-txt').value.trim();if(!text)return;
   const due=$('nt-due').value,pri=$('nt-pri').value,cat=$('nt-cat').value;
   const newTask={id:Date.now(),text,due,priority:pri,cat,done:false,source:'local'};
-  // Try to add to Google Tasks
   if(S.googleTaskListId&&(S.tokens.work||S.tokens.personal)){
     const acc=S.tokens.work?'work':'personal';
     try{
-      const body={title:text,notes:`[${pri}] ${cat}`,status:'needsAction'};
-      if(due) body.due=due+'T00:00:00.000Z';
+      const body={title:text,notes:`[${pri}] [${cat}]`,status:'needsAction'};
+      if(due)body.due=due+'T00:00:00.000Z';
       const created=await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks`,acc,'POST',body);
       newTask.id=created.id;newTask.source='google';
-    }catch(e){console.warn('Could not add to Google Tasks, saving locally');}
+    }catch(e){console.warn('Could not add to Google Tasks');}
   }
   S.tasks.unshift(newTask);
   S.localTasks.unshift(newTask);
   localStorage.setItem('cmd_tasks',JSON.stringify(S.localTasks));
-  $('nt-txt').value='';
-  renderGoogleTasks();updateStats();
+  $('nt-txt').value='';renderGoogleTasks();updateStats();
 }
 async function toggleTask(id){
   const task=S.tasks.find(t=>t.id==id);if(!task)return;
   task.done=!task.done;
-  // Sync to Google
-  if(task.source==='google'&&S.googleTaskListId&&(S.tokens.work||S.tokens.personal)){
+  if(task.source==='google'&&S.googleTaskListId){
     const acc=S.tokens.work?'work':'personal';
     try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'PATCH',{status:task.done?'completed':'needsAction'});}
-    catch(e){console.warn('Could not sync task status');}
+    catch(e){}
   }
   renderGoogleTasks();updateStats();
 }
@@ -965,10 +1110,9 @@ async function delTask(id){
   S.tasks=S.tasks.filter(t=>t.id!=id);
   S.localTasks=S.localTasks.filter(t=>t.id!=id);
   localStorage.setItem('cmd_tasks',JSON.stringify(S.localTasks));
-  if(task&&task.source==='google'&&S.googleTaskListId&&(S.tokens.work||S.tokens.personal)){
+  if(task?.source==='google'&&S.googleTaskListId){
     const acc=S.tokens.work?'work':'personal';
-    try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'DELETE');}
-    catch(e){}
+    try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'DELETE');}catch(e){}
   }
   renderGoogleTasks();updateStats();
 }
@@ -986,7 +1130,7 @@ function renderGoogleTasks(){
   $('tk-list').innerHTML=fil.map(t=>{
     const dl=t.due?(t.due===today?'Today':t.due<today?'Overdue':fmtDate(t.due)):'';
     const dc=!t.done&&t.due&&t.due<today?'ov':t.due===today?'td':'';
-    return `<div class="tk-item">
+    return`<div class="tk-item">
       <div class="tk-chk ${t.done?'done':''}" onclick="toggleTask('${t.id}')">${t.done?'✓':''}</div>
       <div class="tk-body">
         <div class="tk-text ${t.done?'done':''}">${t.text}</div>
@@ -994,7 +1138,7 @@ function renderGoogleTasks(){
           ${dl?`<span class="tk-due ${dc}">${dl}</span>`:''}
           <span class="tpri ${t.priority}">${t.priority}</span>
           <span class="tcat">${t.cat}</span>
-          ${t.source==='google'?'<span class="tcat" style="color:var(--blue)">G</span>':''}
+          ${t.source==='google'?'<span style="font-family:IBM Plex Mono,monospace;font-size:8px;color:var(--blue)">G</span>':''}
         </div>
       </div>
       <button class="del" onclick="delTask('${t.id}')">✕</button>
@@ -1003,54 +1147,14 @@ function renderGoogleTasks(){
 }
 function renderLocalTasks(){S.tasks=[...S.localTasks];renderGoogleTasks();}
 
-// ── TIDYCAL ───────────────────────────────────────────────────────────────────
-async function syncTidyCal(){
-  $('tc-list').innerHTML='<div class="empty">Loading bookings…</div>';
-  try{
-    const r=await fetch('https://app.tidycal.com/api/bookings?page=1',{headers:{Authorization:`Bearer ${TIDYCAL_TOKEN}`,'Accept':'application/json'}});
-    if(!r.ok)throw new Error('TidyCal API error: '+r.status);
-    const d=await r.json();
-    const bookings=(d.data||d.bookings||d||[]).filter(b=>{
-      const s=b.starts_at||b.start_time||b.scheduled_at||'';
-      return s&&new Date(s)>=new Date();
-    }).sort((a,b)=>{
-      const sa=a.starts_at||a.start_time||'',sb=b.starts_at||b.start_time||'';
-      return new Date(sa)-new Date(sb);
-    });
-    $('sn-tc').textContent=bookings.length;
-    $('ss-tc').textContent=bookings.length+' upcoming';
-    if(!bookings.length){$('tc-list').innerHTML='<div class="empty">No upcoming bookings</div>';return;}
-    $('tc-list').innerHTML=bookings.slice(0,15).map(b=>{
-      const dt=new Date(b.starts_at||b.start_time||'');
-      const name=b.contact_name||b.invitee_name||b.name||'Client';
-      const svc=b.booking_type_name||b.event_type||b.service||'Booking';
-      return `<div class="tc-item">
-        <div>
-          <div class="tc-date">${dt.getDate()}</div>
-          <div class="tc-month">${dt.toLocaleString('en-IN',{month:'short'})}</div>
-        </div>
-        <div class="tc-body">
-          <div class="tc-name">${name}</div>
-          <div class="tc-meta">${fmtTime(dt.toISOString())} · ${dt.toLocaleDateString('en-IN',{weekday:'short'})}</div>
-          <span class="tc-svc">${svc}</span>
-        </div>
-      </div>`;
-    }).join('');
-    $('tc-meta').textContent=bookings.length+' upcoming';
-  }catch(e){
-    console.error('TidyCal',e);
-    $('tc-list').innerHTML='<div class="empty">Could not load TidyCal bookings.<br><small style="font-family:monospace;font-size:10px">'+e.message+'</small></div>';
-    $('sn-tc').textContent='—';
-  }
-}
-
 // ── YOUTUBE ───────────────────────────────────────────────────────────────────
 async function syncYouTube(){
-  if(!S.tokens.work){$('yt-list').innerHTML='<div class="empty">Connect work account for YouTube</div>';return;}
+  // YouTube on personal account
+  const acc=S.tokens.personal?'personal':(S.tokens.work?'work':null);
+  if(!acc){$('yt-list').innerHTML='<div class="empty">Connect personal account for YouTube</div>';return;}
   try{
-    // Channel stats
-    const ch=await gFetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&mine=true','work');
-    if(ch.items&&ch.items.length){
+    const ch=await gFetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&mine=true',acc);
+    if(ch.items?.length){
       const s=ch.items[0].statistics;
       const subs=parseInt(s.subscriberCount||0);
       $('yt-subs').textContent=fmtNum(subs);
@@ -1060,12 +1164,11 @@ async function syncYouTube(){
       $('ss-yt').textContent=ch.items[0].snippet.title;
       $('yt-meta').textContent=ch.items[0].snippet.title;
     }
-    // Recent videos
-    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=5','work');
-    if(vids.items&&vids.items.length){
+    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=5',acc);
+    if(vids.items?.length){
       $('yt-list').innerHTML=vids.items.map(v=>`
         <div class="yt-video">
-          <img class="yt-thumb" src="${v.snippet.thumbnails?.default?.url||''}" alt="" />
+          <img class="yt-thumb" src="${v.snippet.thumbnails?.default?.url||''}" alt=""/>
           <div class="yt-vbody">
             <div class="yt-vtitle">${v.snippet.title}</div>
             <div class="yt-vmeta">${fmtEmailTime(v.snippet.publishedAt)}</div>
@@ -1075,43 +1178,15 @@ async function syncYouTube(){
   }catch(e){console.error('YouTube',e);$('yt-list').innerHTML='<div class="empty">Could not load YouTube data</div>';}
 }
 
-// ── SENDFOX ───────────────────────────────────────────────────────────────────
-async function syncSendFox(){
-  try{
-    const headers={Authorization:`Bearer ${SENDFOX_TOKEN}`,'Accept':'application/json'};
-    // Lists
-    const lists=await fetch('https://api.sendfox.com/lists',{headers}).then(r=>r.json());
-    const totalSubs=(lists.data||[]).reduce((s,l)=>s+(l.count||l.subscribers_count||0),0);
-    $('sf-subs').textContent=fmtNum(totalSubs);
-    $('sf-lists').textContent=(lists.data||[]).length;
-    // Campaigns
-    const camps=await fetch('https://api.sendfox.com/campaigns',{headers}).then(r=>r.json());
-    const campData=camps.data||[];
-    $('sf-camps').textContent=campData.length;
-    $('sf-meta').textContent=campData.length+' campaigns · '+fmtNum(totalSubs)+' subscribers';
-    if(!campData.length){$('sf-list').innerHTML='<div class="empty">No campaigns yet</div>';return;}
-    $('sf-list').innerHTML=campData.slice(0,6).map(c=>`
-      <div class="sf-camp">
-        <div class="sf-cname">${c.name||c.subject||'Campaign'}</div>
-        <div class="sf-cstats">
-          ${c.open_rate?'Opens: '+Math.round(c.open_rate)+'%':''}
-          ${c.click_rate?' · Clicks: '+Math.round(c.click_rate)+'%':''}
-          ${c.sent_at?'<br>'+fmtEmailTime(c.sent_at):''}
-        </div>
-      </div>`).join('');
-  }catch(e){console.error('SendFox',e);$('sf-list').innerHTML='<div class="empty">Could not load SendFox data</div>';}
-}
-
 // ── DRIVE ─────────────────────────────────────────────────────────────────────
 async function syncDrive(){
   const acc=S.tokens.work?'work':'personal';
-  if(!S.tokens[acc]){return;}
+  if(!S.tokens[acc])return;
   try{
     const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=10&orderBy=modifiedTime desc&fields=files(id,name,mimeType,modifiedTime,webViewLink)&q=trashed=false`,acc);
     const files=r.files||[];
-    $('dr-meta').textContent=files.length+' recent files';
-    $('sn-drive') && ($('sn-drive').textContent=files.length);
-    const icons={'application/vnd.google-apps.document':'📄','application/vnd.google-apps.spreadsheet':'📊','application/vnd.google-apps.presentation':'📑','application/vnd.google-apps.folder':'📁','application/pdf':'📋','application/vnd.google-apps.form':'📋'};
+    $('dr-meta').textContent=files.length+' recent';
+    const icons={'application/vnd.google-apps.document':'📄','application/vnd.google-apps.spreadsheet':'📊','application/vnd.google-apps.presentation':'📑','application/vnd.google-apps.folder':'📁','application/pdf':'📋','application/vnd.google-apps.form':'📋','application/vnd.openxmlformats-officedocument.wordprocessingml.document':'📝'};
     $('dr-list').innerHTML=files.map(f=>`
       <a class="dr-item" href="${f.webViewLink}" target="_blank">
         <div class="dr-icon">${icons[f.mimeType]||'📄'}</div>
@@ -1126,29 +1201,25 @@ async function syncDrive(){
 // ── FORMS ─────────────────────────────────────────────────────────────────────
 async function syncForms(){
   const acc=S.tokens.work?'work':'personal';
-  if(!S.tokens[acc]){return;}
+  if(!S.tokens[acc])return;
   try{
-    // Find Google Forms in Drive
     const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=10&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime,webViewLink)&q=mimeType='application/vnd.google-apps.form' and trashed=false`,acc);
     const forms=r.files||[];
     $('forms-meta').textContent=forms.length+' forms';
     if(!forms.length){$('forms-list').innerHTML='<div class="empty">No Google Forms found</div>';return;}
-    // Get response counts via Forms API
-    const formDetails=await Promise.all(forms.slice(0,5).map(async f=>{
-      try{
-        const resp=await gFetch(`https://forms.googleapis.com/v1/forms/${f.id}/responses?pageSize=1`,acc);
-        return{...f,responseCount:resp.totalSize||0};
-      }catch(e){return{...f,responseCount:'?'};}
+    const details=await Promise.all(forms.slice(0,6).map(async f=>{
+      try{const resp=await gFetch(`https://forms.googleapis.com/v1/forms/${f.id}/responses?pageSize=1`,acc);return{...f,count:resp.totalSize||0};}
+      catch(e){return{...f,count:'?'};}
     }));
-    $('forms-list').innerHTML=formDetails.map(f=>`
+    $('forms-list').innerHTML=details.map(f=>`
       <a class="dr-item" href="${f.webViewLink}" target="_blank">
         <div class="dr-icon">📋</div>
         <div class="dr-body">
           <div class="dr-name">${f.name}</div>
-          <div class="dr-meta">${f.responseCount} responses · Modified ${fmtEmailTime(f.modifiedTime)}</div>
+          <div class="dr-meta">${f.count} responses · ${fmtEmailTime(f.modifiedTime)}</div>
         </div>
       </a>`).join('');
-  }catch(e){$('forms-list').innerHTML='<div class="empty">Could not load Forms data</div>';}
+  }catch(e){$('forms-list').innerHTML='<div class="empty">Could not load Forms</div>';}
 }
 
 // ── DEADLINES ─────────────────────────────────────────────────────────────────
@@ -1157,17 +1228,20 @@ function addDeadline(){
   S.deadlines.push({id:Date.now(),title:t,date:d,cat:$('nd-cat').value});
   S.deadlines.sort((a,b)=>a.date.localeCompare(b.date));
   localStorage.setItem('cmd_dl',JSON.stringify(S.deadlines));
-  $('nd-title').value='';tog('add-dl-form');renderDeadlines();
+  $('nd-title').value='';tog('add-dl-form');renderDeadlines();updateStats();
 }
-function delDL(id){S.deadlines=S.deadlines.filter(d=>d.id!==id);localStorage.setItem('cmd_dl',JSON.stringify(S.deadlines));renderDeadlines();}
+function delDL(id){S.deadlines=S.deadlines.filter(d=>d.id!==id);localStorage.setItem('cmd_dl',JSON.stringify(S.deadlines));renderDeadlines();updateStats();}
 function renderDeadlines(){
   const today=todayStr();
+  const upcoming=S.deadlines.filter(d=>Math.ceil((new Date(d.date)-new Date(today))/86400000)<=30).length;
+  $('sn-dl').textContent=upcoming||S.deadlines.length;$('sn-dl').className='sc-num'+(upcoming===0?' zero':'');
+  $('ss-dl').textContent=upcoming+' in next 30 days';
   if(!S.deadlines.length){$('dl-list').innerHTML='<div class="empty">No deadlines yet</div>';return;}
   $('dl-list').innerHTML=S.deadlines.map(d=>{
     const days=Math.ceil((new Date(d.date)-new Date(today))/86400000);
     const cls=days<=3?'urgent':days<=10?'soon':'ok';
     const label=days<0?Math.abs(days)+'d ago':days===0?'Today':days+'d';
-    return `<div class="dl-item">
+    return`<div class="dl-item">
       <div class="dl-days ${cls}">${label}</div>
       <div class="dl-sep"></div>
       <div class="dl-body">
@@ -1185,6 +1259,24 @@ function saveNote(){
   S.noteTimer=setTimeout(()=>{localStorage.setItem('cmd_note',$('note-ta').value);$('note-saved').textContent='saved ✓';},800);
 }
 
+// ── QUICK COMPOSE ─────────────────────────────────────────────────────────────
+async function composeEmail(){
+  const txt=$('compose-in').value.trim();if(!txt)return;
+  const result=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher and practitioner in Chennai. Turn this rough note into a polished, warm, professional email. Include Subject line. Keep it concise.\n\nRough note: ${txt}`);
+  showCompose(result);
+}
+async function composeWhatsApp(){
+  const txt=$('compose-in').value.trim();if(!txt)return;
+  const result=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher. Turn this rough note into a warm, natural WhatsApp message. Conversational tone, no formal email structure.\n\nRough note: ${txt}`);
+  showCompose(result);
+}
+function showCompose(text){
+  const el=$('compose-result');el.textContent=text;el.style.display='block';
+  $('compose-copy-row').style.display='flex';
+}
+function copyCompose(){navigator.clipboard.writeText($('compose-result').textContent).then(()=>alert('Copied to clipboard!'));}
+function clearCompose(){$('compose-in').value='';$('compose-result').style.display='none';$('compose-copy-row').style.display='none';$('compose-result').textContent='';}
+
 // ── STATS ─────────────────────────────────────────────────────────────────────
 function updateStats(){
   const today=todayStr();
@@ -1196,45 +1288,45 @@ function updateStats(){
   $('sn-tk').textContent=tk;$('sn-tk').className='sc-num'+(tk===0?' zero':'');
   $('ss-em').textContent=ur+' unread · both accounts';
   $('ss-ev').textContent=ev+' event'+(ev!==1?'s':'')+' today';
-  $('ss-tk').textContent=tk+' pending task'+(tk!==1?'s':'');
+  $('ss-tk').textContent=tk+' pending';
 }
-
-// ── SCROLL ────────────────────────────────────────────────────────────────────
-function scrollTo2(id){$(id).scrollIntoView({behavior:'smooth',block:'start'});}
 
 // ── AI (GEMINI) ───────────────────────────────────────────────────────────────
-const SYS_CTX=`You are the personal AI assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author (writing "Essentials of Jyotiṣa", Guru Press), PhD candidate, APAI Chronycle journal editor, Chennai. Projects: book production in Apple Pages, Diploma Programme (DIAB1/DIAB2/DIAB3, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), client consultations, journal editing. Income: consultations, courses, honorariums, editing, book sales. Be concise, direct, practical.`;
+const SYS=`You are the personal AI assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author ("Essentials of Jyotiṣa"), PhD candidate, APAI Chronycle journal editor, Chennai, India. His projects: book formatting (Ch 4/12), PhD (Ch 2/9, 2 weeks/chapter), Diploma Programme (DIAB1/DIAB2/DIAB3, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), client consultations, journal editing. Be concise, direct, practical. No fluff.`;
 
 async function callGemini(prompt){
-  const el=$('ai-resp');el.className='ai-resp';el.textContent='Thinking…';
-  $('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});
   try{
-    const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:SYS_CTX+'\n\n'+prompt}]}],generationConfig:{maxOutputTokens:1000,temperature:0.7}})
-    });
+    const r=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:SYS+'\n\n'+prompt}]}],generationConfig:{maxOutputTokens:800,temperature:0.7}})});
     const d=await r.json();
-    if(d.error) throw new Error(d.error.message);
-    el.textContent=d.candidates?.[0]?.content?.parts?.[0]?.text||'No response.';
-  }catch(e){el.textContent='AI error: '+e.message;console.error('Gemini',e);}
+    if(d.error)throw new Error(d.error.message);
+    return d.candidates?.[0]?.content?.parts?.[0]?.text||'No response.';
+  }catch(e){return'AI error: '+e.message;}
 }
+async function showAI(text){const el=$('ai-resp');el.className='ai-resp';el.textContent=text;$('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function getCtx(){
   const today=todayStr();
-  return `Today: ${today}
+  return`Today: ${today}
 Events today: ${S.events.filter(e=>e.start.slice(0,10)===today).map(e=>`${fmtTime(e.start)} ${e.title} [${e.calName||e.account}]`).join(', ')||'none'}
 Deadlines: ${S.deadlines.slice(0,5).map(d=>`${d.title} ${d.date} (${d.cat})`).join(', ')||'none'}
 Pending tasks: ${S.tasks.filter(t=>!t.done).slice(0,10).map(t=>`[${t.priority}] ${t.text} due:${t.due||'—'} ${t.cat}`).join('; ')||'none'}
 Unread emails: ${S.emails.filter(e=>e.unread).slice(0,8).map(e=>`[${e.account}] ${e.sender}: ${e.subject}`).join('; ')||'none'}
-Notes: ${(localStorage.getItem('cmd_note')||'').slice(0,300)||'none'}`;
+Focus today: ${[$('f1')?.value,$('f2')?.value,$('f3')?.value].filter(Boolean).join(' · ')||'not set'}
+Notes: ${(localStorage.getItem('cmd_note')||'').slice(0,200)||'none'}`;
 }
-function askAI(){const q=$('ai-in').value.trim();if(!q)return;$('ai-in').value='';callGemini(`Context:\n${getCtx()}\n\nQuestion: ${q}`);}
-function aiBriefing(){callGemini(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, any deadlines coming up soon, top 3 focus items. Under 200 words.`);}
-function aiSummariseEmails(){
-  if(!S.emails.length){alert('No emails loaded yet.');return;}
-  const list=S.emails.slice(0,15).map(e=>`[${e.account}] ${e.sender}: ${e.subject} | ${e.unread?'UNREAD':'read'}\n${e.snippet}`).join('\n\n');
-  callGemini(`Summarise these emails and flag what needs reply or action:\n\n${list}`);
+async function askAI(){
+  const q=$('ai-in').value.trim();if(!q)return;$('ai-in').value='';
+  $('ai-resp').className='ai-resp';$('ai-resp').textContent='Thinking…';
+  showAI(await callGemini(`Context:\n${getCtx()}\n\nQuestion: ${q}`));
 }
-function aiExpandNote(){const t=$('note-ta').value.trim();if(!t){alert('Notes are empty.');return;}callGemini(`Structure and expand these raw notes into clear, actionable items:\n\n${t}`);}
+async function aiBriefing(){
+  $('ai-resp').className='ai-resp';$('ai-resp').textContent='Preparing your briefing…';
+  showAI(await callGemini(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, deadlines coming up, and my top 3 focus items. Under 200 words.`));
+}
+async function aiExpandNote(){
+  const t=$('note-ta').value.trim();if(!t){alert('Notes are empty.');return;}
+  $('ai-resp').className='ai-resp';$('ai-resp').textContent='Expanding notes…';
+  showAI(await callGemini(`Structure and expand these raw notes into clear, actionable items:\n\n${t}`));
+}
 $('ai-in').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
 // ── GOOGLE FETCH ──────────────────────────────────────────────────────────────
@@ -1250,7 +1342,7 @@ async function gFetch(url,account,method='GET',body=null){
 }
 
 // ── UTILS ─────────────────────────────────────────────────────────────────────
-function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function todayStr(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmtDate(ds){if(!ds)return'';const d=new Date(ds+'T00:00:00');return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});}
 function fmtTime(dt){if(!dt||dt.length===10)return'All day';const d=new Date(dt);return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});}
 function fmtEmailTime(ds){if(!ds)return'';const d=new Date(ds),t=new Date();t.setHours(0,0,0,0);const y=new Date(t);y.setDate(t.getDate()-1);if(d>=t)return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});if(d>=y)return'Yesterday';return d.toLocaleDateString('en-IN',{day:'numeric',month:'short'});}
