@@ -433,21 +433,6 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 <!-- MAIN -->
 <div class="main">
 
-  <!-- AI -->
-  <div class="ai-strip" id="panel-ai">
-    <div class="ai-hdr">
-      <div class="ai-dot"></div>
-      <div class="ai-ttl">✦ AI Assistant</div>
-      <button class="btn p" onclick="aiBriefing()">Daily Briefing</button>
-      <button class="btn" onclick="aiExpandNote()">Expand Notes</button>
-    </div>
-    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a full summary of your day, or ask anything below…</div>
-    <div class="ai-row">
-      <input class="ai-inp" id="ai-in" placeholder="What should I focus on today? · Summarise my emails · Help draft a reply…"/>
-      <button class="btn p" onclick="askAI()">Ask ↵</button>
-    </div>
-  </div>
-
   <!-- TODAY'S FOCUS -->
   <div class="panel">
     <div class="ph">
@@ -676,7 +661,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       <div class="compose-area">
         <textarea class="compose-ta" id="compose-in" placeholder="Write your rough message… e.g. 'tell student Priya her chart interpretation was strong but needs more on house lords'"></textarea>
         <div class="compose-acts">
-          <button class="btn p" onclick="composeEmail()">✦ Polish as Email</button>
+          <button class="btn p" onclick="composeEmail()">Polish as Email</button>
           <button class="btn" onclick="composeWA()">Polish as WhatsApp</button>
           <button class="btn" onclick="clearCompose()">Clear</button>
         </div>
@@ -691,7 +676,6 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       <div class="ph">
         <div class="pt">◇ Notes</div>
         <div class="pacts">
-          <button class="btn p" onclick="aiExpandNote()">AI Expand</button>
           <button class="btn" onclick="if(confirm('Clear notes?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
         </div>
       </div>
@@ -714,8 +698,8 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 <script>
 // ── KEYS ─────────────────────────────────────────────────────────────────────
 const CLIENT_ID='628443819075-2chd41al5oegn74fdfk6186pq7ke5iu9.apps.googleusercontent.com';
-const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/forms.responses.readonly';
-const GEMINI_KEY='AIzaSyDH_hdYgT_5_gbyYI4xLfQNOVSg9eo49aY';
+const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/forms.responses.readonly';
+const YT_SCOPES='https://www.googleapis.com/auth/youtube.readonly';
 const SHEET_ID='1tZG5UJD-tsdUq9VPvkEg7dEqs8o1VPzIL6ldcr4B9fo';
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
@@ -756,7 +740,7 @@ async function loadWeather(){
 loadWeather();
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
-let tokenClient=null,signingIn=null;
+let tokenClient=null,ytTokenClient=null,signingIn=null;
 function initGoogleAuth(){
   tokenClient=google.accounts.oauth2.initTokenClient({
     client_id:CLIENT_ID,scope:SCOPES,
@@ -767,6 +751,17 @@ function initGoogleAuth(){
       updateBadges();
       $('login-msg').textContent=`✓ ${signingIn==='work'?'Work':'Personal'} connected. ${Object.keys(S.tokens).length===1?'Connect the second account or skip.':'Both accounts connected!'}`;
       if(Object.keys(S.tokens).length>=1)setTimeout(launchDashboard,800);
+    }
+  });
+  ytTokenClient=google.accounts.oauth2.initTokenClient({
+    client_id:CLIENT_ID,scope:YT_SCOPES,
+    prompt:'select_account',
+    callback:(resp)=>{
+      if(resp.error){console.error('YT auth error',resp);return;}
+      S.tokens.youtube=resp.access_token;
+      localStorage.setItem('cmd_tokens',JSON.stringify(S.tokens));
+      const byt=$('b-yt');if(byt)byt.classList.add('on');
+      syncYouTube();
     }
   });
   if(Object.keys(S.tokens).length>0)launchDashboard();
@@ -780,16 +775,16 @@ function launchDashboard(){
   $('note-ta').value=localStorage.getItem('cmd_note')||'';
   loadFocus();renderDeadlines();renderMilestones();renderLocalTasks();updateStats();
   if(Object.keys(S.tokens).length>0){
-    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncYouTube();syncAnalytics();
+    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncAnalytics();
   }
 }
 function updateBadges(){
   ['work','personal'].forEach(a=>{const b=$('b-'+a);if(b)b.classList.toggle('on',!!S.tokens[a]);});
-  const byt=$('b-yt');if(byt)byt.classList.toggle('on',!!S.tokens.personal);
+  const byt=$('b-yt');if(byt)byt.classList.toggle('on',!!S.tokens.youtube);
 }
 async function refreshAll(){
   if(!Object.keys(S.tokens).length){alert('Connect a Google account first.');return;}
-  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncYouTube(),syncAnalytics()]);
+  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncAnalytics()]);
   updateStats();
 }
 
@@ -1107,22 +1102,30 @@ function fmtMonth(m){
 
 // ── YOUTUBE ───────────────────────────────────────────────────────────────────
 async function syncYouTube(){
-  const acc=S.tokens.personal?'personal':(S.tokens.work?'work':null);
-  if(!acc){$('yt-list').innerHTML='<div class="empty">Connect personal account for YouTube</div>';return;}
+  // If no youtube token yet, trigger separate account selection
+  if(!S.tokens.youtube){
+    if(!ytTokenClient){setTimeout(syncYouTube,500);return;}
+    ytTokenClient.requestAccessToken();
+    return;
+  }
   try{
-    const ch=await gFetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&mine=true',acc);
+    const ch=await gFetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&mine=true','youtube');
     if(ch.items?.length){
       const s=ch.items[0].statistics;
       const subs=parseInt(s.subscriberCount||0);
       $('yt-subs').textContent=fmtNum(subs);$('yt-views').textContent=fmtNum(parseInt(s.viewCount||0));$('yt-vids').textContent=fmtNum(parseInt(s.videoCount||0));
       $('sn-yt').textContent=fmtNum(subs);$('ss-yt').textContent=ch.items[0].snippet.title;$('yt-meta').textContent=ch.items[0].snippet.title;
-      const byt=$('b-yt');if(byt){byt.classList.add('on');}
+      const byt=$('b-yt');if(byt)byt.classList.add('on');
     }
-    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=4',acc);
+    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=4','youtube');
     if(vids.items?.length){
       $('yt-list').innerHTML=vids.items.map(v=>`<div class="yt-video"><img class="yt-thumb" src="${v.snippet.thumbnails?.default?.url||''}" alt=""/><div class="yt-vbody"><div class="yt-vtitle">${v.snippet.title}</div><div class="yt-vmeta">${fmtEmailTime(v.snippet.publishedAt)}</div></div></div>`).join('');
     }
-  }catch(e){console.error('YouTube',e);$('yt-list').innerHTML='<div class="empty">Could not load YouTube</div>';}
+  }catch(e){
+    // Token may be expired — re-auth
+    if(e.status===401){delete S.tokens.youtube;localStorage.setItem('cmd_tokens',JSON.stringify(S.tokens));syncYouTube();return;}
+    console.error('YouTube',e);$('yt-list').innerHTML='<div class="empty">Could not load YouTube</div>';
+  }
 }
 
 // ── DRIVE ─────────────────────────────────────────────────────────────────────
@@ -1244,59 +1247,18 @@ function updateStats(){
   $('ss-dl').textContent=dl+' in next 30 days';
 }
 
-// ── QUICK COMPOSE ─────────────────────────────────────────────────────────────
-async function composeEmail(){const txt=$('compose-in').value.trim();if(!txt)return;const r=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher in Chennai. Turn this rough note into a polished, warm, professional email. Include Subject line. Keep concise.\n\nRough: ${txt}`);showCompose(r);}
-async function composeWA(){const txt=$('compose-in').value.trim();if(!txt)return;const r=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher. Turn this into a warm, natural WhatsApp message. Conversational, no formal structure.\n\nRough: ${txt}`);showCompose(r);}
+// ── QUICK COMPOSE (plain, no AI) ─────────────────────────────────────────────
+function composeEmail(){
+  const txt=$('compose-in').value.trim();if(!txt)return;
+  showCompose('[Email draft — copy and refine in Gmail]\n\nSubject: \n\n'+txt);
+}
+function composeWA(){
+  const txt=$('compose-in').value.trim();if(!txt)return;
+  showCompose(txt);
+}
 function showCompose(text){const el=$('compose-result');el.textContent=text;el.style.display='block';$('compose-copy-row').style.display='flex';}
 function copyCompose(){navigator.clipboard.writeText($('compose-result').textContent).then(()=>{const btn=event.target;btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy to Clipboard',2000);});}
 function clearCompose(){$('compose-in').value='';$('compose-result').style.display='none';$('compose-copy-row').style.display='none';$('compose-result').textContent='';}
-
-// ── AI (GEMINI with fallback) ─────────────────────────────────────────────────
-const MODELS=['gemini-2.0-flash','gemini-1.5-flash-latest'];
-const SYS=`You are the personal AI assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author ("Essentials of Jyotiṣa"), PhD candidate, APAI Chronycle journal editor, Chennai. Projects: book formatting Ch 4/12, PhD Ch 2/9 (2 weeks/chapter), Diploma Programme (DIAB1/DIAB2/DIAB3, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), client consultations. Be concise, direct, practical.`;
-
-async function callGemini(prompt){
-  for(const model of MODELS){
-    try{
-      const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`,{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({contents:[{role:'user',parts:[{text:SYS+'\n\n'+prompt}]}],generationConfig:{maxOutputTokens:800,temperature:0.7}})
-      });
-      const d=await r.json();
-      if(d.error){console.warn(`Model ${model} failed:`,d.error.message);continue;}
-      const text=d.candidates?.[0]?.content?.parts?.[0]?.text;
-      if(text)return text;
-    }catch(e){console.warn(`Model ${model} error:`,e);}
-  }
-  return'AI unavailable. Both models failed — check your API key.';
-}
-function getCtx(){
-  const today=todayStr();
-  return`Today: ${today}
-Events today: ${S.events.filter(e=>e.start.slice(0,10)===today).map(e=>`${fmtTime(e.start)} ${e.title} [${e.calName||e.account}]`).join(', ')||'none'}
-Deadlines: ${S.deadlines.slice(0,5).map(d=>`${d.title} ${d.date} (${d.cat})`).join(', ')||'none'}
-Pending tasks: ${S.tasks.filter(t=>!t.done).slice(0,10).map(t=>`[${t.priority}] ${t.text} due:${t.due||'—'} ${t.cat}`).join('; ')||'none'}
-Unread emails: ${S.emails.filter(e=>e.unread).slice(0,8).map(e=>`[${e.account}] ${e.sender}: ${e.subject}`).join('; ')||'none'}
-Focus today: ${[$('f1')?.value,$('f2')?.value,$('f3')?.value].filter(Boolean).join(' · ')||'not set'}
-Notes: ${(localStorage.getItem('cmd_note')||'').slice(0,200)||'none'}`;
-}
-async function askAI(){
-  const q=$('ai-in').value.trim();if(!q)return;$('ai-in').value='';
-  $('ai-resp').className='ai-resp';$('ai-resp').textContent='Thinking…';
-  $('ai-resp').textContent=await callGemini(`Context:\n${getCtx()}\n\nQuestion: ${q}`);
-}
-async function aiBriefing(){
-  $('ai-resp').className='ai-resp';$('ai-resp').textContent='Preparing your briefing…';
-  $('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});
-  $('ai-resp').textContent=await callGemini(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, any deadlines coming up, top 3 focus items. Under 200 words.`);
-}
-async function aiExpandNote(){
-  const t=$('note-ta').value.trim();if(!t){alert('Notes are empty.');return;}
-  $('ai-resp').className='ai-resp';$('ai-resp').textContent='Expanding notes…';
-  $('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});
-  $('ai-resp').textContent=await callGemini(`Structure and expand these raw notes into clear, actionable items:\n\n${t}`);
-}
-$('ai-in').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
 // ── GOOGLE FETCH ──────────────────────────────────────────────────────────────
 async function gFetch(url,account,method='GET',body=null){
