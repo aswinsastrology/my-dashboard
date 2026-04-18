@@ -7,25 +7,24 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://apis.google.com/js/api.js"></script>
 <script src="https://accounts.google.com/gsi/client"></script>
-<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 <style>
 :root{
   --bg:#fbf6ee;--surface:#f5ede0;--surface2:#ede3d3;
   --border:#e2d6c4;--border-dark:#c9baa8;
   --text:#1a1208;--text-muted:#8a7a68;--text-dim:#c4b8a8;
   --accent:#ff610b;--accent-bg:rgba(255,97,11,0.07);
-  --green:#2d7a4f;--green-bg:rgba(45,122,79,0.07);
-  --blue:#1a5c8a;--blue-bg:rgba(26,92,138,0.07);
-  --red:#b83232;--red-bg:rgba(184,50,50,0.07);
-  --purple:#6b3fa0;--purple-bg:rgba(107,63,160,0.07);
-  --gold:#9a7200;--gold-bg:rgba(154,114,0,0.07);
+  --green:#2d7a4f;--green-bg:rgba(45,122,79,0.08);
+  --blue:#1a5c8a;--blue-bg:rgba(26,92,138,0.08);
+  --red:#b83232;--red-bg:rgba(184,50,50,0.08);
+  --purple:#6b3fa0;--purple-bg:rgba(107,63,160,0.08);
+  --gold:#9a7200;--gold-bg:rgba(154,114,0,0.08);
   --radius:10px;--shadow:0 2px 14px rgba(0,0,0,0.055);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-weight:300;min-height:100vh;font-size:14px;line-height:1.55;}
 
-/* ── TOPBAR ── */
+/* TOPBAR */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:11px 24px;background:var(--text);position:sticky;top:0;z-index:400;gap:10px;flex-wrap:wrap;}
 .t-logo{font-family:'EB Garamond',serif;font-size:20px;color:var(--bg);}
 .t-logo span{color:var(--accent);}
@@ -41,7 +40,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .btn-ref{font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;padding:4px 10px;border-radius:4px;border:1px solid #444;cursor:pointer;background:transparent;color:#888;transition:all 0.15s;}
 .btn-ref:hover{border-color:var(--accent);color:var(--accent);}
 
-/* ── SUMMARY BAR ── */
+/* SUMMARY BAR */
 .sumbar{display:grid;grid-template-columns:repeat(6,1fr);background:#fff;border-bottom:2px solid var(--accent);box-shadow:var(--shadow);}
 .sc{padding:13px 16px;border-right:1px solid var(--border);cursor:pointer;transition:background 0.15s;position:relative;}
 .sc:last-child{border-right:none;}
@@ -51,12 +50,12 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .sc-label{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-top:3px;}
 .sc-sub{font-size:11px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
-/* ── MAIN ── */
+/* MAIN */
 .main{padding:18px 22px;display:flex;flex-direction:column;gap:16px;max-width:1600px;margin:0 auto;}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 
-/* ── PANEL ── */
+/* PANEL */
 .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .ph{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;gap:8px;}
 .pt{font-family:'EB Garamond',serif;font-size:16px;font-weight:500;display:flex;align-items:center;gap:7px;}
@@ -69,7 +68,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .btn.act{border-color:var(--accent);color:var(--accent);}
 .btn.g{background:var(--green);border-color:var(--green);color:#fff;}
 
-/* ── AI STRIP ── */
+/* AI STRIP */
 .ai-strip{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
 .ai-hdr{padding:11px 16px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
 .ai-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite;flex-shrink:0;}
@@ -82,23 +81,23 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .ai-inp:focus{border-color:var(--accent);}
 .ai-inp::placeholder{color:var(--text-dim);font-style:italic;}
 
-/* ── TODAY'S FOCUS ── */
+/* TODAY'S FOCUS */
 .focus-wrap{padding:14px 16px;display:flex;gap:12px;flex-wrap:wrap;}
 .focus-item{flex:1;min-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
 .focus-num{font-family:'EB Garamond',serif;font-size:22px;color:var(--accent);line-height:1;flex-shrink:0;}
-.focus-inp{flex:1;background:transparent;border:none;outline:none;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);font-weight:400;}
+.focus-inp{flex:1;background:transparent;border:none;outline:none;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);}
 .focus-inp::placeholder{color:var(--text-dim);font-style:italic;}
 
-/* ── SECTION HEADER ── */
+/* SEC HDR */
 .sec-hdr{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-dim);padding:5px 16px;border-bottom:1px solid var(--border);background:var(--surface);}
 
-/* ── FILTER ROW ── */
+/* FILTER ROW */
 .frow{display:flex;gap:5px;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;}
 .chip{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:0.06em;padding:3px 8px;border-radius:20px;border:1px solid var(--border-dark);cursor:pointer;white-space:nowrap;background:transparent;color:var(--text-muted);transition:all 0.15s;}
 .chip.active{background:var(--accent);border-color:var(--accent);color:#fff;}
 .chip:hover:not(.active){border-color:var(--text);color:var(--text);}
 
-/* ── EVENTS ── */
+/* EVENTS */
 .ev-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .ev-item:last-child{border-bottom:none;}
 .ev-item:hover{background:var(--surface);}
@@ -118,7 +117,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .etag.gold{background:var(--gold-bg);color:var(--gold);}
 .zoom-link{display:inline-flex;align-items:center;gap:3px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--blue);text-decoration:none;margin-top:3px;}
 
-/* ── EMAIL ── */
+/* EMAIL */
 .em-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .em-item:last-child{border-bottom:none;}
 .em-item:hover{background:var(--surface);}
@@ -135,7 +134,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .em-acc{font-family:'IBM Plex Mono',monospace;font-size:7.5px;padding:1px 5px;border-radius:3px;background:var(--blue-bg);color:var(--blue);display:inline-block;margin-top:2px;}
 .em-acc.personal{background:var(--green-bg);color:var(--green);}
 
-/* ── TASKS ── */
+/* TASKS */
 .tk-item{display:flex;gap:9px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:flex-start;transition:background 0.1s;}
 .tk-item:last-child{border-bottom:none;}
 .tk-item:hover{background:var(--surface);}
@@ -155,109 +154,134 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .tpri.low{background:var(--green-bg);color:var(--green);}
 .tcat{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-dim);}
 
-/* ── YOUTUBE ── */
+/* BUSINESS ANALYTICS */
+.analytics-grid{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border);}
+.an-stat{padding:14px 16px;border-right:1px solid var(--border);text-align:center;}
+.an-stat:last-child{border-right:none;}
+.an-num{font-family:'EB Garamond',serif;font-size:28px;font-weight:500;color:var(--accent);line-height:1;}
+.an-label{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-top:3px;}
+.an-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.analytics-body{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);}
+.an-section{padding:14px 16px;border-right:1px solid var(--border);}
+.an-section:last-child{border-right:none;}
+.an-section-title{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+/* Tier bars */
+.tier-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.tier-label{font-size:12px;width:48px;flex-shrink:0;}
+.tier-bar-wrap{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.tier-bar{height:100%;border-radius:3px;transition:width 0.6s ease;}
+.tier-bar.hot{background:#ff610b;}
+.tier-bar.warm{background:#f0a500;}
+.tier-bar.cold{background:#1a5c8a;}
+.tier-bar.ghost{background:#bbb;}
+.tier-pct{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);width:32px;text-align:right;flex-shrink:0;}
+.tier-count{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-dim);width:24px;flex-shrink:0;}
+/* Growth */
+.growth-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);}
+.growth-row:last-child{border-bottom:none;}
+.growth-month{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);}
+.growth-num{font-family:'EB Garamond',serif;font-size:15px;font-weight:500;}
+.growth-delta{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:1px 5px;border-radius:3px;}
+.growth-delta.up{background:var(--green-bg);color:var(--green);}
+.growth-delta.dn{background:var(--red-bg);color:var(--red);}
+/* Birthdays */
+.bday-item{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border);}
+.bday-item:last-child{border-bottom:none;}
+.bday-icon{font-size:16px;flex-shrink:0;}
+.bday-body{flex:1;}
+.bday-name{font-size:13px;}
+.bday-date{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);margin-top:1px;}
+.bday-days{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:1px 6px;border-radius:3px;background:var(--accent-bg);color:var(--accent);}
+/* Prospects */
+.prospect-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
+.prospect-row:last-child{border-bottom:none;}
+.prospect-label{font-size:13px;}
+.prospect-num{font-family:'EB Garamond',serif;font-size:22px;font-weight:500;color:var(--accent);}
+
+/* YOUTUBE */
 .yt-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);}
 .yt-stat{padding:12px 14px;border-right:1px solid var(--border);text-align:center;}
 .yt-stat:last-child{border-right:none;}
-.yt-num{font-family:'EB Garamond',serif;font-size:24px;font-weight:500;color:var(--accent);}
-.yt-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
-.yt-video{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
+.yt-num{font-family:'EB Garamond',serif;font-size:22px;font-weight:500;color:var(--accent);}
+.yt-label{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-top:2px;}
+.yt-video{display:flex;gap:10px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:flex-start;}
 .yt-video:last-child{border-bottom:none;}
-.yt-thumb{width:64px;height:36px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--surface2);}
+.yt-thumb{width:60px;height:34px;border-radius:4px;object-fit:cover;flex-shrink:0;background:var(--surface2);}
 .yt-vbody{flex:1;min-width:0;}
-.yt-vtitle{font-size:12.5px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.yt-vmeta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
+.yt-vtitle{font-size:12px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.yt-vmeta{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-muted);margin-top:2px;}
 
-/* ── DRIVE ── */
+/* DRIVE */
 .dr-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background 0.1s;text-decoration:none;color:inherit;}
 .dr-item:last-child{border-bottom:none;}
 .dr-item:hover{background:var(--surface);}
 .dr-icon{font-size:17px;flex-shrink:0;}
 .dr-body{flex:1;min-width:0;}
-.dr-name{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.dr-meta{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:1px;}
+.dr-name{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dr-meta{font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-muted);margin-top:1px;}
 
-/* ── DEADLINES ── */
+/* DEADLINES */
 .dl-item{display:flex;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);align-items:center;}
 .dl-item:last-child{border-bottom:none;}
-.dl-days{font-family:'EB Garamond',serif;font-size:22px;font-weight:500;width:42px;flex-shrink:0;text-align:right;line-height:1;}
+.dl-days{font-family:'EB Garamond',serif;font-size:20px;font-weight:500;width:38px;flex-shrink:0;text-align:right;line-height:1;}
 .dl-days.urgent{color:var(--red);}
 .dl-days.soon{color:var(--accent);}
 .dl-days.ok{color:var(--green);}
-.dl-sep{width:1px;background:var(--border);height:28px;flex-shrink:0;}
+.dl-sep{width:1px;background:var(--border);height:26px;flex-shrink:0;}
 .dl-body{flex:1;}
-.dl-title{font-size:13.5px;}
+.dl-title{font-size:13px;}
 .dl-info{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);margin-top:2px;}
 .dl-cat{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 5px;border-radius:3px;background:var(--blue-bg);color:var(--blue);}
 
-/* ── MILESTONES ── */
+/* MILESTONES */
 .ms-item{padding:12px 16px;border-bottom:1px solid var(--border);}
 .ms-item:last-child{border-bottom:none;}
 .ms-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
 .ms-title{font-family:'EB Garamond',serif;font-size:15px;}
-.ms-status{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
-.ms-bar-wrap{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:5px;}
-.ms-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.4s;}
-.ms-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
-.ms-timeline{margin-top:8px;display:flex;flex-direction:column;gap:3px;}
-.ms-chap{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:8.5px;padding:2px 0;}
-.ms-chap.current{color:var(--accent);font-weight:500;}
+.ms-status{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);display:flex;gap:6px;align-items:center;}
+.ms-bar-wrap{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:4px;}
+.ms-bar{height:100%;background:var(--accent);border-radius:2px;transition:width 0.5s;}
+.ms-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
+.ms-timeline{margin-top:8px;display:flex;flex-direction:column;gap:2px;max-height:120px;overflow-y:auto;}
+.ms-chap{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:8px;padding:2px 0;}
 .ms-chap.done{color:var(--text-dim);text-decoration:line-through;}
+.ms-chap.current{color:var(--accent);font-weight:500;}
 .ms-chap.future{color:var(--text-muted);}
 .ms-edit-btn{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:1px 6px;border-radius:3px;border:1px solid var(--border-dark);background:transparent;cursor:pointer;color:var(--text-muted);}
 .ms-edit-btn:hover{border-color:var(--accent);color:var(--accent);}
 
-/* ── PANCHANGA ── */
-.pancha-top{padding:14px 16px;display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid var(--border);}
-.moon-glyph{font-size:44px;line-height:1;flex-shrink:0;}
-.moon-main{}
-.moon-phase{font-family:'EB Garamond',serif;font-size:17px;margin-bottom:4px;}
-.moon-row{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);margin-bottom:3px;}
-.moon-row span{color:var(--text);}
-.pancha-planets{padding:8px 0;}
-.planet-row{display:grid;grid-template-columns:80px 1fr 1fr 1fr;gap:0;padding:5px 16px;border-bottom:1px solid var(--border);font-size:12.5px;align-items:center;}
-.planet-row:last-child{border-bottom:none;}
-.planet-row:hover{background:var(--surface);}
-.pl-name{font-family:'EB Garamond',serif;font-size:13px;font-weight:500;}
-.pl-deg{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent);}
-.pl-sign{font-size:12px;}
-.pl-nak{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-muted);}
-.planet-hdr{display:grid;grid-template-columns:80px 1fr 1fr 1fr;gap:0;padding:4px 16px 4px;background:var(--surface);border-bottom:1px solid var(--border);}
-.planet-hdr span{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);}
+/* QUICK COMPOSE */
+.compose-area{padding:12px 16px;}
+.compose-ta{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);resize:vertical;outline:none;min-height:80px;line-height:1.6;}
+.compose-ta:focus{border-color:var(--accent);background:#fff;}
+.compose-result{margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:13.5px;line-height:1.6;display:none;white-space:pre-wrap;}
+.compose-acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
 
-/* ── BATCH ── */
-.batch-sec{border-bottom:1px solid var(--border);}
-.batch-sec:last-child{border-bottom:none;}
-.batch-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);cursor:pointer;user-select:none;}
-.batch-name{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;font-weight:500;}
-.batch-right{display:flex;align-items:center;gap:8px;}
-.batch-count{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
-.batch-body{display:none;padding:12px 14px;}
-.batch-body.open{display:block;}
-.batch-notes{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:8px 10px;font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;min-height:60px;line-height:1.5;}
-.batch-notes:focus{border-color:var(--accent);background:#fff;}
-.batch-notes-label{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:5px;}
-
-/* ── NOTES ── */
+/* NOTES */
 .note-ta{width:100%;min-height:130px;background:var(--surface);border:none;border-top:1px solid var(--border);padding:14px 16px;font-family:'EB Garamond',serif;font-size:15px;color:var(--text);resize:vertical;outline:none;line-height:1.75;}
 .note-ta:focus{background:#fffdf9;}
 .note-saved{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-dim);padding:5px 16px;border-top:1px solid var(--border);text-align:right;background:var(--surface);}
 
-/* ── ADD ROWS ── */
+/* BATCH */
+.batch-sec{border-bottom:1px solid var(--border);}
+.batch-sec:last-child{border-bottom:none;}
+.batch-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface);cursor:pointer;user-select:none;}
+.batch-name{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;font-weight:500;}
+.batch-count{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
+.batch-body{display:none;padding:12px 14px;}
+.batch-body.open{display:block;}
+.batch-notes-lbl{font-family:'IBM Plex Mono',monospace;font-size:8px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:5px;}
+.batch-notes{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:8px 10px;font-family:'Source Sans 3',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;min-height:60px;line-height:1.5;}
+.batch-notes:focus{border-color:var(--accent);background:#fff;}
+
+/* ADD ROWS */
 .add-row{display:flex;gap:6px;padding:9px 14px;border-top:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
 .inp{flex:1;min-width:80px;background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 9px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);outline:none;transition:border-color 0.15s;}
 .inp:focus{border-color:var(--accent);}
 .inp::placeholder{color:var(--text-dim);}
 .sel{background:#fff;border:1px solid var(--border-dark);border-radius:5px;padding:6px 7px;font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--text-muted);outline:none;cursor:pointer;}
 
-/* ── QUICK COMPOSE ── */
-.compose-area{padding:12px 16px;}
-.compose-ta{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;color:var(--text);resize:vertical;outline:none;min-height:80px;line-height:1.6;}
-.compose-ta:focus{border-color:var(--accent);background:#fff;}
-.compose-result{margin-top:10px;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:13.5px;line-height:1.6;display:none;white-space:pre-wrap;}
-.compose-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
-
-/* ── EMPTY ── */
+/* EMPTY */
 .empty{padding:22px 14px;text-align:center;color:var(--text-muted);font-family:'EB Garamond',serif;font-style:italic;font-size:14px;}
 .del{background:none;border:none;cursor:pointer;color:var(--text-dim);font-size:12px;padding:0 3px;flex-shrink:0;}
 .del:hover{color:var(--red);}
@@ -268,7 +292,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .panel,.ai-strip{animation:fadeUp 0.2s ease both;}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #login{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:22px;padding:20px;}
 .login-logo{font-family:'EB Garamond',serif;font-size:44px;color:var(--text);}
 .login-logo span{color:var(--accent);}
@@ -279,16 +303,25 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 .lcard-ico{font-size:26px;margin-bottom:8px;}
 .lcard-title{font-family:'EB Garamond',serif;font-size:17px;margin-bottom:3px;}
 .lcard-sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted);}
+.lcard-yt{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 20px;text-align:center;cursor:pointer;transition:all 0.2s;min-width:180px;display:flex;align-items:center;gap:10px;justify-content:center;}
+.lcard-yt:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(255,97,11,0.1);}
 #login-msg{font-size:13px;color:var(--text-muted);text-align:center;max-width:380px;line-height:1.6;}
 .skip-btn{font-family:'IBM Plex Mono',monospace;font-size:8.5px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);background:none;border:1px solid var(--border);padding:6px 14px;border-radius:4px;cursor:pointer;}
 .skip-btn:hover{color:var(--text);border-color:var(--text);}
 
-/* ── MOBILE ── */
+/* MOBILE */
+.mobile-connect{display:none;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border);}
+.mobile-connect-btns{display:flex;gap:8px;flex-wrap:wrap;}
 @media(max-width:900px){
   .row2,.row3{grid-template-columns:1fr;}
   .sumbar{grid-template-columns:repeat(3,1fr);}
   .sc:nth-child(3){border-right:none;}
   .sc:nth-child(4){border-top:1px solid var(--border);}
+  .analytics-grid{grid-template-columns:1fr 1fr;}
+  .analytics-body{grid-template-columns:1fr;}
+  .an-section{border-right:none;border-bottom:1px solid var(--border);}
+  .mobile-connect{display:block;}
+  .badges{display:none;}
 }
 @media(max-width:600px){
   .sumbar{grid-template-columns:repeat(2,1fr);}
@@ -298,10 +331,10 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
   .sc:nth-child(5){border-top:1px solid var(--border);border-right:1px solid var(--border);}
   .sc:nth-child(6){border-top:1px solid var(--border);}
   .topbar{padding:9px 14px;}
-  .t-tag,.wpill,.badges{display:none;}
+  .t-tag,.wpill{display:none;}
   .main{padding:10px 12px;gap:12px;}
-  .planet-row{grid-template-columns:70px 1fr 1fr;}
-  .pl-nak{display:none;}
+  .analytics-grid{grid-template-columns:1fr 1fr;}
+  .focus-wrap{flex-direction:column;}
 }
 </style>
 </head>
@@ -322,6 +355,13 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       <div class="lcard-title">Personal Gmail</div>
       <div class="lcard-sub">theabverdict@gmail.com</div>
     </div>
+    <div class="lcard-yt" onclick="signIn('personal')">
+      <div style="font-size:22px">▶</div>
+      <div>
+        <div class="lcard-title" style="font-size:14px">YouTube</div>
+        <div class="lcard-sub">via personal account</div>
+      </div>
+    </div>
   </div>
   <div id="login-msg">Connect one or both accounts. Your data stays in your browser — nothing stored on any server.</div>
   <button class="skip-btn" onclick="launchDashboard()">Skip — offline mode</button>
@@ -339,8 +379,20 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
     <div class="badges">
       <div class="badge" id="b-work" onclick="signIn('work')"><div class="dot"></div>Work</div>
       <div class="badge" id="b-personal" onclick="signIn('personal')"><div class="dot"></div>Personal</div>
+      <div class="badge" id="b-yt" onclick="syncYouTube()" style="cursor:pointer"><div class="dot"></div>YouTube</div>
     </div>
     <button class="btn-ref" onclick="refreshAll()">↻ Refresh</button>
+  </div>
+</div>
+
+<!-- MOBILE CONNECT BAR -->
+<div class="mobile-connect">
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:8px">Connect Accounts</div>
+  <div class="mobile-connect-btns">
+    <button class="btn" id="mob-work" onclick="signIn('work')" style="font-size:10px;padding:6px 14px">💼 Work</button>
+    <button class="btn" id="mob-personal" onclick="signIn('personal')" style="font-size:10px;padding:6px 14px">👤 Personal</button>
+    <button class="btn" id="mob-yt" onclick="syncYouTube()" style="font-size:10px;padding:6px 14px">▶ YouTube</button>
+    <button class="btn-ref" onclick="refreshAll()" style="font-size:10px;padding:6px 14px">↻ Refresh All</button>
   </div>
 </div>
 
@@ -361,20 +413,20 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
     <div class="sc-label">Tasks Pending</div>
     <div class="sc-sub" id="ss-tk">Google Tasks</div>
   </div>
+  <div class="sc" onclick="scr('sec-analytics')">
+    <div class="sc-num" id="sn-subs">—</div>
+    <div class="sc-label">Subscribers</div>
+    <div class="sc-sub" id="ss-subs">newsletter list</div>
+  </div>
   <div class="sc" onclick="scr('sec-yt')">
     <div class="sc-num" id="sn-yt">—</div>
     <div class="sc-label">YT Subscribers</div>
-    <div class="sc-sub" id="ss-yt">YouTube</div>
+    <div class="sc-sub" id="ss-yt">YouTube channel</div>
   </div>
   <div class="sc" onclick="scr('sec-dl')">
     <div class="sc-num" id="sn-dl">—</div>
     <div class="sc-label">Deadlines</div>
     <div class="sc-sub" id="ss-dl">next 30 days</div>
-  </div>
-  <div class="sc" onclick="scr('sec-moon')">
-    <div class="sc-num" id="sn-moon" style="font-size:20px;line-height:1.6">🌙</div>
-    <div class="sc-label">Moon</div>
-    <div class="sc-sub" id="ss-moon">loading…</div>
   </div>
 </div>
 
@@ -389,9 +441,9 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       <button class="btn p" onclick="aiBriefing()">Daily Briefing</button>
       <button class="btn" onclick="aiExpandNote()">Expand Notes</button>
     </div>
-    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a summary of your day, or ask anything below…</div>
+    <div class="ai-resp empty" id="ai-resp">Click "Daily Briefing" for a full summary of your day, or ask anything below…</div>
     <div class="ai-row">
-      <input class="ai-inp" id="ai-in" placeholder="What should I focus on today? · Help me draft a reply · Summarise my week…"/>
+      <input class="ai-inp" id="ai-in" placeholder="What should I focus on today? · Summarise my emails · Help draft a reply…"/>
       <button class="btn p" onclick="askAI()">Ask ↵</button>
     </div>
   </div>
@@ -403,7 +455,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       <div class="pacts"><span class="pmeta">Three things. That's it.</span><button class="btn" onclick="clearFocus()">Clear</button></div>
     </div>
     <div class="focus-wrap">
-      <div class="focus-item"><div class="focus-num">1</div><input class="focus-inp" id="f1" placeholder="Most important thing today…" oninput="saveFocus()"/></div>
+      <div class="focus-item"><div class="focus-num">1</div><input class="focus-inp" id="f1" placeholder="Most important today…" oninput="saveFocus()"/></div>
       <div class="focus-item"><div class="focus-num">2</div><input class="focus-inp" id="f2" placeholder="Second priority…" oninput="saveFocus()"/></div>
       <div class="focus-item"><div class="focus-num">3</div><input class="focus-inp" id="f3" placeholder="Third priority…" oninput="saveFocus()"/></div>
     </div>
@@ -411,8 +463,6 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
 
   <!-- EMAIL + CALENDAR -->
   <div class="row2">
-
-    <!-- EMAIL -->
     <div class="panel" id="sec-email">
       <div class="ph">
         <div class="pt">◎ Email</div>
@@ -428,12 +478,9 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
         <button class="chip" onclick="setEA('work',this)">Work</button>
         <button class="chip" onclick="setEA('personal',this)">Personal</button>
       </div>
-      <div id="em-list" class="scrollable" style="max-height:360px">
-        <div class="empty">Connect Gmail to load emails</div>
-      </div>
+      <div id="em-list" class="scrollable" style="max-height:360px"><div class="empty">Connect Gmail to load emails</div></div>
     </div>
 
-    <!-- CALENDAR -->
     <div class="panel" id="sec-cal">
       <div class="ph">
         <div class="pt">◈ Calendar</div>
@@ -446,9 +493,7 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
           <button class="btn" onclick="syncCalendar()">↻</button>
         </div>
       </div>
-      <div id="ev-list" class="scrollable" style="max-height:300px">
-        <div class="empty">Connect Google Calendar to load events</div>
-      </div>
+      <div id="ev-list" class="scrollable" style="max-height:300px"><div class="empty">Connect Google Calendar to load events</div></div>
       <div id="add-ev-form" style="display:none">
         <div class="add-row">
           <input class="inp" id="ne-title" placeholder="Event title" style="flex:2"/>
@@ -461,7 +506,6 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- TASKS FULL WIDTH -->
@@ -499,10 +543,61 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
     </div>
   </div>
 
-  <!-- YOUTUBE + FORMS -->
-  <div class="row2">
+  <!-- BUSINESS ANALYTICS FULL WIDTH -->
+  <div class="panel" id="sec-analytics">
+    <div class="ph">
+      <div class="pt">◉ Business Analytics</div>
+      <div class="pacts">
+        <span class="pmeta" id="an-meta">from Google Sheets</span>
+        <button class="btn" onclick="syncAnalytics()">↻ Sync</button>
+      </div>
+    </div>
+    <!-- Top stats row -->
+    <div class="analytics-grid" id="an-stats">
+      <div class="an-stat"><div class="an-num" id="an-bookings">—</div><div class="an-label">Total Bookings</div><div class="an-sub" id="an-bookings-sub">paid + students</div></div>
+      <div class="an-stat"><div class="an-num" id="an-clients">—</div><div class="an-label">Unique Clients</div><div class="an-sub" id="an-clients-sub">since launch</div></div>
+      <div class="an-stat"><div class="an-num" id="an-prospects-total">—</div><div class="an-label">Prospects</div><div class="an-sub" id="an-prospects-sub">consult + diploma</div></div>
+      <div class="an-stat"><div class="an-num" id="an-subs-total">—</div><div class="an-label">Subscribers</div><div class="an-sub" id="an-subs-sub">total list</div></div>
+    </div>
+    <!-- Three column body -->
+    <div class="analytics-body">
+      <!-- Subscriber Intelligence -->
+      <div class="an-section">
+        <div class="an-section-title">
+          <span>Subscriber Intelligence</span>
+          <span id="an-subs-count" style="color:var(--text);font-weight:500"></span>
+        </div>
+        <div id="tier-bars">
+          <div class="tier-row"><span class="tier-label">🔥 Hot</span><div class="tier-bar-wrap"><div class="tier-bar hot" id="tb-hot" style="width:0%"></div></div><span class="tier-pct" id="tp-hot">—</span><span class="tier-count" id="tc-hot"></span></div>
+          <div class="tier-row"><span class="tier-label">🌤 Warm</span><div class="tier-bar-wrap"><div class="tier-bar warm" id="tb-warm" style="width:0%"></div></div><span class="tier-pct" id="tp-warm">—</span><span class="tier-count" id="tc-warm"></span></div>
+          <div class="tier-row"><span class="tier-label">🌧 Cold</span><div class="tier-bar-wrap"><div class="tier-bar cold" id="tb-cold" style="width:0%"></div></div><span class="tier-pct" id="tp-cold">—</span><span class="tier-count" id="tc-cold"></span></div>
+          <div class="tier-row"><span class="tier-label">👻 Ghost</span><div class="tier-bar-wrap"><div class="tier-bar ghost" id="tb-ghost" style="width:0%"></div></div><span class="tier-pct" id="tp-ghost">—</span><span class="tier-count" id="tc-ghost"></span></div>
+        </div>
+      </div>
+      <!-- Growth + Birthdays -->
+      <div class="an-section">
+        <div class="an-section-title"><span>Subscriber Growth</span></div>
+        <div id="growth-rows"><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text-dim);font-style:italic">Loading…</div></div>
+        <div style="margin-top:14px">
+          <div class="an-section-title"><span>🎂 Birthdays This Month</span></div>
+          <div id="bday-list"><div style="font-family:'EB Garamond',serif;font-style:italic;font-size:13px;color:var(--text-muted)">Loading…</div></div>
+        </div>
+      </div>
+      <!-- Prospects -->
+      <div class="an-section">
+        <div class="an-section-title"><span>Prospects Pipeline</span></div>
+        <div id="prospect-rows">
+          <div class="prospect-row"><span class="prospect-label">Consultation clients</span><span class="prospect-num" id="pr-consult">—</span></div>
+          <div class="prospect-row"><span class="prospect-label">Diploma students</span><span class="prospect-num" id="pr-diploma">—</span></div>
+        </div>
+        <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--text-muted)" id="an-updated"></div>
+      </div>
+    </div>
+  </div>
 
-    <!-- YOUTUBE -->
+  <!-- YOUTUBE + FORMS + DRIVE (3 cols) -->
+  <div class="row3">
+
     <div class="panel" id="sec-yt">
       <div class="ph">
         <div class="pt">▶ YouTube</div>
@@ -513,34 +608,23 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       </div>
       <div class="yt-stats">
         <div class="yt-stat"><div class="yt-num" id="yt-subs">—</div><div class="yt-label">Subscribers</div></div>
-        <div class="yt-stat"><div class="yt-num" id="yt-views">—</div><div class="yt-label">Total Views</div></div>
+        <div class="yt-stat"><div class="yt-num" id="yt-views">—</div><div class="yt-label">Views</div></div>
         <div class="yt-stat"><div class="yt-num" id="yt-vids">—</div><div class="yt-label">Videos</div></div>
       </div>
-      <div id="yt-list" class="scrollable" style="max-height:220px">
-        <div class="empty">Connect personal account for YouTube</div>
-      </div>
+      <div id="yt-list" class="scrollable" style="max-height:180px"><div class="empty">Connect personal account</div></div>
     </div>
 
-    <!-- FORMS -->
     <div class="panel" id="sec-forms">
       <div class="ph">
-        <div class="pt">📋 Form Responses</div>
+        <div class="pt">📋 Forms</div>
         <div class="pacts">
           <span class="pmeta" id="forms-meta"></span>
           <button class="btn" onclick="syncForms()">↻ Sync</button>
         </div>
       </div>
-      <div id="forms-list" class="scrollable" style="max-height:300px">
-        <div class="empty">Connect Google to load forms</div>
-      </div>
+      <div id="forms-list" class="scrollable" style="max-height:260px"><div class="empty">Connect Google to load forms</div></div>
     </div>
 
-  </div>
-
-  <!-- DRIVE + DEADLINES -->
-  <div class="row2">
-
-    <!-- DRIVE -->
     <div class="panel" id="sec-drive">
       <div class="ph">
         <div class="pt">◫ Drive</div>
@@ -549,20 +633,19 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
           <button class="btn" onclick="syncDrive()">↻ Sync</button>
         </div>
       </div>
-      <div id="dr-list" class="scrollable" style="max-height:300px">
-        <div class="empty">Connect Google to load recent files</div>
-      </div>
+      <div id="dr-list" class="scrollable" style="max-height:260px"><div class="empty">Connect Google to load files</div></div>
     </div>
 
-    <!-- DEADLINES -->
+  </div>
+
+  <!-- DEADLINES + MILESTONES -->
+  <div class="row2">
     <div class="panel" id="sec-dl">
       <div class="ph">
         <div class="pt">⏳ Deadlines</div>
         <div class="pacts"><button class="btn p" onclick="tog('add-dl-form')">+ Add</button></div>
       </div>
-      <div id="dl-list" class="scrollable" style="max-height:260px">
-        <div class="empty">No deadlines yet</div>
-      </div>
+      <div id="dl-list" class="scrollable" style="max-height:280px"><div class="empty">No deadlines yet</div></div>
       <div id="add-dl-form" style="display:none">
         <div class="add-row">
           <input class="inp" id="nd-title" placeholder="Deadline title" style="flex:2"/>
@@ -574,78 +657,50 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
       </div>
     </div>
 
-  </div>
-
-  <!-- MILESTONES + PANCHANGA -->
-  <div class="row2">
-
-    <!-- MILESTONES -->
     <div class="panel" id="sec-ms">
       <div class="ph">
         <div class="pt">◉ Milestones</div>
-        <div class="pacts"><span class="pmeta">Manual update</span></div>
+        <div class="pacts"><span class="pmeta">Click Edit to update progress</span></div>
       </div>
       <div id="ms-list"></div>
     </div>
+  </div>
 
-    <!-- PANCHANGA -->
-    <div class="panel" id="sec-moon">
+  <!-- QUICK COMPOSE + NOTES -->
+  <div class="row2">
+    <div class="panel" id="sec-compose">
       <div class="ph">
-        <div class="pt">🌙 Pañcāṅga</div>
-        <div class="pacts"><span class="pmeta">Rāman Ayanāṁśa · Sidereal</span></div>
+        <div class="pt">✍ Quick Compose</div>
+        <div class="pacts"><span class="pmeta">Write rough · AI polishes · Copy</span></div>
       </div>
-      <div class="pancha-top">
-        <div class="moon-glyph" id="moon-glyph">🌙</div>
-        <div class="moon-main">
-          <div class="moon-phase" id="moon-phase">Calculating…</div>
-          <div class="moon-row">Tithi: <span id="moon-tithi">—</span></div>
-          <div class="moon-row">Moon: <span id="moon-pos">—</span></div>
-          <div class="moon-row">Nakṣatra: <span id="moon-nak">—</span></div>
-          <div class="moon-row" id="moon-date-row" style="margin-top:6px;font-size:8.5px;color:var(--text-dim)"></div>
+      <div class="compose-area">
+        <textarea class="compose-ta" id="compose-in" placeholder="Write your rough message… e.g. 'tell student Priya her chart interpretation was strong but needs more on house lords'"></textarea>
+        <div class="compose-acts">
+          <button class="btn p" onclick="composeEmail()">✦ Polish as Email</button>
+          <button class="btn" onclick="composeWA()">Polish as WhatsApp</button>
+          <button class="btn" onclick="clearCompose()">Clear</button>
+        </div>
+        <div class="compose-result" id="compose-result"></div>
+        <div class="compose-acts" id="compose-copy-row" style="display:none">
+          <button class="btn g" onclick="copyCompose()">Copy to Clipboard</button>
         </div>
       </div>
-      <div class="planet-hdr">
-        <span>Planet</span><span>Longitude</span><span>Sign</span><span>Nakṣatra</span>
-      </div>
-      <div class="pancha-planets" id="planet-list"></div>
     </div>
 
-  </div>
-
-  <!-- QUICK COMPOSE -->
-  <div class="panel" id="sec-compose">
-    <div class="ph">
-      <div class="pt">✍ Quick Compose</div>
-      <div class="pacts"><span class="pmeta">Write rough · AI polishes · Copy to Gmail</span></div>
-    </div>
-    <div class="compose-area">
-      <textarea class="compose-ta" id="compose-in" placeholder="Write your rough message here… e.g. 'tell student Priya her assignment was good but needs more detail on house lords, submission was on time'"></textarea>
-      <div class="compose-actions">
-        <button class="btn p" onclick="composeEmail()">✦ Polish as Email</button>
-        <button class="btn" onclick="composeWhatsApp()">Polish as WhatsApp</button>
-        <button class="btn" onclick="clearCompose()">Clear</button>
+    <div class="panel">
+      <div class="ph">
+        <div class="pt">◇ Notes</div>
+        <div class="pacts">
+          <button class="btn p" onclick="aiExpandNote()">AI Expand</button>
+          <button class="btn" onclick="if(confirm('Clear notes?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
+        </div>
       </div>
-      <div class="compose-result" id="compose-result"></div>
-      <div class="compose-actions" id="compose-copy-row" style="display:none">
-        <button class="btn g" onclick="copyCompose()">Copy to Clipboard</button>
-      </div>
+      <textarea class="note-ta" id="note-ta" placeholder="Quick notes, ideas, reminders, draft thoughts…" oninput="saveNote()"></textarea>
+      <div class="note-saved" id="note-saved"></div>
     </div>
   </div>
 
-  <!-- NOTES FULL WIDTH -->
-  <div class="panel">
-    <div class="ph">
-      <div class="pt">◇ Notes</div>
-      <div class="pacts">
-        <button class="btn p" onclick="aiExpandNote()">AI Expand</button>
-        <button class="btn" onclick="if(confirm('Clear notes?')){$('note-ta').value='';localStorage.removeItem('cmd_note');}">Clear</button>
-      </div>
-    </div>
-    <textarea class="note-ta" id="note-ta" placeholder="Quick notes, ideas, reminders, draft thoughts…" oninput="saveNote()"></textarea>
-    <div class="note-saved" id="note-saved"></div>
-  </div>
-
-  <!-- DIPLOMA BATCHES FULL WIDTH -->
+  <!-- DIPLOMA BATCHES -->
   <div class="panel" id="sec-batches">
     <div class="ph">
       <div class="pt">◉ Diploma Programme</div>
@@ -654,14 +709,14 @@ body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-ser
     <div id="batch-list"><div class="empty">Connect calendar to load batch sessions</div></div>
   </div>
 
-</div><!-- /main -->
+</div>
 
 <script>
 // ── KEYS ─────────────────────────────────────────────────────────────────────
 const CLIENT_ID='628443819075-2chd41al5oegn74fdfk6186pq7ke5iu9.apps.googleusercontent.com';
-const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/forms.responses.readonly';
+const SCOPES='https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/spreadsheets.readonly https://www.googleapis.com/auth/forms.responses.readonly';
 const GEMINI_KEY='AIzaSyDH_hdYgT_5_gbyYI4xLfQNOVSg9eo49aY';
-const GEMINI_URL=`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+const SHEET_ID='1tZG5UJD-tsdUq9VPvkEg7dEqs8o1VPzIL6ldcr4B9fo';
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const S={
@@ -700,194 +755,6 @@ async function loadWeather(){
 }
 loadWeather();
 
-// ── PANCHANGA (Raman Ayanamsa + Astronomy Engine) ─────────────────────────────
-const RAMAN_AYANAMSA_2000=22.4600;// degrees at J2000
-const AYANAMSA_RATE=50.2388475/3600;// degrees per year
-function getRamanAyanamsa(date){
-  const jd=(date.getTime()/86400000)+2440587.5;
-  const yearsFrom2000=(jd-2451545.0)/365.25;
-  return RAMAN_AYANAMSA_2000+(yearsFrom2000*AYANAMSA_RATE);
-}
-function toSidereal(tropLon,ayanamsa){return((tropLon-ayanamsa)%360+360)%360;}
-function lonToDMS(lon){
-  const d=Math.floor(lon),m=Math.floor((lon-d)*60),s=Math.round(((lon-d)*60-m)*60);
-  return`${d}°${String(m).padStart(2,'0')}'${String(s).padStart(2,'0')}''`;
-}
-function sidToSign(sid){
-  const signs=[['Meṣa','Aries'],['Vṛṣabha','Taurus'],['Mithuna','Gemini'],['Karkaṭa','Cancer'],['Siṃha','Leo'],['Kanyā','Virgo'],['Tulā','Libra'],['Vṛścika','Scorpio'],['Dhanus','Sagittarius'],['Makara','Capricorn'],['Kumbha','Aquarius'],['Mīna','Pisces']];
-  const idx=Math.floor(sid/30)%12;
-  const deg=sid%30;
-  return{sanskrit:signs[idx][0],english:signs[idx][1],deg,idx};
-}
-const NAKS=['Aśvinī','Bharaṇī','Kṛttikā','Rohiṇī','Mṛgaśīrṣa','Ārdrā','Punarvasu','Puṣya','Āśleṣā','Maghā','Pūrvā Phālgunī','Uttarā Phālgunī','Hasta','Citrā','Svātī','Viśākhā','Anurādhā','Jyeṣṭhā','Mūla','Pūrvāṣāḍhā','Uttarāṣāḍhā','Śravaṇa','Dhaniṣṭhā','Śatabhiṣā','Pūrva Bhādrapadā','Uttara Bhādrapadā','Revatī'];
-function getNakshatra(sidLon){return NAKS[Math.floor(sidLon/(360/27))%27];}
-function calcPanchanga(){
-  if(typeof Astronomy==='undefined'){setTimeout(calcPanchanga,500);return;}
-  const now=new Date();
-  const ayanamsa=getRamanAyanamsa(now);
-  const astroDate=new Astronomy.AstroTime(now);
-  // Get equatorial then ecliptic for each body
-  const bodies={
-    'Sun':Astronomy.Body.Sun,'Moon':Astronomy.Body.Moon,
-    'Mars':Astronomy.Body.Mars,'Mercury':Astronomy.Body.Mercury,
-    'Jupiter':Astronomy.Body.Jupiter,'Venus':Astronomy.Body.Venus,
-    'Saturn':Astronomy.Body.Saturn
-  };
-  const results={};
-  for(const[name,body]of Object.entries(bodies)){
-    try{
-      const ecl=Astronomy.EclipticLongitude(body,astroDate);
-      const sid=toSidereal(ecl,ayanamsa);
-      const sign=sidToSign(sid);
-      const nak=getNakshatra(sid);
-      results[name]={trop:ecl,sid,sign,nak,lon:lonToDMS(sid)};
-    }catch(e){results[name]={sid:0,sign:{sanskrit:'—',english:'—',deg:0},nak:'—',lon:'—'};}
-  }
-  // Rahu/Ketu (mean nodes) — simplified calculation
-  try{
-    const T=(astroDate.tt-2451545.0)/36525;
-    const rahuTrop=((125.0445479-1934.1362608*T+0.0020754*T*T)%360+360)%360;
-    const rahuSid=toSidereal(rahuTrop,ayanamsa);
-    const ketuSid=((rahuSid+180)%360+360)%360;
-    results['Rāhu']={sid:rahuSid,sign:sidToSign(rahuSid),nak:getNakshatra(rahuSid),lon:lonToDMS(rahuSid)};
-    results['Ketu']={sid:ketuSid,sign:sidToSign(ketuSid),nak:getNakshatra(ketuSid),lon:lonToDMS(ketuSid)};
-  }catch(e){}
-
-  // Moon phase
-  const moonSid=results['Moon']?.sid||0;
-  const sunSid=results['Sun']?.sid||0;
-  let elong=((moonSid-sunSid)%360+360)%360;
-  const tithiNum=Math.floor(elong/12)+1;
-  const paksha=tithiNum<=15?'Śukla':'Kṛṣṇa';
-  const tithiInPk=tithiNum<=15?tithiNum:tithiNum-15;
-  const tNames=['Pratipadā','Dvitīyā','Tṛtīyā','Caturthī','Pañcamī','Ṣaṣṭhī','Saptamī','Aṣṭamī','Navamī','Daśamī','Ekādaśī','Dvādaśī','Trayodaśī','Caturdaśī','Pūrṇimā'];
-  const tithi=tNames[Math.min(tithiInPk-1,14)];
-  // Moon age for phase glyph
-  const syno=29.53058867;
-  const jd=(now.getTime()/86400000)+2440587.5;
-  const moonAge=((jd-2451550.1)%syno+syno)%syno;
-  const glyphs=['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
-  const phases=['New Moon','Waxing Crescent','First Quarter','Waxing Gibbous','Full Moon','Waning Gibbous','Last Quarter','Waning Crescent'];
-  const gIdx=Math.round(moonAge/(syno/8))%8;
-
-  // Update summary bar
-  const ms=results['Moon'];
-  if(ms){
-    $('sn-moon').textContent=glyphs[gIdx];
-    $('ss-moon').textContent=`${ms.sign.english} ${ms.sign.deg.toFixed(1)}° · ${ms.nak}`;
-  }
-
-  // Update panel top
-  $('moon-glyph').textContent=glyphs[gIdx];
-  $('moon-phase').textContent=phases[gIdx];
-  $('moon-tithi').textContent=`${paksha} ${tithi} (${tithiNum})`;
-  if(ms) $('moon-pos').textContent=`${ms.sign.deg.toFixed(2)}° ${ms.sign.sanskrit} (${ms.sign.english}) · ${ms.lon}`;
-  if(ms) $('moon-nak').textContent=ms.nak;
-  $('moon-date-row').textContent=now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+` · Ayanāṁśa ${ayanamsa.toFixed(4)}°`;
-
-  // Planet table
-  const order=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rāhu','Ketu'];
-  $('planet-list').innerHTML=order.map(n=>{
-    const p=results[n];if(!p)return'';
-    return`<div class="planet-row">
-      <div class="pl-name">${n}</div>
-      <div class="pl-deg">${p.lon}</div>
-      <div class="pl-sign">${p.sign.deg.toFixed(2)}° ${p.sign.sanskrit}<br><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--text-muted)">${p.sign.english}</span></div>
-      <div class="pl-nak">${p.nak}</div>
-    </div>`;
-  }).join('');
-}
-calcPanchanga();
-
-// ── MILESTONES ────────────────────────────────────────────────────────────────
-function getDefaultMilestones(){
-  const today=new Date();
-  // PhD: Chapter 2 current, 9 chapters total, 2 weeks each
-  const phdChaps=[];
-  for(let i=1;i<=9;i++){
-    const d=new Date(today);
-    d.setDate(today.getDate()+(i-2)*14);// ch2 is now, each +2 weeks
-    phdChaps.push({ch:i,date:d.toISOString().slice(0,10)});
-  }
-  return[
-    {id:'book',title:'Essentials of Jyotiṣa',subtitle:'Formatting · Apple Pages',current:4,total:12,unit:'Chapter',extra:''},
-    {id:'phd',title:'PhD Thesis',subtitle:'Chapter timeline · 2 weeks/chapter',current:2,total:9,unit:'Chapter',timeline:phdChaps,extra:''},
-    {id:'journal',title:'APAI Chronycle',subtitle:'',current:0,total:0,unit:'',status:'Vol 3 — In layout',extra:''},
-    {id:'diab',title:'Diploma Programme',subtitle:'',current:0,total:0,unit:'',status:'DIAB1: Module — · DIAB2: Module — · DIAB3: Module —',extra:''}
-  ];
-}
-function renderMilestones(){
-  const ms=S.milestones||getDefaultMilestones();
-  $('ms-list').innerHTML=ms.map(m=>{
-    if(m.total>0){
-      const pct=Math.round(m.current/m.total*100);
-      let chapHtml='';
-      if(m.timeline){
-        const today=todayStr();
-        chapHtml=`<div class="ms-timeline">${m.timeline.map(c=>{
-          const cls=c.ch<m.current?'done':c.ch===m.current?'current':'future';
-          return`<div class="ms-chap ${cls}"><span>Ch ${c.ch}${c.ch===m.current?' ← current':''}</span><span>${fmtDate(c.date)}</span></div>`;
-        }).join('')}</div>`;
-      }
-      return`<div class="ms-item">
-        <div class="ms-top">
-          <div class="ms-title">${m.title}</div>
-          <div style="display:flex;gap:5px;align-items:center">
-            <span class="ms-status">${m.current} / ${m.total} ${m.unit}s</span>
-            <button class="ms-edit-btn" onclick="editMilestone('${m.id}')">Edit</button>
-          </div>
-        </div>
-        <div class="ms-bar-wrap"><div class="ms-bar" style="width:${pct}%"></div></div>
-        <div class="ms-sub">${m.subtitle} · ${pct}% complete</div>
-        ${chapHtml}
-      </div>`;
-    }else{
-      return`<div class="ms-item">
-        <div class="ms-top">
-          <div class="ms-title">${m.title}</div>
-          <button class="ms-edit-btn" onclick="editMilestone('${m.id}')">Edit</button>
-        </div>
-        <div class="ms-sub" id="ms-status-${m.id}">${m.status||'—'}</div>
-      </div>`;
-    }
-  }).join('');
-}
-function editMilestone(id){
-  const ms=S.milestones||getDefaultMilestones();
-  const m=ms.find(x=>x.id===id);if(!m)return;
-  if(m.total>0){
-    const val=prompt(`${m.title}\nCurrent ${m.unit} (1-${m.total}):`,m.current);
-    if(val!==null){m.current=Math.max(1,Math.min(parseInt(val)||m.current,m.total));}
-    if(m.id==='phd'){
-      // Recalculate timeline from current chapter
-      const today=new Date();
-      m.timeline=m.timeline.map((c,i)=>{
-        const d=new Date(today);
-        d.setDate(today.getDate()+(c.ch-m.current)*14);
-        return{...c,date:d.toISOString().slice(0,10)};
-      });
-    }
-  }else{
-    const val=prompt(`${m.title}\nStatus:`,m.status||'');
-    if(val!==null)m.status=val;
-  }
-  S.milestones=ms;
-  localStorage.setItem('cmd_milestones',JSON.stringify(ms));
-  renderMilestones();
-}
-
-// ── TODAY'S FOCUS ─────────────────────────────────────────────────────────────
-function saveFocus(){
-  clearTimeout(S.focusTimer);
-  S.focusTimer=setTimeout(()=>{
-    localStorage.setItem('cmd_focus',JSON.stringify([$('f1').value,$('f2').value,$('f3').value]));
-  },600);
-}
-function clearFocus(){$('f1').value='';$('f2').value='';$('f3').value='';localStorage.removeItem('cmd_focus');}
-function loadFocus(){
-  try{const f=JSON.parse(localStorage.getItem('cmd_focus')||'[]');if(f.length){$('f1').value=f[0]||'';$('f2').value=f[1]||'';$('f3').value=f[2]||'';}}catch(e){}
-}
-
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 let tokenClient=null,signingIn=null;
 function initGoogleAuth(){
@@ -913,22 +780,29 @@ function launchDashboard(){
   $('note-ta').value=localStorage.getItem('cmd_note')||'';
   loadFocus();renderDeadlines();renderMilestones();renderLocalTasks();updateStats();
   if(Object.keys(S.tokens).length>0){
-    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncYouTube();
+    syncCalendar();syncEmail();syncTasks();syncDrive();syncForms();syncYouTube();syncAnalytics();
   }
 }
-function updateBadges(){['work','personal'].forEach(a=>{const b=$('b-'+a);b.classList.toggle('on',!!S.tokens[a]);});}
+function updateBadges(){
+  ['work','personal'].forEach(a=>{const b=$('b-'+a);if(b)b.classList.toggle('on',!!S.tokens[a]);});
+  const byt=$('b-yt');if(byt)byt.classList.toggle('on',!!S.tokens.personal);
+}
 async function refreshAll(){
   if(!Object.keys(S.tokens).length){alert('Connect a Google account first.');return;}
-  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncYouTube()]);
+  await Promise.all([syncCalendar(),syncEmail(),syncTasks(),syncDrive(),syncForms(),syncYouTube(),syncAnalytics()]);
   updateStats();
 }
+
+// ── FOCUS ─────────────────────────────────────────────────────────────────────
+function saveFocus(){clearTimeout(S.focusTimer);S.focusTimer=setTimeout(()=>{localStorage.setItem('cmd_focus',JSON.stringify([$('f1').value,$('f2').value,$('f3').value]));},600);}
+function clearFocus(){$('f1').value='';$('f2').value='';$('f3').value='';localStorage.removeItem('cmd_focus');}
+function loadFocus(){try{const f=JSON.parse(localStorage.getItem('cmd_focus')||'[]');if(f.length){$('f1').value=f[0]||'';$('f2').value=f[1]||'';$('f3').value=f[2]||'';}}catch(e){}}
 
 // ── CALENDAR ──────────────────────────────────────────────────────────────────
 async function syncCalendar(){
   S.events=[];
-  const now=new Date();
-  const tMin=new Date(now);tMin.setDate(now.getDate()-1);
-  const tMax=new Date(now);tMax.setDate(now.getDate()+30);
+  const now=new Date(),tMin=new Date(now),tMax=new Date(now);
+  tMin.setDate(now.getDate()-1);tMax.setDate(now.getDate()+30);
   for(const acc of['work','personal']){
     if(!S.tokens[acc])continue;
     try{
@@ -938,11 +812,10 @@ async function syncCalendar(){
           const r=await gFetch(`https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(cal.id)}/events?timeMin=${tMin.toISOString()}&timeMax=${tMax.toISOString()}&singleEvents=true&orderBy=startTime&maxResults=50`,acc);
           (r.items||[]).forEach(ev=>{
             if(!ev.start)return;
-            const desc=ev.description||'';
-            const zm=desc.match(/https:\/\/[a-z0-9.]+zoom\.us\/[^\s"<]+/);
+            const zm=(ev.description||'').match(/https:\/\/[a-z0-9.]+zoom\.us\/[^\s"<]+/);
             S.events.push({id:ev.id+cal.id,title:ev.summary||'(No title)',start:ev.start.dateTime||ev.start.date||'',end:ev.end?.dateTime||ev.end?.date||'',location:ev.location||'',account:acc,calName:cal.summary,allDay:!ev.start.dateTime,zoomLink:zm?zm[0]:(ev.hangoutLink||'')});
           });
-        }catch(e){console.warn('Cal skip',cal.summary);}
+        }catch(e){console.warn('Skip cal',cal.summary);}
       }
     }catch(e){if(e.status===401)delete S.tokens[acc];}
   }
@@ -965,7 +838,7 @@ function renderCal(){
   const ws=new Date(now);ws.setDate(now.getDate()-((now.getDay()||7)-1));
   const we=new Date(ws);we.setDate(ws.getDate()+6);
   const wsS=ws.toISOString().slice(0,10),weS=we.toISOString().slice(0,10);
-  let fil=S.events.filter(e=>{const ds=e.start.slice(0,10);return S.calFilter==='today'?ds===today:S.calFilter==='week'?ds>=wsS&&ds<=weS:true;});
+  const fil=S.events.filter(e=>{const ds=e.start.slice(0,10);return S.calFilter==='today'?ds===today:S.calFilter==='week'?ds>=wsS&&ds<=weS:true;});
   $('cal-meta').textContent=fil.length+' event'+(fil.length!==1?'s':'');
   if(!fil.length){$('ev-list').innerHTML=`<div class="empty">${S.events.length===0?'Connect Google Calendar':'No events '+(S.calFilter==='today'?'today':'this period')}</div>`;return;}
   const grp={};fil.forEach(e=>{const ds=e.start.slice(0,10);if(!grp[ds])grp[ds]=[];grp[ds].push(e);});
@@ -975,16 +848,7 @@ function renderCal(){
     ${grp[date].map(e=>{
       const cn=e.calName||'';const dc=DC[cn]||(e.account==='personal'?'green':'');
       const lbl=cn&&cn!=="Aswin's Appointment"&&cn!=='Personal GMAIL'?cn:(e.account==='work'?'Work':'Personal');
-      return`<div class="ev-item">
-        <div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div>
-        <div class="ev-dot ${dc}"></div>
-        <div class="ev-body">
-          <div class="ev-title">${e.title}</div>
-          ${e.location?`<div class="ev-sub">📍 ${e.location}</div>`:''}
-          <span class="etag ${dc}">${lbl}</span>
-          ${e.zoomLink?`<a class="zoom-link" href="${e.zoomLink}" target="_blank">🎥 Join</a>`:''}
-        </div>
-      </div>`;
+      return`<div class="ev-item"><div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div><div class="ev-dot ${dc}"></div><div class="ev-body"><div class="ev-title">${e.title}</div>${e.location?`<div class="ev-sub">📍 ${e.location}</div>`:''}<span class="etag ${dc}">${lbl}</span>${e.zoomLink?`<a class="zoom-link" href="${e.zoomLink}" target="_blank">🎥 Join</a>`:''}</div></div>`;
     }).join('')}`).join('');
 }
 function renderBatches(){
@@ -993,31 +857,20 @@ function renderBatches(){
   const tMaxS=tMax.toISOString().slice(0,10);
   const batches=['DIAB1','DIAB2','DIAB3'];
   const data={};batches.forEach(b=>{data[b]=S.events.filter(e=>e.calName===b&&e.start.slice(0,10)>=today&&e.start.slice(0,10)<=tMaxS);});
-  const hasData=batches.some(b=>data[b].length>0)||S.events.length>0;
-  if(!hasData){$('batch-list').innerHTML=`<div class="empty">Connect calendar to load batch sessions</div>`;return;}
+  if(batches.every(b=>data[b].length===0)&&S.events.length===0){$('batch-list').innerHTML=`<div class="empty">Connect calendar to load batch sessions</div>`;return;}
   $('batch-list').innerHTML=batches.map(b=>`
     <div class="batch-sec">
-      <div class="batch-hdr" onclick="toggleBatch('${b}',this)">
+      <div class="batch-hdr" onclick="this.nextElementSibling.classList.toggle('open')">
         <span class="batch-name">${b}</span>
-        <div class="batch-right">
-          <span class="batch-count">${data[b].length} session${data[b].length!==1?'s':''} · next 14 days</span>
-          <span>▾</span>
-        </div>
+        <div style="display:flex;align-items:center;gap:8px"><span class="batch-count">${data[b].length} session${data[b].length!==1?'s':''} · next 14 days</span><span>▾</span></div>
       </div>
-      <div class="batch-body" id="batch-body-${b}">
-        ${data[b].length?data[b].map(e=>`<div class="ev-item"><div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div><div class="ev-dot blue"></div><div class="ev-body"><div class="ev-title">${e.title}</div><div class="ev-sub">${fmtDate(e.start.slice(0,10))}</div></div></div>`).join(''):`<div style="padding:8px 0;font-size:12.5px;color:var(--text-muted);font-style:italic;">No sessions in next 14 days</div>`}
-        <div style="margin-top:10px">
-          <div class="batch-notes-label">Batch Notes</div>
-          <textarea class="batch-notes" id="bn-${b}" placeholder="Notes for ${b}…" oninput="saveBatchNote('${b}')">${S.batchNotes[b]||''}</textarea>
-        </div>
+      <div class="batch-body">
+        ${data[b].length?data[b].map(e=>`<div class="ev-item"><div class="ev-time">${e.allDay?'All day':fmtTime(e.start)}</div><div class="ev-dot blue"></div><div class="ev-body"><div class="ev-title">${e.title}</div><div class="ev-sub">${fmtDate(e.start.slice(0,10))}</div></div></div>`).join(''):`<div style="padding:6px 0;font-size:12.5px;color:var(--text-muted);font-style:italic">No sessions in next 14 days</div>`}
+        <div style="margin-top:10px"><div class="batch-notes-lbl">Batch Notes</div><textarea class="batch-notes" id="bn-${b}" placeholder="Notes for ${b}…" oninput="saveBatchNote('${b}')">${S.batchNotes[b]||''}</textarea></div>
       </div>
     </div>`).join('');
 }
-function toggleBatch(b,hdr){const body=$('batch-body-'+b);body.classList.toggle('open');}
-function saveBatchNote(b){
-  S.batchNotes[b]=$('bn-'+b).value;
-  localStorage.setItem('cmd_batch_notes',JSON.stringify(S.batchNotes));
-}
+function saveBatchNote(b){S.batchNotes[b]=$('bn-'+b).value;localStorage.setItem('cmd_batch_notes',JSON.stringify(S.batchNotes));}
 
 // ── EMAIL ─────────────────────────────────────────────────────────────────────
 async function syncEmail(){
@@ -1090,8 +943,7 @@ async function addTask(){
       newTask.id=created.id;newTask.source='google';
     }catch(e){console.warn('Could not add to Google Tasks');}
   }
-  S.tasks.unshift(newTask);
-  S.localTasks.unshift(newTask);
+  S.tasks.unshift(newTask);S.localTasks.unshift(newTask);
   localStorage.setItem('cmd_tasks',JSON.stringify(S.localTasks));
   $('nt-txt').value='';renderGoogleTasks();updateStats();
 }
@@ -1100,15 +952,13 @@ async function toggleTask(id){
   task.done=!task.done;
   if(task.source==='google'&&S.googleTaskListId){
     const acc=S.tokens.work?'work':'personal';
-    try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'PATCH',{status:task.done?'completed':'needsAction'});}
-    catch(e){}
+    try{await gFetch(`https://tasks.googleapis.com/tasks/v1/lists/${S.googleTaskListId}/tasks/${id}`,acc,'PATCH',{status:task.done?'completed':'needsAction'});}catch(e){}
   }
   renderGoogleTasks();updateStats();
 }
 async function delTask(id){
   const task=S.tasks.find(t=>t.id==id);
-  S.tasks=S.tasks.filter(t=>t.id!=id);
-  S.localTasks=S.localTasks.filter(t=>t.id!=id);
+  S.tasks=S.tasks.filter(t=>t.id!=id);S.localTasks=S.localTasks.filter(t=>t.id!=id);
   localStorage.setItem('cmd_tasks',JSON.stringify(S.localTasks));
   if(task?.source==='google'&&S.googleTaskListId){
     const acc=S.tokens.work?'work':'personal';
@@ -1130,26 +980,133 @@ function renderGoogleTasks(){
   $('tk-list').innerHTML=fil.map(t=>{
     const dl=t.due?(t.due===today?'Today':t.due<today?'Overdue':fmtDate(t.due)):'';
     const dc=!t.done&&t.due&&t.due<today?'ov':t.due===today?'td':'';
-    return`<div class="tk-item">
-      <div class="tk-chk ${t.done?'done':''}" onclick="toggleTask('${t.id}')">${t.done?'✓':''}</div>
-      <div class="tk-body">
-        <div class="tk-text ${t.done?'done':''}">${t.text}</div>
-        <div class="tk-meta">
-          ${dl?`<span class="tk-due ${dc}">${dl}</span>`:''}
-          <span class="tpri ${t.priority}">${t.priority}</span>
-          <span class="tcat">${t.cat}</span>
-          ${t.source==='google'?'<span style="font-family:IBM Plex Mono,monospace;font-size:8px;color:var(--blue)">G</span>':''}
-        </div>
-      </div>
-      <button class="del" onclick="delTask('${t.id}')">✕</button>
-    </div>`;
+    return`<div class="tk-item"><div class="tk-chk ${t.done?'done':''}" onclick="toggleTask('${t.id}')">${t.done?'✓':''}</div><div class="tk-body"><div class="tk-text ${t.done?'done':''}">${t.text}</div><div class="tk-meta">${dl?`<span class="tk-due ${dc}">${dl}</span>`:''}<span class="tpri ${t.priority}">${t.priority}</span><span class="tcat">${t.cat}</span>${t.source==='google'?'<span style="font-family:IBM Plex Mono,monospace;font-size:8px;color:var(--blue)">G</span>':''}</div></div><button class="del" onclick="delTask('${t.id}')">✕</button></div>`;
   }).join('');
 }
 function renderLocalTasks(){S.tasks=[...S.localTasks];renderGoogleTasks();}
 
+// ── BUSINESS ANALYTICS (Google Sheets) ───────────────────────────────────────
+async function syncAnalytics(){
+  const acc=S.tokens.work?'work':(S.tokens.personal?'personal':null);
+  if(!acc){$('an-meta').textContent='Connect Google to load analytics';return;}
+  $('an-meta').textContent='Loading…';
+  try{
+    const enc=encodeURIComponent;
+    // Dashboard tab — key cells
+    const dashRange=`${enc('📊 Dashboard')}!B5:N29`;
+    const dashData=await gFetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${dashRange}`,acc);
+    const dv=dashData.values||[];
+    // Row 0 = row 5 in sheet: bookings, paid, students, unique, repeat, cancel, subs
+    const r5=dv[0]||[];
+    const totalBookings=parseFloat(r5[0])||0;
+    const paidSessions=parseFloat(r5[2])||0;
+    const studentSlots=parseFloat(r5[4])||0;
+    const uniqueClients=parseFloat(r5[6])||0;
+    const totalSubs=parseFloat(r5[12])||0;
+    // Tier rows (rows 26-29 in sheet = index 21-24 in our range)
+    const tierRows=dv.slice(21,25)||[];
+    const tiers={};
+    tierRows.forEach(row=>{
+      if(row[8]){const name=String(row[8]).trim();tiers[name]={count:parseFloat(row[9])||0,pct:parseFloat(row[10])||0};}
+    });
+
+    // Subscriber Growth tab
+    const growthRange=`${enc('📈 Subscriber Growth')}!A3:G15`;
+    const growthData=await gFetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${growthRange}`,acc);
+    const gv=(growthData.values||[]).filter(r=>r[0]&&r[0]!=='Month');
+
+    // Action List tab — birthdays
+    const bdayRange=`${enc('⚠️ Action List')}!A3:G9`;
+    const bdayData=await gFetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${bdayRange}`,acc);
+    const bv=(bdayData.values||[]).filter(r=>r[0]&&r[0]!=='Name'&&r[3]);
+
+    // Prospects tab — counts
+    const prosRange=`${enc('🎯 Prospects')}!A1:A100`;
+    const prosData=await gFetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${prosRange}`,acc);
+    const pv=prosData.values||[];
+    let consultCount=0,diplomaCount=0,section='';
+    pv.forEach(row=>{
+      const v=String(row[0]||'');
+      if(v.includes('CONSULTATION'))section='consult';
+      else if(v.includes('DIPLOMA'))section='diploma';
+      else if(v.includes('@')){
+        if(section==='consult')consultCount++;
+        else if(section==='diploma')diplomaCount++;
+      }
+    });
+
+    // Render
+    $('an-bookings').textContent=totalBookings;
+    $('an-bookings-sub').textContent=`${paidSessions} paid · ${studentSlots} students`;
+    $('an-clients').textContent=uniqueClients;
+    $('an-prospects-total').textContent=consultCount+diplomaCount;
+    $('an-prospects-sub').textContent=`${consultCount} consult · ${diplomaCount} diploma`;
+    $('an-subs-total').textContent=totalSubs;
+    $('an-subs-sub').textContent='total newsletter list';
+    $('an-subs-count').textContent=totalSubs+' total';
+
+    // Summary bar
+    $('sn-subs').textContent=totalSubs;
+    $('ss-subs').textContent=totalSubs+' subscribers';
+
+    // Tier bars
+    const tierDefs=[
+      {key:'Hot',id:'hot',emoji:'🔥'},
+      {key:'Warm',id:'warm',emoji:'🌤'},
+      {key:'Cold',id:'cold',emoji:'🌧'},
+      {key:'Ghost',id:'ghost',emoji:'👻'}
+    ];
+    tierDefs.forEach(t=>{
+      const data=tiers[t.key]||{count:0,pct:0};
+      const pct=Math.round(data.pct*100);
+      $('tb-'+t.id).style.width=pct+'%';
+      $('tp-'+t.id).textContent=pct+'%';
+      $('tc-'+t.id).textContent=data.count;
+    });
+
+    // Growth — last 3 months
+    const lastMonths=gv.slice(-3);
+    $('growth-rows').innerHTML=lastMonths.map((r,i)=>{
+      const month=r[0]||'';const cum=parseFloat(r[2])||0;const delta=parseFloat(r[3])||0;
+      const isLatest=i===lastMonths.length-1;
+      return`<div class="growth-row"><span class="growth-month">${fmtMonth(month)}</span><span class="growth-num" style="${isLatest?'color:var(--accent)':''}">${cum}</span>${delta?`<span class="growth-delta up">+${Math.round(delta)}</span>`:''}</div>`;
+    }).join('');
+
+    // Birthdays
+    const bdayRows=bv.slice(0,5);
+    if(!bdayRows.length){$('bday-list').innerHTML='<div style="font-size:12.5px;color:var(--text-muted);font-style:italic">No birthdays this month</div>';}
+    else{
+      $('bday-list').innerHTML=bdayRows.map(r=>`
+        <div class="bday-item">
+          <div class="bday-icon">🎂</div>
+          <div class="bday-body">
+            <div class="bday-name">${r[0]||'Client'}</div>
+            <div class="bday-date">${r[3]||''}</div>
+          </div>
+          <span class="bday-days">${r[4]||''}</span>
+        </div>`).join('');
+    }
+
+    // Prospects
+    $('pr-consult').textContent=consultCount;
+    $('pr-diploma').textContent=diplomaCount;
+
+    $('an-meta').textContent='Google Sheets · updated just now';
+    $('an-updated').textContent='Data as of: '+new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+
+  }catch(e){
+    console.error('Analytics',e);
+    $('an-meta').textContent='Could not load — '+e.message;
+  }
+}
+function fmtMonth(m){
+  if(!m)return'';const parts=m.split('-');if(parts.length<2)return m;
+  const mons=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return mons[parseInt(parts[1])-1]+' '+parts[0];
+}
+
 // ── YOUTUBE ───────────────────────────────────────────────────────────────────
 async function syncYouTube(){
-  // YouTube on personal account
   const acc=S.tokens.personal?'personal':(S.tokens.work?'work':null);
   if(!acc){$('yt-list').innerHTML='<div class="empty">Connect personal account for YouTube</div>';return;}
   try{
@@ -1157,68 +1114,40 @@ async function syncYouTube(){
     if(ch.items?.length){
       const s=ch.items[0].statistics;
       const subs=parseInt(s.subscriberCount||0);
-      $('yt-subs').textContent=fmtNum(subs);
-      $('yt-views').textContent=fmtNum(parseInt(s.viewCount||0));
-      $('yt-vids').textContent=fmtNum(parseInt(s.videoCount||0));
-      $('sn-yt').textContent=fmtNum(subs);
-      $('ss-yt').textContent=ch.items[0].snippet.title;
-      $('yt-meta').textContent=ch.items[0].snippet.title;
+      $('yt-subs').textContent=fmtNum(subs);$('yt-views').textContent=fmtNum(parseInt(s.viewCount||0));$('yt-vids').textContent=fmtNum(parseInt(s.videoCount||0));
+      $('sn-yt').textContent=fmtNum(subs);$('ss-yt').textContent=ch.items[0].snippet.title;$('yt-meta').textContent=ch.items[0].snippet.title;
+      const byt=$('b-yt');if(byt){byt.classList.add('on');}
     }
-    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=5',acc);
+    const vids=await gFetch('https://www.googleapis.com/youtube/v3/search?part=snippet&forMine=true&type=video&order=date&maxResults=4',acc);
     if(vids.items?.length){
-      $('yt-list').innerHTML=vids.items.map(v=>`
-        <div class="yt-video">
-          <img class="yt-thumb" src="${v.snippet.thumbnails?.default?.url||''}" alt=""/>
-          <div class="yt-vbody">
-            <div class="yt-vtitle">${v.snippet.title}</div>
-            <div class="yt-vmeta">${fmtEmailTime(v.snippet.publishedAt)}</div>
-          </div>
-        </div>`).join('');
+      $('yt-list').innerHTML=vids.items.map(v=>`<div class="yt-video"><img class="yt-thumb" src="${v.snippet.thumbnails?.default?.url||''}" alt=""/><div class="yt-vbody"><div class="yt-vtitle">${v.snippet.title}</div><div class="yt-vmeta">${fmtEmailTime(v.snippet.publishedAt)}</div></div></div>`).join('');
     }
-  }catch(e){console.error('YouTube',e);$('yt-list').innerHTML='<div class="empty">Could not load YouTube data</div>';}
+  }catch(e){console.error('YouTube',e);$('yt-list').innerHTML='<div class="empty">Could not load YouTube</div>';}
 }
 
 // ── DRIVE ─────────────────────────────────────────────────────────────────────
 async function syncDrive(){
-  const acc=S.tokens.work?'work':'personal';
-  if(!S.tokens[acc])return;
+  const acc=S.tokens.work?'work':'personal';if(!S.tokens[acc])return;
   try{
-    const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=10&orderBy=modifiedTime desc&fields=files(id,name,mimeType,modifiedTime,webViewLink)&q=trashed=false`,acc);
-    const files=r.files||[];
-    $('dr-meta').textContent=files.length+' recent';
-    const icons={'application/vnd.google-apps.document':'📄','application/vnd.google-apps.spreadsheet':'📊','application/vnd.google-apps.presentation':'📑','application/vnd.google-apps.folder':'📁','application/pdf':'📋','application/vnd.google-apps.form':'📋','application/vnd.openxmlformats-officedocument.wordprocessingml.document':'📝'};
-    $('dr-list').innerHTML=files.map(f=>`
-      <a class="dr-item" href="${f.webViewLink}" target="_blank">
-        <div class="dr-icon">${icons[f.mimeType]||'📄'}</div>
-        <div class="dr-body">
-          <div class="dr-name">${f.name}</div>
-          <div class="dr-meta">Modified ${fmtEmailTime(f.modifiedTime)}</div>
-        </div>
-      </a>`).join('');
-  }catch(e){$('dr-list').innerHTML='<div class="empty">Could not load Drive files</div>';}
+    const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=8&orderBy=modifiedTime desc&fields=files(id,name,mimeType,modifiedTime,webViewLink)&q=trashed=false`,acc);
+    const files=r.files||[];$('dr-meta').textContent=files.length+' recent';
+    const icons={'application/vnd.google-apps.document':'📄','application/vnd.google-apps.spreadsheet':'📊','application/vnd.google-apps.presentation':'📑','application/vnd.google-apps.folder':'📁','application/pdf':'📋','application/vnd.google-apps.form':'📋'};
+    $('dr-list').innerHTML=files.map(f=>`<a class="dr-item" href="${f.webViewLink}" target="_blank"><div class="dr-icon">${icons[f.mimeType]||'📄'}</div><div class="dr-body"><div class="dr-name">${f.name}</div><div class="dr-meta">Modified ${fmtEmailTime(f.modifiedTime)}</div></div></a>`).join('');
+  }catch(e){$('dr-list').innerHTML='<div class="empty">Could not load Drive</div>';}
 }
 
 // ── FORMS ─────────────────────────────────────────────────────────────────────
 async function syncForms(){
-  const acc=S.tokens.work?'work':'personal';
-  if(!S.tokens[acc])return;
+  const acc=S.tokens.work?'work':'personal';if(!S.tokens[acc])return;
   try{
-    const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=10&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime,webViewLink)&q=mimeType='application/vnd.google-apps.form' and trashed=false`,acc);
-    const forms=r.files||[];
-    $('forms-meta').textContent=forms.length+' forms';
+    const r=await gFetch(`https://www.googleapis.com/drive/v3/files?pageSize=8&orderBy=modifiedTime desc&fields=files(id,name,modifiedTime,webViewLink)&q=mimeType='application/vnd.google-apps.form' and trashed=false`,acc);
+    const forms=r.files||[];$('forms-meta').textContent=forms.length+' forms';
     if(!forms.length){$('forms-list').innerHTML='<div class="empty">No Google Forms found</div>';return;}
     const details=await Promise.all(forms.slice(0,6).map(async f=>{
       try{const resp=await gFetch(`https://forms.googleapis.com/v1/forms/${f.id}/responses?pageSize=1`,acc);return{...f,count:resp.totalSize||0};}
       catch(e){return{...f,count:'?'};}
     }));
-    $('forms-list').innerHTML=details.map(f=>`
-      <a class="dr-item" href="${f.webViewLink}" target="_blank">
-        <div class="dr-icon">📋</div>
-        <div class="dr-body">
-          <div class="dr-name">${f.name}</div>
-          <div class="dr-meta">${f.count} responses · ${fmtEmailTime(f.modifiedTime)}</div>
-        </div>
-      </a>`).join('');
+    $('forms-list').innerHTML=details.map(f=>`<a class="dr-item" href="${f.webViewLink}" target="_blank"><div class="dr-icon">📋</div><div class="dr-body"><div class="dr-name">${f.name}</div><div class="dr-meta">${f.count} responses · ${fmtEmailTime(f.modifiedTime)}</div></div></a>`).join('');
   }catch(e){$('forms-list').innerHTML='<div class="empty">Could not load Forms</div>';}
 }
 
@@ -1241,41 +1170,63 @@ function renderDeadlines(){
     const days=Math.ceil((new Date(d.date)-new Date(today))/86400000);
     const cls=days<=3?'urgent':days<=10?'soon':'ok';
     const label=days<0?Math.abs(days)+'d ago':days===0?'Today':days+'d';
-    return`<div class="dl-item">
-      <div class="dl-days ${cls}">${label}</div>
-      <div class="dl-sep"></div>
-      <div class="dl-body">
-        <div class="dl-title">${d.title}</div>
-        <div class="dl-info">${fmtDate(d.date)} &nbsp;<span class="dl-cat">${d.cat}</span></div>
-      </div>
-      <button class="del" onclick="delDL(${d.id})">✕</button>
-    </div>`;
+    return`<div class="dl-item"><div class="dl-days ${cls}">${label}</div><div class="dl-sep"></div><div class="dl-body"><div class="dl-title">${d.title}</div><div class="dl-info">${fmtDate(d.date)} &nbsp;<span class="dl-cat">${d.cat}</span></div></div><button class="del" onclick="delDL(${d.id})">✕</button></div>`;
   }).join('');
 }
 
-// ── NOTES ─────────────────────────────────────────────────────────────────────
-function saveNote(){
-  clearTimeout(S.noteTimer);$('note-saved').textContent='saving…';
-  S.noteTimer=setTimeout(()=>{localStorage.setItem('cmd_note',$('note-ta').value);$('note-saved').textContent='saved ✓';},800);
+// ── MILESTONES ────────────────────────────────────────────────────────────────
+function getDefaultMilestones(){
+  const today=new Date();
+  const phdChaps=Array.from({length:9},(_,i)=>{
+    const d=new Date(today);d.setDate(today.getDate()+(i-1)*14);// ch2 is current
+    return{ch:i+1,date:d.toISOString().slice(0,10)};
+  });
+  return[
+    {id:'book',title:'Essentials of Jyotiṣa',subtitle:'Formatting · Apple Pages',current:4,total:12,unit:'Chapter'},
+    {id:'phd',title:'PhD Thesis',subtitle:'2 weeks per chapter',current:2,total:9,unit:'Chapter',timeline:phdChaps},
+    {id:'journal',title:'APAI Chronycle',subtitle:'',current:0,total:0,status:'Vol 3 — In layout'},
+    {id:'diab',title:'Diploma Programme',subtitle:'',current:0,total:0,status:'DIAB1: — · DIAB2: — · DIAB3: —'}
+  ];
+}
+function renderMilestones(){
+  const ms=S.milestones||getDefaultMilestones();
+  $('ms-list').innerHTML=ms.map(m=>{
+    if(m.total>0){
+      const pct=Math.round(m.current/m.total*100);
+      let tl='';
+      if(m.timeline){
+        tl=`<div class="ms-timeline">${m.timeline.map(c=>{
+          const cls=c.ch<m.current?'done':c.ch===m.current?'current':'future';
+          return`<div class="ms-chap ${cls}"><span>Ch ${c.ch}${c.ch===m.current?' ◀':''}</span><span>${fmtDate(c.date)}</span></div>`;
+        }).join('')}</div>`;
+      }
+      return`<div class="ms-item"><div class="ms-top"><div class="ms-title">${m.title}</div><div class="ms-status"><span>${m.current}/${m.total} ${m.unit}s</span><button class="ms-edit-btn" onclick="editMS('${m.id}')">Edit</button></div></div><div class="ms-bar-wrap"><div class="ms-bar" style="width:${pct}%"></div></div><div class="ms-sub">${m.subtitle} · ${pct}% complete</div>${tl}</div>`;
+    }else{
+      return`<div class="ms-item"><div class="ms-top"><div class="ms-title">${m.title}</div><button class="ms-edit-btn" onclick="editMS('${m.id}')">Edit</button></div><div class="ms-sub" style="margin-top:4px">${m.status||'—'}</div></div>`;
+    }
+  }).join('');
+}
+function editMS(id){
+  const ms=S.milestones||getDefaultMilestones();
+  const m=ms.find(x=>x.id===id);if(!m)return;
+  if(m.total>0){
+    const val=prompt(`${m.title}\nCurrent ${m.unit} (1-${m.total}):`,m.current);
+    if(val===null)return;
+    m.current=Math.max(1,Math.min(parseInt(val)||m.current,m.total));
+    if(m.timeline){
+      const today=new Date();
+      m.timeline=m.timeline.map(c=>{const d=new Date(today);d.setDate(today.getDate()+(c.ch-m.current)*14);return{...c,date:d.toISOString().slice(0,10)};});
+    }
+  }else{
+    const val=prompt(`${m.title}\nStatus:`,m.status||'');
+    if(val===null)return;
+    m.status=val;
+  }
+  S.milestones=ms;localStorage.setItem('cmd_milestones',JSON.stringify(ms));renderMilestones();
 }
 
-// ── QUICK COMPOSE ─────────────────────────────────────────────────────────────
-async function composeEmail(){
-  const txt=$('compose-in').value.trim();if(!txt)return;
-  const result=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher and practitioner in Chennai. Turn this rough note into a polished, warm, professional email. Include Subject line. Keep it concise.\n\nRough note: ${txt}`);
-  showCompose(result);
-}
-async function composeWhatsApp(){
-  const txt=$('compose-in').value.trim();if(!txt)return;
-  const result=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher. Turn this rough note into a warm, natural WhatsApp message. Conversational tone, no formal email structure.\n\nRough note: ${txt}`);
-  showCompose(result);
-}
-function showCompose(text){
-  const el=$('compose-result');el.textContent=text;el.style.display='block';
-  $('compose-copy-row').style.display='flex';
-}
-function copyCompose(){navigator.clipboard.writeText($('compose-result').textContent).then(()=>alert('Copied to clipboard!'));}
-function clearCompose(){$('compose-in').value='';$('compose-result').style.display='none';$('compose-copy-row').style.display='none';$('compose-result').textContent='';}
+// ── NOTES ─────────────────────────────────────────────────────────────────────
+function saveNote(){clearTimeout(S.noteTimer);$('note-saved').textContent='saving…';S.noteTimer=setTimeout(()=>{localStorage.setItem('cmd_note',$('note-ta').value);$('note-saved').textContent='saved ✓';},800);}
 
 // ── STATS ─────────────────────────────────────────────────────────────────────
 function updateStats(){
@@ -1283,26 +1234,42 @@ function updateStats(){
   const ev=S.events.filter(e=>e.start.slice(0,10)===today).length;
   const tk=S.tasks.filter(t=>!t.done).length;
   const ur=S.emails.filter(e=>e.unread).length;
+  const dl=S.deadlines.filter(d=>Math.ceil((new Date(d.date)-new Date(today))/86400000)<=30).length;
   $('sn-em').textContent=ur;$('sn-em').className='sc-num'+(ur===0?' zero':'');
   $('sn-ev').textContent=ev;$('sn-ev').className='sc-num'+(ev===0?' zero':'');
   $('sn-tk').textContent=tk;$('sn-tk').className='sc-num'+(tk===0?' zero':'');
-  $('ss-em').textContent=ur+' unread · both accounts';
+  $('sn-dl').textContent=dl;$('sn-dl').className='sc-num'+(dl===0?' zero':'');
   $('ss-ev').textContent=ev+' event'+(ev!==1?'s':'')+' today';
   $('ss-tk').textContent=tk+' pending';
+  $('ss-dl').textContent=dl+' in next 30 days';
 }
 
-// ── AI (GEMINI) ───────────────────────────────────────────────────────────────
-const SYS=`You are the personal AI assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author ("Essentials of Jyotiṣa"), PhD candidate, APAI Chronycle journal editor, Chennai, India. His projects: book formatting (Ch 4/12), PhD (Ch 2/9, 2 weeks/chapter), Diploma Programme (DIAB1/DIAB2/DIAB3, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), client consultations, journal editing. Be concise, direct, practical. No fluff.`;
+// ── QUICK COMPOSE ─────────────────────────────────────────────────────────────
+async function composeEmail(){const txt=$('compose-in').value.trim();if(!txt)return;const r=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher in Chennai. Turn this rough note into a polished, warm, professional email. Include Subject line. Keep concise.\n\nRough: ${txt}`);showCompose(r);}
+async function composeWA(){const txt=$('compose-in').value.trim();if(!txt)return;const r=await callGemini(`You are writing on behalf of Aswin Suresh, a Jyotiṣa teacher. Turn this into a warm, natural WhatsApp message. Conversational, no formal structure.\n\nRough: ${txt}`);showCompose(r);}
+function showCompose(text){const el=$('compose-result');el.textContent=text;el.style.display='block';$('compose-copy-row').style.display='flex';}
+function copyCompose(){navigator.clipboard.writeText($('compose-result').textContent).then(()=>{const btn=event.target;btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy to Clipboard',2000);});}
+function clearCompose(){$('compose-in').value='';$('compose-result').style.display='none';$('compose-copy-row').style.display='none';$('compose-result').textContent='';}
+
+// ── AI (GEMINI with fallback) ─────────────────────────────────────────────────
+const MODELS=['gemini-2.0-flash','gemini-1.5-flash-latest'];
+const SYS=`You are the personal AI assistant for Aswin Suresh — Jyotiṣa practitioner, teacher, author ("Essentials of Jyotiṣa"), PhD candidate, APAI Chronycle journal editor, Chennai. Projects: book formatting Ch 4/12, PhD Ch 2/9 (2 weeks/chapter), Diploma Programme (DIAB1/DIAB2/DIAB3, ~34 students), Sanskrit manuscript (Hīlājadīpikā c.1570s), client consultations. Be concise, direct, practical.`;
 
 async function callGemini(prompt){
-  try{
-    const r=await fetch(GEMINI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:SYS+'\n\n'+prompt}]}],generationConfig:{maxOutputTokens:800,temperature:0.7}})});
-    const d=await r.json();
-    if(d.error)throw new Error(d.error.message);
-    return d.candidates?.[0]?.content?.parts?.[0]?.text||'No response.';
-  }catch(e){return'AI error: '+e.message;}
+  for(const model of MODELS){
+    try{
+      const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`,{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({contents:[{role:'user',parts:[{text:SYS+'\n\n'+prompt}]}],generationConfig:{maxOutputTokens:800,temperature:0.7}})
+      });
+      const d=await r.json();
+      if(d.error){console.warn(`Model ${model} failed:`,d.error.message);continue;}
+      const text=d.candidates?.[0]?.content?.parts?.[0]?.text;
+      if(text)return text;
+    }catch(e){console.warn(`Model ${model} error:`,e);}
+  }
+  return'AI unavailable. Both models failed — check your API key.';
 }
-async function showAI(text){const el=$('ai-resp');el.className='ai-resp';el.textContent=text;$('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});}
 function getCtx(){
   const today=todayStr();
   return`Today: ${today}
@@ -1316,16 +1283,18 @@ Notes: ${(localStorage.getItem('cmd_note')||'').slice(0,200)||'none'}`;
 async function askAI(){
   const q=$('ai-in').value.trim();if(!q)return;$('ai-in').value='';
   $('ai-resp').className='ai-resp';$('ai-resp').textContent='Thinking…';
-  showAI(await callGemini(`Context:\n${getCtx()}\n\nQuestion: ${q}`));
+  $('ai-resp').textContent=await callGemini(`Context:\n${getCtx()}\n\nQuestion: ${q}`);
 }
 async function aiBriefing(){
   $('ai-resp').className='ai-resp';$('ai-resp').textContent='Preparing your briefing…';
-  showAI(await callGemini(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, deadlines coming up, and my top 3 focus items. Under 200 words.`));
+  $('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});
+  $('ai-resp').textContent=await callGemini(`Context:\n${getCtx()}\n\nGive me a crisp daily briefing: what's on today, what's most urgent, any deadlines coming up, top 3 focus items. Under 200 words.`);
 }
 async function aiExpandNote(){
   const t=$('note-ta').value.trim();if(!t){alert('Notes are empty.');return;}
   $('ai-resp').className='ai-resp';$('ai-resp').textContent='Expanding notes…';
-  showAI(await callGemini(`Structure and expand these raw notes into clear, actionable items:\n\n${t}`));
+  $('panel-ai').scrollIntoView({behavior:'smooth',block:'nearest'});
+  $('ai-resp').textContent=await callGemini(`Structure and expand these raw notes into clear, actionable items:\n\n${t}`);
 }
 $('ai-in').addEventListener('keydown',e=>{if(e.key==='Enter')askAI();});
 
